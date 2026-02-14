@@ -1,0 +1,32 @@
+{
+  "lastUpdated": "2026-02-14",
+  "phase": {
+    "current": "Phase 0: 基盤構築",
+    "startDate": "2026-02-14",
+    "goals": [
+      "組織構成の確立",
+      "Webサイト（LP）の公開",
+      "ShieldMeの企画・MVP開発"
+    ]
+  },
+  "kpi": {
+    "revenue": 0,
+    "users": 0,
+    "xFollowers": 0,
+    "websiteVisits": 0,
+    "operatingCost": 0
+  },
+  "products": {
+    "shieldme": {
+      "status": "企画段階",
+      "description": "誹謗中傷検知SaaS",
+      "specDoc": "docs/specs/shieldme-spec.md"
+    }
+  },
+  "infrastructure": {
+    "website": "未公開",
+    "xAccount": "未開設",
+    "domain": "ai-agency.jp（未取得）"
+  },
+  "weeklyReportCount": 0
+}
