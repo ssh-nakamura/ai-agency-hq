@@ -1,19 +1,23 @@
 {
-  "lastUpdated": "2026-02-14",
+  "lastUpdated": "2026-02-15",
   "phase": {
     "current": "Phase 0: 基盤構築",
+    "step": "Step 1: 調査と計画",
     "startDate": "2026-02-14",
     "goals": [
-      "組織構成の確立",
+      "組織構成の確立（8エージェント体制）",
       "Webサイト（LP）の公開",
-      "ShieldMeの企画・MVP開発"
+      "ShieldMeの企画・MVP仕様確定",
+      "YouTube動画パイプライン設計"
     ]
   },
   "kpi": {
     "revenue": 0,
     "users": 0,
     "xFollowers": 0,
+    "youtubeSubscribers": 0,
     "websiteVisits": 0,
+    "blogPosts": 0,
     "operatingCost": 0
   },
   "products": {
@@ -23,10 +27,33 @@
       "specDoc": "docs/specs/shieldme-spec.md"
     }
   },
+  "businesses": {
+    "saas": {
+      "lead": "product-manager",
+      "status": "企画段階",
+      "products": ["shieldme"]
+    },
+    "content": {
+      "lead": "writer",
+      "status": "準備中",
+      "channels": ["blog", "note"]
+    },
+    "video": {
+      "lead": "video-creator",
+      "status": "パイプライン設計中",
+      "channels": ["youtube"]
+    }
+  },
   "infrastructure": {
     "website": "未公開",
     "xAccount": "未開設",
+    "youtubeChannel": "未開設",
     "domain": "ai-agency.jp（未取得）"
+  },
+  "organization": {
+    "agents": 8,
+    "philosophy": "AIで稼げることはなんでもやる実験室",
+    "architecture": "Agent Teams（Maxプラン）"
   },
   "weeklyReportCount": 0
 }
