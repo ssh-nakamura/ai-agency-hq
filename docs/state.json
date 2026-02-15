@@ -12,40 +12,74 @@
     ]
   },
   "kpi": {
-    "revenue": 0,
-    "users": 0,
-    "xFollowers": 0,
-    "youtubeSubscribers": 0,
-    "websiteVisits": 0,
-    "blogPosts": 0,
-    "operatingCost": 0
+    "actual": {
+      "revenue": 0,
+      "users": 0,
+      "xFollowers": 0,
+      "youtubeSubscribers": 0,
+      "websiteVisits": 0,
+      "blogPosts": 0,
+      "operatingCost": 15000
+    },
+    "targets": {
+      "phase1": {
+        "shieldmeBetaUsers": 30,
+        "shieldmeFeedback": 50,
+        "blogPosts": 16,
+        "monthlyPV": 5000,
+        "noteArticles": 4,
+        "contentRevenue": 15000,
+        "xFollowers": 1000,
+        "youtubeSubscribers": 500,
+        "videosPublished": 12
+      },
+      "phase2": {
+        "shieldmePaidUsers": 150,
+        "shieldmeMRR": 225000,
+        "contentMonthlyRevenue": 67500,
+        "videoMonthlyRevenue": 12000,
+        "totalMonthlyRevenue": 304500,
+        "monthlyCost": 60000,
+        "monthlyProfit": 244500,
+        "xFollowers": 5000,
+        "youtubeSubscribers": 5000,
+        "breakEvenUsers": 17
+      }
+    },
+    "scenario": "standard",
+    "source": "docs/specs/kpi-proposal.md"
   },
   "products": {
     "shieldme": {
-      "status": "企画段階",
+      "status": "MVP仕様確定",
       "description": "誹謗中傷検知SaaS",
-      "specDoc": "docs/specs/shieldme-spec.md"
+      "specDoc": "docs/specs/shieldme-mvp-spec.md",
+      "pricing": {
+        "free": 0,
+        "basic": 980,
+        "pro": 4980
+      }
     }
   },
   "businesses": {
     "saas": {
       "lead": "product-manager",
-      "status": "企画段階",
+      "status": "MVP仕様確定",
       "products": ["shieldme"]
     },
     "content": {
       "lead": "writer",
-      "status": "準備中",
+      "status": "LP文面完了",
       "channels": ["blog", "note"]
     },
     "video": {
       "lead": "video-creator",
-      "status": "パイプライン設計中",
+      "status": "パイプライン設計完了",
       "channels": ["youtube"]
     }
   },
   "infrastructure": {
-    "website": "未公開",
+    "website": "LP HTML実装中",
     "xAccount": "未開設",
     "youtubeChannel": "未開設",
     "domain": "ai-agency.jp（未取得）"

@@ -1,0 +1,15 @@
+{
+  "name": "ai-agency-hq",
+  "version": "1.0.0",
+  "description": "> 人間ゼロで事業を回す、AIだけの組織実験",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
