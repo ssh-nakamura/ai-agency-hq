@@ -1,6 +1,6 @@
 ---
 name: session-log
-description: セッション終了時にログを保存する。今回のセッションでやったことを記録し、メモリを更新し、actions.mdとstate.jsonを最新化する。
+description: セッション終了時にログを保存する。今回のセッションでやったことを記録し、メモリを更新し、status.mdを最新化する。
 ---
 
 # セッションログ保存
@@ -37,14 +37,11 @@ description: セッション終了時にログを保存する。今回のセッ�
 
 ## 2. CEOメモリの更新
 `.claude/agent-memory/ceo/MEMORY.md` を更新:
-- 「最重要：次回やること」を更新
 - 新しい確定事項があれば追記
 - 失敗と学びがあれば追記
-- セッション履歴に今回を追加
 
 ## 3. ドキュメント最新化
-- `docs/actions.md` — 完了タスクを移動、新規タスクを追加
-- `docs/state.json` — KPIや状態が変わっていれば更新
+- `docs/status.md` — 完了タスクを移動、新規タスクを追加、KPIや収支に変更があれば更新
 
 ## 4. トークン消費記録（ccusage使用）
 
@@ -54,9 +51,7 @@ npx ccusage@latest daily --since YYYYMMDD
 ```
 （YYYYMMDDは今日の日付）
 
-取得した数値を `docs/finances.md` のトークン消費管理セクションに記録:
-- 日付、総トークン数、API換算コスト、Cache Read量
-- 若様にプラン使用率を確認する
+取得した数値を `docs/status.md` のトークン消費セクションに記録。
 
 **注意**: ccusageの数値にはCache Readが含まれる。新規トークンは「Total - Cache Read」で計算する。
 

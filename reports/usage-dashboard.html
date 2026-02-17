@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Agency HQ - Usage Dashboard (Max Plan)</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans',sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh}
+.header{background:#1e293b;border-bottom:1px solid #334155;padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
+.header h1{font-size:18px;font-weight:700;color:#fff}
+.header-badge{background:#22c55e20;color:#22c55e;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600;border:1px solid #22c55e40}
+.header-right{display:flex;align-items:center;gap:12px}
+.status{display:flex;align-items:center;gap:6px;font-size:12px}
+.status-dot{width:8px;height:8px;border-radius:50%}
+.status-dot.ok{background:#22c55e;box-shadow:0 0 6px #22c55e80}
+.status-dot.err{background:#ef4444;box-shadow:0 0 6px #ef444480}
+.refresh-btn{padding:6px 14px;border-radius:8px;font-size:12px;background:#334155;color:#e2e8f0;border:1px solid #475569;cursor:pointer}
+.refresh-btn:hover{background:#475569}
+.container{max-width:1200px;margin:0 auto;padding:24px}
+
+/* Info banner */
+.info-banner{background:#1e3a5f;border:1px solid #2563eb40;border-radius:10px;padding:12px 16px;margin-bottom:24px;font-size:13px;color:#93c5fd;display:flex;align-items:center;gap:10px}
+.info-banner strong{color:#60a5fa}
+
+/* KPI cards */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+.kpi-card{background:#1e293b;border-radius:12px;padding:20px;border:1px solid #334155}
+.kpi-label{font-size:12px;color:#94a3b8;font-weight:500;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}
+.kpi-value{font-size:28px;font-weight:700;color:#fff}
+.kpi-sub{font-size:12px;color:#64748b;margin-top:4px}
+.kpi-trend{font-size:12px;margin-top:4px}
+.kpi-trend.up{color:#22c55e}
+.kpi-trend.down{color:#ef4444}
+.kpi-trend.warn{color:#f59e0b}
+.kpi-trend.neutral{color:#94a3b8}
+
+/* Sections */
+.row{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px}
+.section{background:#1e293b;border-radius:12px;padding:20px;border:1px solid #334155;margin-bottom:24px}
+.section-title{font-size:14px;font-weight:600;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.section-title span{color:#94a3b8;font-weight:400;font-size:12px}
+
+/* Model table */
+.model-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #334155}
+.model-row:last-child{border:none}
+.model-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.model-name{font-size:13px;font-weight:600;color:#fff;min-width:120px}
+.model-detail{font-size:12px;color:#94a3b8;flex:1}
+.model-bar-bg{flex:0 0 100px;height:6px;background:#334155;border-radius:3px;overflow:hidden}
+.model-bar-fill{height:100%;border-radius:3px}
+.model-pct{font-size:12px;color:#64748b;min-width:40px;text-align:right}
+
+/* Tip */
+.tip{font-size:12px;color:#94a3b8;padding:8px 12px;background:#334155;border-radius:6px;margin-top:12px;line-height:1.5}
+.tip strong{color:#f59e0b}
+
+/* Project */
+.project-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid #33415520}
+.project-row:last-child{border:none}
+.project-name{flex:1;font-size:13px;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.project-pct{font-size:12px;font-weight:600;color:#fff;min-width:50px;text-align:right}
+.project-bar-bg{flex:0 0 100px;height:6px;background:#334155;border-radius:3px;overflow:hidden}
+.project-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#3b82f6,#8b5cf6)}
+
+/* Daily chart */
+.chart-bars{display:flex;align-items:flex-end;gap:4px;height:100px;padding:8px 0}
+.chart-bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
+.chart-bar-fill{width:100%;border-radius:3px 3px 0 0;min-height:2px;transition:height .3s}
+.chart-bar-label{font-size:9px;color:#64748b;white-space:nowrap}
+.chart-bar-value{font-size:9px;color:#94a3b8;white-space:nowrap}
+
+/* Error */
+.error-msg{background:#7f1d1d40;border:1px solid #991b1b;border-radius:8px;padding:16px;color:#fca5a5;font-size:13px;text-align:center;line-height:1.8}
+.error-msg code{background:#0f172a;padding:2px 8px;border-radius:4px;font-size:12px;display:inline-block;margin-top:8px}
+
+/* Footer */
+.footer{text-align:center;padding:24px;color:#475569;font-size:11px}
+
+@media(max-width:768px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div style="display:flex;align-items:center;gap:12px">
+        <h1>AI Agency HQ</h1>
+        <span class="header-badge">Max Plan $100/mo</span>
+    </div>
+    <div class="header-right">
+        <div class="status"><div class="status-dot" id="statusDot"></div><span id="statusText">Connecting...</span></div>
+        <button class="refresh-btn" onclick="fetchData()">Refresh</button>
+    </div>
+</div>
+
+<div class="container" id="content">
+    <div style="text-align:center;padding:60px;color:#64748b">Loading...</div>
+</div>
+
+<script>
+const API = 'http://localhost:3333/api';
+
+function fmt(n) { return n.toLocaleString(); }
+function fmtTokens(n) {
+    if (n >= 1e9) return (n/1e9).toFixed(1) + 'B';
+    if (n >= 1e6) return (n/1e6).toFixed(1) + 'M';
+    if (n >= 1e3) return (n/1e3).toFixed(1) + 'K';
+    return n.toString();
+}
+
+async function fetchData() {
+    const dot = document.getElementById('statusDot');
+    const txt = document.getElementById('statusText');
+    try {
+        const res = await fetch(API + '/stats');
+        if (!res.ok) throw new Error('API returned ' + res.status);
+        const data = await res.json();
+        dot.className = 'status-dot ok';
+        txt.textContent = 'Live';
+        render(data);
+    } catch(e) {
+        dot.className = 'status-dot err';
+        txt.textContent = 'Disconnected';
+        document.getElementById('content').innerHTML = `
+            <div class="error-msg">
+                ccboard APIに接続できません。以下で起動してください:<br>
+                <code>/Users/soshunakamura/ai_prodcut/tools/ccboard web --port 3333 &</code>
+            </div>`;
+    }
+}
+
+function render(d) {
+    const models = d.modelUsage || {};
+    const projects = d.projectsByCost || [];
+    const daily = d.dailyActivity || [];
+    const totalSessions = d.totalSessions || 0;
+    const totalMessages = d.totalMessages || 0;
+    const cacheHit = ((d.cacheHitRatio || 0) * 100).toFixed(1);
+
+    // Totals
+    let totalNew = 0, totalCache = 0, totalOut = 0;
+    for (const [_, m] of Object.entries(models)) {
+        totalNew += m.inputTokens || 0;
+        totalOut += m.outputTokens || 0;
+        totalCache += (m.cacheReadInputTokens || 0);
+    }
+    const totalAll = totalNew + totalOut + totalCache;
+
+    // Opus share (rate limit concern)
+    let opusTokens = 0, sonnetTokens = 0, haikuTokens = 0;
+    for (const [name, m] of Object.entries(models)) {
+        const t = (m.inputTokens||0) + (m.outputTokens||0);
+        if (name.includes('opus')) opusTokens += t;
+        else if (name.includes('sonnet')) sonnetTokens += t;
+        else if (name.includes('haiku')) haikuTokens += t;
+    }
+    const newTotal = opusTokens + sonnetTokens + haikuTokens;
+    const opusPct = newTotal > 0 ? (opusTokens / newTotal * 100) : 0;
+
+    // Daily averages
+    const activeDays = daily.length || 1;
+    const avgMsgsPerDay = Math.round(totalMessages / activeDays);
+    const avgSessionsPerDay = (totalSessions / activeDays).toFixed(1);
+
+    // Opus rate concern
+    let opusWarning = '';
+    if (opusPct > 70) opusWarning = '<div class="kpi-trend down">Opus使用率高い - レート制限リスク</div>';
+    else if (opusPct > 40) opusWarning = '<div class="kpi-trend warn">Opusは枠を1.7x速く消費</div>';
+    else opusWarning = '<div class="kpi-trend up">Sonnet主体で効率的</div>';
+
+    // Teams multiplier warning
+    const hasTeams = daily.some(d => (d.toolCallCount || 0) > 50);
+
+    // Model colors
+    const modelColors = {
+        'opus': '#ef4444',
+        'sonnet': '#3b82f6',
+        'haiku': '#22c55e'
+    };
+
+    // Chart
+    const chartData = daily.slice(-14);
+    const maxMsgs = Math.max(...chartData.map(d => d.messageCount), 1);
+
+    const html = `
+    <div class="info-banner">
+        <strong>Max Plan</strong> 定額$100/月。APIドル換算のコストは実際の請求額ではありません。監視すべきはレート制限の消費ペースです。
+    </div>
+
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-label">セッション数</div>
+            <div class="kpi-value">${totalSessions}</div>
+            <div class="kpi-sub">${fmt(totalMessages)} messages</div>
+            <div class="kpi-trend neutral">${avgMsgsPerDay} msgs/day avg</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">キャッシュ効率</div>
+            <div class="kpi-value">${cacheHit}%</div>
+            <div class="kpi-sub">Cache hit ratio</div>
+            <div class="kpi-trend ${parseFloat(cacheHit) > 95 ? 'up' : parseFloat(cacheHit) > 80 ? 'warn' : 'down'}">
+                ${parseFloat(cacheHit) > 95 ? 'Excellent - 枠の節約に貢献' : parseFloat(cacheHit) > 80 ? 'Good' : 'Low - 改善余地あり'}
+            </div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Opus使用率</div>
+            <div class="kpi-value">${opusPct.toFixed(0)}%</div>
+            <div class="kpi-sub">of new tokens (excl. cache)</div>
+            ${opusWarning}
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">新規トークン合計</div>
+            <div class="kpi-value">${fmtTokens(newTotal)}</div>
+            <div class="kpi-sub">Input + Output (excl. cache)</div>
+            <div class="kpi-trend neutral">Cache: ${fmtTokens(totalCache)}</div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Model breakdown -->
+        <div class="section">
+            <div class="section-title">Model Mix <span>レート制限はOpusが最も厳しい</span></div>
+            ${Object.entries(models).sort((a,b) => ((b[1].inputTokens||0)+(b[1].outputTokens||0)) - ((a[1].inputTokens||0)+(a[1].outputTokens||0))).map(([name, m]) => {
+                const tokens = (m.inputTokens||0) + (m.outputTokens||0);
+                const pct = newTotal > 0 ? (tokens / newTotal * 100) : 0;
+                let tier = 'haiku';
+                if (name.includes('opus')) tier = 'opus';
+                else if (name.includes('sonnet')) tier = 'sonnet';
+                const color = modelColors[tier] || '#94a3b8';
+                const shortName = name.replace('claude-','').replace(/-\d{8}$/,'');
+                const rateNote = tier === 'opus' ? '(1.7x rate cost)' : tier === 'haiku' ? '(cheapest)' : '';
+                return `<div class="model-row">
+                    <div class="model-dot" style="background:${color}"></div>
+                    <div class="model-name">${shortName}</div>
+                    <div class="model-detail">In:${fmtTokens(m.inputTokens||0)} Out:${fmtTokens(m.outputTokens||0)} ${rateNote}</div>
+                    <div class="model-bar-bg"><div class="model-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+                    <div class="model-pct">${pct.toFixed(0)}%</div>
+                </div>`;
+            }).join('')}
+            <div class="tip"><strong>Tip:</strong> Sonnetをメインに、Opusは複雑な判断のみ。Haiku可能なサブタスクはHaikuに。Agent Teamsは通常の7xトークン消費。</div>
+        </div>
+
+        <!-- Project breakdown -->
+        <div class="section">
+            <div class="section-title">Project Distribution <span>プロジェクト別の使用割合</span></div>
+            ${projects.map(p => {
+                const name = p.project.split('/').filter(Boolean).slice(-2).join('/');
+                return `<div class="project-row">
+                    <span class="project-name">${name}</span>
+                    <div class="project-bar-bg"><div class="project-bar-fill" style="width:${p.percentage}%"></div></div>
+                    <span class="project-pct">${p.percentage.toFixed(1)}%</span>
+                </div>`;
+            }).join('')}
+        </div>
+    </div>
+
+    <!-- Daily Activity -->
+    <div class="section">
+        <div class="section-title">Daily Activity <span>Messages per day</span></div>
+        <div class="chart-bars">
+            ${chartData.map(day => {
+                const h = Math.max((day.messageCount / maxMsgs) * 100, 3);
+                const label = day.date.slice(5);
+                const sessions = day.sessionCount || 0;
+                return `<div class="chart-bar">
+                    <div class="chart-bar-value">${day.messageCount}</div>
+                    <div class="chart-bar-fill" style="height:${h}%;background:linear-gradient(180deg,#3b82f6,#1d4ed8)"></div>
+                    <div class="chart-bar-label">${label}</div>
+                </div>`;
+            }).join('')}
+        </div>
+    </div>
+
+    <!-- Rate limit tips -->
+    <div class="section" style="border-color:#f59e0b40">
+        <div class="section-title" style="color:#f59e0b">Rate Limit Management</div>
+        <div style="font-size:13px;color:#94a3b8;line-height:1.8">
+            <strong style="color:#e2e8f0">5時間ローリングウィンドウ:</strong> 使い切ると回復まで待ち。連続作業は2-3時間が目安。<br>
+            <strong style="color:#e2e8f0">週間キャップ:</strong> Max 5xでもヘビー使用で週後半に制限される報告あり。<br>
+            <strong style="color:#e2e8f0">Agent Teams:</strong> 通常の約7倍消費。チームは最小人数で、完了後すぐ解散。<br>
+            <strong style="color:#e2e8f0">節約:</strong> /clear でタスク切替、Sonnet主体、CLAUDE.md 500行以下。
+        </div>
+    </div>
+
+    <div class="footer">
+        Data from ccboard API (localhost:3333) | Auto-refresh 30s | ${new Date().toLocaleString('ja-JP')}
+    </div>
+    `;
+
+    document.getElementById('content').innerHTML = html;
+}
+
+fetchData();
+setInterval(fetchData, 30000);
+</script>
+</body>
+</html>

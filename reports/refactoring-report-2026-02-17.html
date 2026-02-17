@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>リファクタリング報告 - 2026-02-17</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f9fa; color: #1a1a2e; line-height: 1.6; padding: 24px; max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 1.6rem; margin-bottom: 8px; color: #1a1a2e; }
+  .subtitle { color: #6c757d; font-size: 0.9rem; margin-bottom: 32px; }
+  h2 { font-size: 1.2rem; margin: 28px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #e9ecef; }
+  h3 { font-size: 1rem; margin: 16px 0 8px; color: #495057; }
+
+  .summary-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .card { background: white; border-radius: 10px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .card .label { font-size: 0.75rem; color: #6c757d; text-transform: uppercase; letter-spacing: 0.5px; }
+  .card .value { font-size: 1.8rem; font-weight: 700; margin: 4px 0; }
+  .card .detail { font-size: 0.8rem; color: #868e96; }
+  .card.green .value { color: #2b8a3e; }
+  .card.red .value { color: #c92a2a; }
+  .card.blue .value { color: #1971c2; }
+
+  table { width: 100%; border-collapse: collapse; margin: 8px 0 16px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  th { background: #f1f3f5; text-align: left; padding: 10px 14px; font-size: 0.8rem; color: #495057; font-weight: 600; }
+  td { padding: 10px 14px; border-top: 1px solid #f1f3f5; font-size: 0.85rem; }
+  tr:hover { background: #f8f9fa; }
+
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+  .badge-del { background: #ffe0e0; color: #c92a2a; }
+  .badge-new { background: #d3f9d8; color: #2b8a3e; }
+  .badge-edit { background: #d0ebff; color: #1971c2; }
+  .badge-ok { background: #d3f9d8; color: #2b8a3e; }
+
+  .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 12px 0; }
+  .before-after > div { background: white; border-radius: 8px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .before-after h4 { font-size: 0.85rem; margin-bottom: 8px; }
+  .before-after ul { padding-left: 20px; font-size: 0.85rem; }
+  .before-after li { margin: 4px 0; }
+  .strike { text-decoration: line-through; color: #adb5bd; }
+
+  .check-list { list-style: none; padding: 0; }
+  .check-list li { padding: 6px 0; font-size: 0.9rem; }
+  .check-list li::before { content: "✓ "; color: #2b8a3e; font-weight: bold; }
+
+  .flow { background: white; border-radius: 8px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); font-family: monospace; font-size: 0.85rem; white-space: pre-wrap; margin: 8px 0; }
+  .dim { color: #adb5bd; }
+  .hl { color: #1971c2; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<h1>組織設計リファクタリング報告</h1>
+<p class="subtitle">2026-02-17 | 外部AIレビュー指摘事項への対応</p>
+
+<div class="summary-cards">
+  <div class="card red">
+    <div class="label">CLAUDE.md</div>
+    <div class="value">348→55</div>
+    <div class="detail">行数（-84%削減）</div>
+  </div>
+  <div class="card red">
+    <div class="label">ドキュメント</div>
+    <div class="value">6→3</div>
+    <div class="detail">ファイル統合</div>
+  </div>
+  <div class="card blue">
+    <div class="label">CEO起動ターン</div>
+    <div class="value">7→3</div>
+    <div class="detail">通常モード</div>
+  </div>
+  <div class="card green">
+    <div class="label">バリデーション</div>
+    <div class="value">0</div>
+    <div class="detail">エラー / 警告</div>
+  </div>
+</div>
+
+<h2>1. 指摘事項と対応</h2>
+
+<table>
+  <thead><tr><th>指摘</th><th>問題</th><th>対応</th><th>状態</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>CLAUDE.md肥大化</td>
+      <td>348行が全サブエージェントに注入。毎回トークン浪費</td>
+      <td>55行に圧縮。CEO固有の内容をceo-manual.mdに分離</td>
+      <td><span class="badge badge-ok">完了</span></td>
+    </tr>
+    <tr>
+      <td>ドキュメント6ファイル</td>
+      <td>CEO起動時に5ファイル読み込み = 5ターン消費</td>
+      <td>3ファイルに統合（plan.md / status.md / decisions.md）</td>
+      <td><span class="badge badge-ok">完了</span></td>
+    </tr>
+    <tr>
+      <td>CEO起動が重い</td>
+      <td>毎回フルチェック。改善提案まで含め7-8ターン</td>
+      <td>通常モード（3ターン）/ フルモード（週次）に分離</td>
+      <td><span class="badge badge-ok">完了</span></td>
+    </tr>
+    <tr>
+      <td>MEMORY.mdの人間関係</td>
+      <td>容量200行制限のMEMORY.mdに関係設定は無駄</td>
+      <td>agents/*.md bodyに移動（x-manager 1件のみ該当）</td>
+      <td><span class="badge badge-ok">完了</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>2. ドキュメント構成 Before / After</h2>
+
+<div class="before-after">
+  <div>
+    <h4>Before（6ファイル）</h4>
+    <ul>
+      <li class="strike">docs/business-plan.md</li>
+      <li class="strike">docs/roadmap.md</li>
+      <li class="strike">docs/actions.md</li>
+      <li class="strike">docs/state.json</li>
+      <li class="strike">docs/finances.md</li>
+      <li>docs/decisions.md</li>
+    </ul>
+  </div>
+  <div>
+    <h4>After（3ファイル）</h4>
+    <ul>
+      <li><strong>docs/plan.md</strong> ← business-plan + roadmap</li>
+      <li><strong>docs/status.md</strong> ← actions + state.json + finances</li>
+      <li>docs/decisions.md（変更なし）</li>
+      <li style="margin-top:8px;color:#6c757d">+ docs/ceo-manual.md（CEO専用、CLAUDE.mdから分離）</li>
+    </ul>
+  </div>
+</div>
+
+<h2>3. CEO起動フロー Before / After</h2>
+
+<div class="before-after">
+  <div>
+    <h4>Before（毎回フルモード）</h4>
+    <div class="flow"><span class="dim">1.</span> MEMORY.md <span class="dim">(自動)</span>
+<span class="dim">2.</span> Read business-plan.md
+<span class="dim">3.</span> Read roadmap.md
+<span class="dim">4.</span> Read actions.md
+<span class="dim">5.</span> Read state.json
+<span class="dim">6.</span> Read finances.md
+<span class="dim">7.</span> Run validate-docs.py
+<span class="dim">8.</span> セルフチェック 12項目
+<span class="dim">→ 計 7-8ターン消費</span></div>
+  </div>
+  <div>
+    <h4>After（通常モード）</h4>
+    <div class="flow"><span class="dim">1.</span> MEMORY.md <span class="dim">(自動)</span>
+<span class="dim">2.</span> Read ceo-manual.md
+<span class="dim">3.</span> Read status.md
+<span class="dim">4.</span> 軽量チェック 3項目
+<span class="hl">→ 計 3ターン消費</span>
+
+<span class="dim">フルモード（週次）は従来と同等:</span>
+<span class="dim">+ Read plan.md</span>
+<span class="dim">+ validate-docs.py</span>
+<span class="dim">+ セルフチェック全項目</span></div>
+  </div>
+</div>
+
+<h2>4. 変更ファイル一覧</h2>
+
+<table>
+  <thead><tr><th>操作</th><th>ファイル</th><th>内容</th></tr></thead>
+  <tbody>
+    <tr><td><span class="badge badge-del">削除</span></td><td>docs/business-plan.md</td><td>plan.md Part 1 に統合</td></tr>
+    <tr><td><span class="badge badge-del">削除</span></td><td>docs/roadmap.md</td><td>plan.md Part 2 に統合</td></tr>
+    <tr><td><span class="badge badge-del">削除</span></td><td>docs/actions.md</td><td>status.md に統合</td></tr>
+    <tr><td><span class="badge badge-del">削除</span></td><td>docs/state.json</td><td>status.md に統合（MD化）</td></tr>
+    <tr><td><span class="badge badge-del">削除</span></td><td>docs/finances.md</td><td>status.md に統合</td></tr>
+    <tr><td><span class="badge badge-new">新規</span></td><td>docs/plan.md</td><td>事業計画 + ロードマップ（~160行）</td></tr>
+    <tr><td><span class="badge badge-new">新規</span></td><td>docs/status.md</td><td>KPI + アクション + 収支（~130行）</td></tr>
+    <tr><td><span class="badge badge-new">新規</span></td><td>docs/ceo-manual.md</td><td>CEO専用マニュアル（~120行）</td></tr>
+    <tr><td><span class="badge badge-edit">更新</span></td><td>CLAUDE.md</td><td>348行 → 55行に圧縮</td></tr>
+    <tr><td><span class="badge badge-edit">更新</span></td><td>tools/validate-docs.py</td><td>新3ファイル構成対応 + 旧ファイル残存チェック追加</td></tr>
+    <tr><td><span class="badge badge-edit">更新</span></td><td>tools/dashboard/server.py</td><td>全API（health/actions/kpi/roadmap）を新ファイル参照に更新</td></tr>
+    <tr><td><span class="badge badge-edit">更新</span></td><td>.claude/commands/startup.md</td><td>通常モード仕様に変更 + 軽量チェック3項目</td></tr>
+    <tr><td><span class="badge badge-edit">更新</span></td><td>.claude/commands/kpi-update.md</td><td>status.md参照に変更</td></tr>
+    <tr><td><span class="badge badge-edit">更新</span></td><td>.claude/commands/session-log.md</td><td>status.md参照に変更</td></tr>
+    <tr><td><span class="badge badge-edit">更新</span></td><td>.claude/commands/weekly-report.md</td><td>status.md + plan.md参照に変更</td></tr>
+    <tr><td><span class="badge badge-edit">更新</span></td><td>.claude/agent-memory/ceo/MEMORY.md</td><td>ファイル参照・ツール情報を新構成に更新</td></tr>
+    <tr><td><span class="badge badge-edit">更新</span></td><td>.claude/agent-memory/x-manager/MEMORY.md</td><td>人間関係行を削除（agents/*.mdに移動済み）</td></tr>
+    <tr><td><span class="badge badge-edit">更新</span></td><td>docs/project-overview-for-review.md</td><td>新構成・新フロー反映</td></tr>
+  </tbody>
+</table>
+
+<h2>5. バリデーション結果</h2>
+
+<ul class="check-list">
+  <li>必須ファイル: 全21ファイル存在</li>
+  <li>フェーズ整合: plan.md / status.md 一致（Phase 0 - Step 1→2 移行中）</li>
+  <li>コスト整合: 月次支出合計 ¥15,000</li>
+  <li>MEMORY.md キャラ設定: 全8エージェント OK</li>
+  <li>一人称照合: 全7エージェント一致（site-builderは意図的に一人称なし）</li>
+  <li>plan.md 要調査: 0箇所</li>
+  <li>ディレクトリ構成: 全14ディレクトリ存在</li>
+  <li>完了済みアクション: 10件以内</li>
+  <li>旧ファイル残存: なし（統合完了）</li>
+</ul>
+
+<h2>6. 残課題</h2>
+<table>
+  <thead><tr><th>項目</th><th>状態</th><th>備考</th></tr></thead>
+  <tbody>
+    <tr><td>Git コミット</td><td>未完了</td><td>この報告後に実施</td></tr>
+  </tbody>
+</table>
+
+<p style="margin-top: 32px; color: #adb5bd; font-size: 0.8rem; text-align: center;">
+  報告者: CEO（九条 零） / 保存先: reports/
+</p>
+
+</body>
+</html>

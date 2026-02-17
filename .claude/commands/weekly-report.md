@@ -1,6 +1,6 @@
 ---
 name: weekly-report
-description: 週次レポートを生成する。docs/state.json、docs/actions.md、docs/finances.md、content/logs/のセッションログを元に、CLAUDE.mdの週次レポートフォーマットに従って作成する。
+description: 週次レポートを生成する。docs/status.mdとdocs/plan.md、セッションログを元に作成する。
 ---
 
 # 週次レポート生成
@@ -8,18 +8,15 @@ description: 週次レポートを生成する。docs/state.json、docs/actions.
 ## 手順
 
 1. 以下を読み込む（並列で）:
-   - `docs/state.json` — 現在のKPI
-   - `docs/actions.md` — 今週のアクション進捗
-   - `docs/finances.md` — 収支状況
+   - `docs/status.md` — KPI・アクション進捗・収支
+   - `docs/plan.md` — 事業計画・ロードマップ
    - `content/logs/` — 今週のセッションログ（直近7日分）
 
-2. CLAUDE.mdの週次レポートフォーマットに従い、レポートを作成する
+2. ceo-manual.mdの週次レポートフォーマットに従い、レポートを作成する
 
 3. `reports/weekly-YYYY-WXX.md` に保存する（例: reports/weekly-2026-W07.md）
 
-4. state.jsonのweeklyReportCountをインクリメントする
-
-## フォーマット（CLAUDE.mdより）
+## フォーマット（ceo-manual.mdより）
 
 ```markdown
 # 仮想機関AI計画 週次報告 - Week N
@@ -49,6 +46,6 @@ description: 週次レポートを生成する。docs/state.json、docs/actions.
 ```
 
 ## 注意
-- 数字は全てstate.jsonとfinances.mdの実績値を使う。推定値を混ぜない
+- 数字は全てstatus.mdの実績値を使う。推定値を混ぜない
 - 成果は完了済みアクションから抽出する
-- 相談事項はactions.mdの「株主承認待ち」から抽出する
+- 相談事項はstatus.mdの「株主承認待ち」から抽出する

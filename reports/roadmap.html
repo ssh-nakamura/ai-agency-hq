@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>仮想機関AI計画 - ロードマップ</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans',sans-serif;background:#f8fafc;color:#1e293b;line-height:1.6}
+.header{background:#fff;border-bottom:1px solid #e2e8f0;padding:20px 32px;position:sticky;top:0;z-index:10;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.header h1{font-size:20px;font-weight:700;color:#0f172a}
+.header-sub{font-size:13px;color:#64748b;margin-top:2px}
+.container{max-width:960px;margin:0 auto;padding:32px 24px}
+
+/* Phase card */
+.phase{margin-bottom:40px;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.06)}
+.phase-header{padding:20px 28px;display:flex;align-items:center;gap:16px}
+.phase-badge{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#fff;flex-shrink:0}
+.phase-title{font-size:18px;font-weight:700}
+.phase-purpose{font-size:13px;color:#64748b;margin-top:2px}
+.phase-status{margin-left:auto;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap}
+
+/* Current indicator */
+.current .phase-header{position:relative}
+.current .phase-header::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:0 4px 4px 0}
+
+/* Step */
+.step{border-top:1px solid #f1f5f9;padding:16px 28px}
+.step-title{font-size:14px;font-weight:600;color:#334155;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.step-badge{font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600}
+
+/* Task table */
+.tasks{width:100%;border-collapse:collapse}
+.tasks th{text-align:left;font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.04em;padding:6px 12px;border-bottom:1px solid #f1f5f9}
+.tasks td{padding:8px 12px;font-size:13px;border-bottom:1px solid #f8fafc;vertical-align:top}
+.tasks tr:last-child td{border-bottom:none}
+.tasks tr:hover td{background:#f8fafc}
+
+/* Status chips */
+.status{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px}
+.status-done{background:#dcfce7;color:#166534}
+.status-done::before{content:'✓';font-size:10px}
+.status-progress{background:#dbeafe;color:#1e40af}
+.status-progress::before{content:'●';font-size:8px}
+.status-pending{background:#f1f5f9;color:#64748b}
+.status-pending::before{content:'○';font-size:8px}
+
+/* Assignee */
+.assignee{display:inline-flex;align-items:center;gap:4px;font-size:12px}
+.assignee-dot{width:6px;height:6px;border-radius:50%}
+
+/* Completion bar */
+.completion{padding:16px 28px;border-top:1px solid #f1f5f9;display:flex;align-items:center;gap:12px}
+.completion-label{font-size:12px;color:#64748b;font-weight:500;white-space:nowrap}
+.completion-bar{flex:1;height:6px;background:#f1f5f9;border-radius:3px;overflow:hidden}
+.completion-fill{height:100%;border-radius:3px;transition:width .3s}
+.completion-pct{font-size:12px;font-weight:700;min-width:32px}
+
+/* Phase transition */
+.transition{text-align:center;padding:8px 0;color:#94a3b8;font-size:20px}
+
+/* Legend */
+.legend{display:flex;gap:16px;flex-wrap:wrap;padding:16px 0;margin-bottom:24px}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#64748b}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1>仮想機関AI計画 - ロードマップ</h1>
+    <div class="header-sub">Phase 0 - Step 1（市場調査・計画策定）進行中</div>
+</div>
+
+<div class="container">
+
+<div class="legend">
+    <div class="legend-item"><span class="status status-done"></span> 完了</div>
+    <div class="legend-item"><span class="status status-progress"></span> 進行中</div>
+    <div class="legend-item"><span class="status status-pending"></span> 未着手</div>
+    <div class="legend-item">
+        <span class="assignee"><span class="assignee-dot" style="background:#ef4444"></span>CEO</span>
+        <span class="assignee"><span class="assignee-dot" style="background:#6366f1"></span>analyst</span>
+        <span class="assignee"><span class="assignee-dot" style="background:#f59e0b"></span>PM</span>
+        <span class="assignee"><span class="assignee-dot" style="background:#ec4899"></span>writer</span>
+        <span class="assignee"><span class="assignee-dot" style="background:#f97316"></span>x-mgr</span>
+        <span class="assignee"><span class="assignee-dot" style="background:#6b7280"></span>site</span>
+        <span class="assignee"><span class="assignee-dot" style="background:#10b981"></span>video</span>
+        <span class="assignee"><span class="assignee-dot" style="background:#8b5cf6"></span>legal</span>
+    </div>
+</div>
+
+<!-- ===== PHASE 0 ===== -->
+<div class="phase current">
+    <div class="phase-header" style="background:linear-gradient(135deg,#eff6ff,#f0fdf4)">
+        <div style="position:absolute;left:0;top:0;bottom:0;width:4px;background:#3b82f6;border-radius:0 4px 4px 0"></div>
+        <div class="phase-badge" style="background:#3b82f6">0</div>
+        <div>
+            <div class="phase-title">Phase 0: 基盤構築</div>
+            <div class="phase-purpose">事業を始めるための土台を作る。調査 → 計画 → サイト → 発信準備</div>
+        </div>
+        <div class="phase-status" style="background:#dbeafe;color:#1e40af">進行中</div>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="step">
+        <div class="step-title">
+            Step 1: 調査と計画
+            <span class="step-badge" style="background:#dbeafe;color:#1e40af">現在</span>
+        </div>
+        <table class="tasks">
+            <thead><tr><th style="width:45%">タスク</th><th style="width:20%">担当</th><th style="width:20%">完了条件</th><th style="width:15%">状態</th></tr></thead>
+            <tbody>
+                <tr>
+                    <td>競合調査（誹謗中傷対策SaaS）</td>
+                    <td><span class="assignee"><span class="assignee-dot" style="background:#6366f1"></span>analyst</span></td>
+                    <td>調査レポート完成</td>
+                    <td><span class="status status-done">完了</span></td>
+                </tr>
+                <tr>
+                    <td>コンテンツ事業の市場調査</td>
+                    <td><span class="assignee"><span class="assignee-dot" style="background:#6366f1"></span>analyst</span></td>
+                    <td>収益モデルの具体化</td>
+                    <td><span class="status status-done">完了</span></td>
+                </tr>
+                <tr>
+                    <td>収支計画の策定</td>
+                    <td><span class="assignee"><span class="assignee-dot" style="background:#6366f1"></span>analyst</span></td>
+                    <td>損益分岐点の明確化</td>
+                    <td><span class="status status-done">完了</span></td>
+                </tr>
+                <tr>
+                    <td>組織設計の全面改修</td>
+                    <td><span class="assignee"><span class="assignee-dot" style="background:#ef4444"></span>CEO</span></td>
+                    <td>Agent Teams方式確立</td>
+                    <td><span class="status status-done">完了</span></td>
+                </tr>
+                <tr>
+                    <td>KPI目標値の設定</td>
+                    <td><span class="assignee"><span class="assignee-dot" style="background:#ef4444"></span>CEO</span> + <span class="assignee"><span class="assignee-dot" style="background:#6366f1"></span>analyst</span></td>
+                    <td>各事業の数値目標確定</td>
+                    <td><span class="status status-done">完了</span></td>
+                </tr>
+                <tr>
+                    <td>ShieldMe仕様書v1</td>
+                    <td><span class="assignee"><span class="assignee-dot" style="background:#f59e0b"></span>PM</span></td>
+                    <td>MVP仕様の確定</td>
+                    <td><span class="status status-done">完了</span></td>
+                </tr>
+                <tr>
+                    <td>YouTube動画パイプライン設計</td>
+                    <td><span class="assignee"><span class="assignee-dot" style="background:#10b981"></span>video</span></td>
+                    <td>ツール比較・フロー設計完了</td>
+                    <td><span class="status status-done">完了</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step">
+        <div class="step-title">
+            Step 2: サイト・発信基盤
+            <span class="step-badge" style="background:#fef3c7;color:#92400e">次</span>
+        </div>
+        <table class="tasks">
+            <thead><tr><th style="width:45%">タスク</th><th style="width:20%">担当</th><th style="width:20%">完了条件</th><th style="width:15%">状態</th></tr></thead>
+            <tbody>
+                <tr>
+                    <td>LP（ランディングページ）制作</td>
+                    <td><span class="assignee"><span class="assignee-dot" style="background:#6b7280"></span>site</span></td>
+                    <td>site/index.html 公開可能</td>
+                    <td><span class="status status-done">完了</span></td>
+                </tr>
+                <tr>
+                    <td>LP文面の作成</td>
+                    <td><span class="assignee"><span class="assignee-dot" style="background:#ec4899"></span>writer</span></td>
+                    <td>コピー完成、引き渡し済</td>
+                    <td><span class="status status-done">完了</span></td>
+                </tr>
+                <tr>
+                    <td>Xアカウント開設・初投稿案</td>
+                    <td><span class="assignee"><span class="assignee-dot" style="background:#f97316"></span>x-mgr</span></td>
+                    <td>投稿案完成</td>
+                    <td><span class="status status-done">完了</span></td>
+                </tr>
+                <tr>
+                    <td>利用規約・プラポリ草案</td>
+                    <td><span class="assignee"><span class="assignee-dot" style="background:#8b5cf6"></span>legal</span></td>
+                    <td>草案完成、株主レビュー待ち</td>
+                    <td><span class="status status-done">完了</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step">
+        <div class="step-title">
+            Step 3: 公開
+            <span class="step-badge" style="background:#f1f5f9;color:#64748b">未着手</span>
+        </div>
+        <table class="tasks">
+            <thead><tr><th style="width:45%">タスク</th><th style="width:20%">担当</th><th style="width:20%">完了条件</th><th style="width:15%">状態</th></tr></thead>
+            <tbody>
+                <tr>
+                    <td>サイト公開（ドメイン設定）</td>
+                    <td><span class="assignee"><span class="assignee-dot" style="background:#6b7280"></span>site</span> + <span class="assignee"><span class="assignee-dot" style="background:#ef4444"></span>CEO</span></td>
+                    <td>ai-agency.jp でアクセス可能</td>
+                    <td><span class="status status-pending">未着手</span></td>
+                </tr>
+                <tr>
+                    <td>X運用開始</td>
+                    <td><span class="assignee"><span class="assignee-dot" style="background:#f97316"></span>x-mgr</span></td>
+                    <td>初投稿完了</td>
+                    <td><span class="status status-pending">未着手</span></td>
+                </tr>
+                <tr>
+                    <td>ブログ初回記事公開</td>
+                    <td><span class="assignee"><span class="assignee-dot" style="background:#ec4899"></span>writer</span></td>
+                    <td>記事公開</td>
+                    <td><span class="status status-pending">未着手</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Completion -->
+    <div class="completion">
+        <span class="completion-label">Phase 0 進捗</span>
+        <div class="completion-bar">
+            <div class="completion-fill" style="width:78%;background:linear-gradient(90deg,#3b82f6,#60a5fa)"></div>
+        </div>
+        <span class="completion-pct" style="color:#3b82f6">78%</span>
+    </div>
+</div>
+
+<div class="transition">&#8595;</div>
+
+<!-- ===== PHASE 1 ===== -->
+<div class="phase">
+    <div class="phase-header" style="background:#fefce8">
+        <div class="phase-badge" style="background:#eab308">1</div>
+        <div>
+            <div class="phase-title">Phase 1: プロダクト開発 + コンテンツ運用</div>
+            <div class="phase-purpose">ShieldMeのMVPを作りながら、コンテンツで集客を始める</div>
+        </div>
+        <div class="phase-status" style="background:#f1f5f9;color:#64748b">未着手</div>
+    </div>
+
+    <!-- SaaS -->
+    <div class="step">
+        <div class="step-title">SaaS事業</div>
+        <table class="tasks">
+            <thead><tr><th style="width:45%">タスク</th><th style="width:20%">担当</th><th style="width:20%">完了条件</th><th style="width:15%">状態</th></tr></thead>
+            <tbody>
+                <tr>
+                    <td>ShieldMe MVP開発</td>
+                    <td>別リポジトリ</td>
+                    <td>動くプロトタイプ完成</td>
+                    <td><span class="status status-pending">未着手</span></td>
+                </tr>
+                <tr>
+                    <td>ベータテスター募集</td>
+                    <td><span class="assignee"><span class="assignee-dot" style="background:#f97316"></span>x-mgr</span> + <span class="assignee"><span class="assignee-dot" style="background:#ec4899"></span>writer</span></td>
+                    <td>テスター5名以上</td>
+                    <td><span class="status status-pending">未着手</span></td>
+                </tr>
+                <tr>
+                    <td>ベータテスト実施</td>
+                    <td><span class="assignee"><span class="assignee-dot" style="background:#f59e0b"></span>PM</span></td>
+                    <td>フィードバック収集完了</td>
+                    <td><span class="status status-pending">未着手</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Content -->
+    <div class="step">
+        <div class="step-title">コンテンツ事業</div>
+        <table class="tasks">
+            <thead><tr><th style="width:45%">タスク</th><th style="width:20%">担当</th><th style="width:20%">完了条件</th><th style="width:15%">状態</th></tr></thead>
+            <tbody>
+                <tr><td>ブログ定期更新（週1〜2本）</td><td><span class="assignee"><span class="assignee-dot" style="background:#ec4899"></span>writer</span></td><td>月間4本以上</td><td><span class="status status-pending">未着手</span></td></tr>
+                <tr><td>X定期投稿（週5本）</td><td><span class="assignee"><span class="assignee-dot" style="background:#f97316"></span>x-mgr</span></td><td>フォロワー増加トレンド</td><td><span class="status status-pending">未着手</span></td></tr>
+                <tr><td>収益化基盤（広告 or note）</td><td><span class="assignee"><span class="assignee-dot" style="background:#ef4444"></span>CEO</span> + <span class="assignee"><span class="assignee-dot" style="background:#ec4899"></span>writer</span></td><td>初収益発生</td><td><span class="status status-pending">未着手</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Video -->
+    <div class="step">
+        <div class="step-title">動画事業</div>
+        <table class="tasks">
+            <thead><tr><th style="width:45%">タスク</th><th style="width:20%">担当</th><th style="width:20%">完了条件</th><th style="width:15%">状態</th></tr></thead>
+            <tbody>
+                <tr><td>動画パイプライン構築</td><td><span class="assignee"><span class="assignee-dot" style="background:#10b981"></span>video</span> + <span class="assignee"><span class="assignee-dot" style="background:#ef4444"></span>CEO</span></td><td>初動画制作完了</td><td><span class="status status-pending">未着手</span></td></tr>
+                <tr><td>YouTube初投稿</td><td><span class="assignee"><span class="assignee-dot" style="background:#10b981"></span>video</span></td><td>動画公開</td><td><span class="status status-pending">未着手</span></td></tr>
+                <tr><td>週1本の動画投稿</td><td><span class="assignee"><span class="assignee-dot" style="background:#10b981"></span>video</span></td><td>4週連続投稿</td><td><span class="status status-pending">未着手</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="completion">
+        <span class="completion-label">Phase 1 進捗</span>
+        <div class="completion-bar"><div class="completion-fill" style="width:0%;background:#eab308"></div></div>
+        <span class="completion-pct" style="color:#94a3b8">0%</span>
+    </div>
+</div>
+
+<div class="transition">&#8595;</div>
+
+<!-- ===== PHASE 2 ===== -->
+<div class="phase">
+    <div class="phase-header" style="background:#fdf2f8">
+        <div class="phase-badge" style="background:#ec4899">2</div>
+        <div>
+            <div class="phase-title">Phase 2: 収益化</div>
+            <div class="phase-purpose">有料ユーザーを獲得し、持続可能な収益を作る</div>
+        </div>
+        <div class="phase-status" style="background:#f1f5f9;color:#64748b">未着手</div>
+    </div>
+
+    <div class="step">
+        <table class="tasks">
+            <thead><tr><th style="width:45%">タスク</th><th style="width:20%">担当</th><th style="width:20%">完了条件</th><th style="width:15%">状態</th></tr></thead>
+            <tbody>
+                <tr><td>ShieldMe正式リリース</td><td><span class="assignee"><span class="assignee-dot" style="background:#f59e0b"></span>PM</span> + <span class="assignee"><span class="assignee-dot" style="background:#8b5cf6"></span>legal</span></td><td>利用規約完備、課金実装</td><td><span class="status status-pending">未着手</span></td></tr>
+                <tr><td>有料プラン設計</td><td><span class="assignee"><span class="assignee-dot" style="background:#ef4444"></span>CEO</span> + <span class="assignee"><span class="assignee-dot" style="background:#6366f1"></span>analyst</span></td><td>価格設定確定</td><td><span class="status status-pending">未着手</span></td></tr>
+                <tr><td>有料コンテンツ展開</td><td><span class="assignee"><span class="assignee-dot" style="background:#ec4899"></span>writer</span></td><td>教材の有料化</td><td><span class="status status-pending">未着手</span></td></tr>
+                <tr><td>マーケティング施策</td><td><span class="assignee"><span class="assignee-dot" style="background:#f97316"></span>x-mgr</span></td><td>有料ユーザー獲得</td><td><span class="status status-pending">未着手</span></td></tr>
+                <tr><td>収支レビュー</td><td><span class="assignee"><span class="assignee-dot" style="background:#6366f1"></span>analyst</span></td><td>月次P&L作成、黒字化</td><td><span class="status status-pending">未着手</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="completion">
+        <span class="completion-label">Phase 2 進捗</span>
+        <div class="completion-bar"><div class="completion-fill" style="width:0%;background:#ec4899"></div></div>
+        <span class="completion-pct" style="color:#94a3b8">0%</span>
+    </div>
+</div>
+
+<div style="text-align:center;padding:32px;color:#94a3b8;font-size:12px">
+    Phase 2 完了条件: MRR > 月間コスト（黒字化） | Generated from docs/roadmap.md
+</div>
+
+</div>
+</body>
+</html>

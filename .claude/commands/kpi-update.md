@@ -1,15 +1,14 @@
 ---
 name: kpi-update
-description: KPIと収支を更新する。state.jsonとfinances.mdを最新の実績値に更新する。
+description: KPIと収支を更新する。status.mdを最新の実績値に更新する。
 ---
 
 # KPI・収支更新
 
 ## 手順
 
-1. 現在の値を読み込む（並列で）:
-   - `docs/state.json`
-   - `docs/finances.md`
+1. 現在の値を読み込む:
+   - `docs/status.md`（KPI + 収支セクション）
 
 2. 株主に以下を確認する:
    - 売上の変化はあるか（新規収入等）
@@ -23,12 +22,12 @@ description: KPIと収支を更新する。state.jsonとfinances.mdを最新の�
    npx ccusage@latest monthly
    ```
 
-4. 確認結果に基づき更新:
-   - `docs/state.json` のkpi.actual を更新
-   - `docs/finances.md` の月次収支を更新
-   - finances.mdのトークン消費記録をccusageの実データで更新
+4. 確認結果に基づき `docs/status.md` を更新:
+   - KPIセクション（実績テーブル）を更新
+   - 収支セクション（月次収支テーブル）を更新
+   - トークン消費記録を更新
 
-4. 更新後のサマリーを報告:
+5. 更新後のサマリーを報告:
 
 ```
 **KPI更新完了**

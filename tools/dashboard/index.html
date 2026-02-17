@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Agency HQ</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<nav class="topnav">
+    <span class="topnav-brand">AI Agency HQ</span>
+    <div class="topnav-tabs">
+        <button class="tab-btn active" data-tab="overview">Overview</button>
+        <button class="tab-btn" data-tab="agents">Agents</button>
+        <button class="tab-btn" data-tab="roadmap">Roadmap</button>
+        <button class="tab-btn" data-tab="usage">Usage</button>
+    </div>
+    <div class="topnav-right">
+        <div class="status-dot" id="healthDot"></div>
+        <span class="status-text" id="healthText">Loading</span>
+    </div>
+</nav>
+
+<!-- OVERVIEW TAB -->
+<div class="tab-panel active" id="panel-overview">
+    <div class="overview-scroll" id="overviewContent">Loading...</div>
+</div>
+
+<!-- AGENTS TAB -->
+<div class="tab-panel" id="panel-agents">
+    <div class="agents-layout">
+        <div class="sidebar" id="agentsSidebar"></div>
+        <div class="chat-panel" id="chatPanel">
+            <div class="chat-empty">&#8592; Select a conversation</div>
+        </div>
+    </div>
+</div>
+
+<!-- ROADMAP TAB -->
+<div class="tab-panel" id="panel-roadmap">
+    <div class="roadmap-scroll" id="roadmapContent">Loading...</div>
+</div>
+
+<!-- USAGE TAB -->
+<div class="tab-panel" id="panel-usage">
+    <div class="usage-scroll" id="usageContent">Loading...</div>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>
