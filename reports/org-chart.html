@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>組織図 | 仮想機関AI計画</title>
+<style>
+  :root {
+    --bg: #f8f9fa;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --muted: #6c757d;
+    --border: #e9ecef;
+    --border-strong: #ced4da;
+
+    /* モデルカラー */
+    --opus-bg: #eff6ff;
+    --opus-border: #3b82f6;
+    --opus-label: #1d4ed8;
+    --opus-badge-bg: #dbeafe;
+
+    --sonnet-bg: #f0fdf4;
+    --sonnet-border: #22c55e;
+    --sonnet-label: #15803d;
+    --sonnet-badge-bg: #dcfce7;
+
+    --haiku-bg: #f9fafb;
+    --haiku-border: #9ca3af;
+    --haiku-label: #4b5563;
+    --haiku-badge-bg: #f3f4f6;
+
+    /* 株主 */
+    --shareholder-bg: #fefce8;
+    --shareholder-border: #eab308;
+    --shareholder-label: #92400e;
+
+    --connector: #ced4da;
+    --connector-lateral: #a5b4fc;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Kaku Gothic ProN', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 40px 24px 80px;
+  }
+
+  /* ── ヘッダー ── */
+  .page-header {
+    max-width: 960px;
+    margin: 0 auto 48px;
+  }
+  .page-header .label {
+    font-size: 0.72rem;
+    font-family: 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--opus-label);
+    margin-bottom: 8px;
+  }
+  .page-header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .page-header .meta {
+    font-size: 0.84rem;
+    color: var(--muted);
+  }
+
+  /* ── 凡例 ── */
+  .legend {
+    max-width: 960px;
+    margin: 0 auto 48px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    padding: 16px 20px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .legend-title {
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-weight: 600;
+    margin-right: 4px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: var(--text);
+  }
+  .legend-badge {
+    display: inline-block;
+    font-family: 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
+    font-size: 0.68rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .badge-opus   { background: var(--opus-badge-bg);   color: var(--opus-label);   border: 1px solid var(--opus-border); }
+  .badge-sonnet { background: var(--sonnet-badge-bg); color: var(--sonnet-label); border: 1px solid var(--sonnet-border); }
+  .badge-haiku  { background: var(--haiku-badge-bg);  color: var(--haiku-label);  border: 1px solid var(--haiku-border); }
+
+  .legend-divider { width: 1px; height: 20px; background: var(--border); }
+
+  .legend-line-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  .line-solid {
+    width: 32px;
+    height: 2px;
+    background: var(--connector);
+  }
+  .line-dashed {
+    width: 32px;
+    height: 0;
+    border-top: 2px dashed var(--connector-lateral);
+  }
+
+  /* ── 組織図 本体 ── */
+  .org-chart {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  /* ── ノード共通 ── */
+  .node {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    text-align: center;
+    position: relative;
+  }
+  .node-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .node-role {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .node-model {
+    display: inline-block;
+    font-family: 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
+    font-size: 0.68rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+
+  /* ── 株主ノード ── */
+  .node-shareholder {
+    background: var(--shareholder-bg);
+    border-color: var(--shareholder-border);
+    width: 200px;
+  }
+  .node-shareholder .node-name { color: #78350f; }
+  .node-shareholder .node-role { color: #92400e; }
+  .node-shareholder .node-model {
+    background: #fef9c3;
+    color: #78350f;
+    border: 1px solid var(--shareholder-border);
+  }
+
+  /* ── CEOノード ── */
+  .node-ceo {
+    background: var(--opus-bg);
+    border-color: var(--opus-border);
+    width: 260px;
+    padding: 20px 24px;
+  }
+  .node-ceo .node-name { font-size: 1.15rem; }
+  .node-ceo .node-model { background: var(--opus-badge-bg); color: var(--opus-label); border: 1px solid var(--opus-border); }
+
+  /* ── 部門長ノード ── */
+  .node-sonnet {
+    background: var(--sonnet-bg);
+    border-color: var(--sonnet-border);
+  }
+  .node-sonnet .node-model { background: var(--sonnet-badge-bg); color: var(--sonnet-label); border: 1px solid var(--sonnet-border); }
+
+  .node-haiku {
+    background: var(--haiku-bg);
+    border-color: var(--haiku-border);
+  }
+  .node-haiku .node-model { background: var(--haiku-badge-bg); color: var(--haiku-label); border: 1px solid var(--haiku-border); }
+
+  /* ── コネクター ── */
+  .connector-v {
+    width: 2px;
+    background: var(--connector);
+    margin: 0 auto;
+  }
+  .connector-v-short { height: 24px; }
+  .connector-v-med   { height: 40px; }
+
+  /* ── 枝分かれ用水平バー ── */
+  .branch-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .branch-bar-wrap {
+    width: 100%;
+    position: relative;
+    height: 24px;
+  }
+  /* 水平ライン（左端〜右端をまたぐ） */
+  .branch-bar-wrap::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: calc(50% - 350px);
+    right: calc(50% - 350px);
+    height: 2px;
+    background: var(--connector);
+  }
+  /* 中央から下への縦ライン */
+  .branch-bar-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 24px;
+    background: var(--connector);
+  }
+
+  /* ── グリッドレイアウト（部門長一覧） ── */
+  .reports-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  /* 部門長ノードの上からの縦線 */
+  .report-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+  .report-col .connector-v {
+    height: 24px;
+  }
+  .report-col .node {
+    width: 100%;
+  }
+
+  /* ── 横連携セクション ── */
+  .lateral-section {
+    max-width: 960px;
+    margin: 56px auto 0;
+  }
+  .lateral-section h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .lateral-section .section-desc {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .lateral-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .lateral-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.86rem;
+    color: var(--text);
+  }
+  .lateral-item .node-tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+  .tag-sonnet { background: var(--sonnet-badge-bg); color: var(--sonnet-label); border: 1px solid var(--sonnet-border); }
+  .tag-haiku  { background: var(--haiku-badge-bg);  color: var(--haiku-label);  border: 1px solid var(--haiku-border); }
+  .lateral-connector {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--connector-lateral);
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+  .lateral-connector .dashes {
+    display: inline-block;
+    width: 40px;
+    height: 0;
+    border-top: 2px dashed var(--connector-lateral);
+  }
+  .lateral-purpose {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-left: auto;
+  }
+
+  /* ── フッター ── */
+  .page-footer {
+    max-width: 960px;
+    margin: 56px auto 0;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 0.78rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* ── レスポンシブ ── */
+  @media (max-width: 768px) {
+    .reports-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .branch-bar-wrap::before {
+      left: calc(50% - 180px);
+      right: calc(50% - 180px);
+    }
+    .lateral-purpose { display: none; }
+  }
+  @media (max-width: 480px) {
+    .reports-grid {
+      grid-template-columns: 1fr;
+    }
+    .branch-bar-wrap::before {
+      display: none;
+    }
+    .branch-bar-wrap::after {
+      display: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ヘッダー -->
+<header class="page-header">
+  <p class="label">// org-chart</p>
+  <h1>組織図</h1>
+  <p class="meta">仮想機関AI計画 &nbsp;|&nbsp; 2026-02-19 更新</p>
+</header>
+
+<!-- 凡例 -->
+<div class="legend" role="note" aria-label="凡例">
+  <span class="legend-title">モデル</span>
+  <span class="legend-item">
+    <span class="legend-badge badge-opus">opus</span>
+    Claude Opus（最上位モデル）
+  </span>
+  <span class="legend-item">
+    <span class="legend-badge badge-sonnet">sonnet</span>
+    Claude Sonnet（標準モデル）
+  </span>
+  <span class="legend-item">
+    <span class="legend-badge badge-haiku">haiku</span>
+    Claude Haiku（軽量モデル）
+  </span>
+  <span class="legend-divider" aria-hidden="true"></span>
+  <span class="legend-line-item">
+    <span class="line-solid" aria-hidden="true"></span>
+    指揮系統（上↓指示 / 下↑報告）
+  </span>
+  <span class="legend-line-item">
+    <span class="line-dashed" aria-hidden="true"></span>
+    横連携（作業レベル）
+  </span>
+</div>
+
+<!-- 組織図 -->
+<div class="org-chart" role="img" aria-label="仮想機関AI計画 組織図">
+
+  <!-- 株主 -->
+  <div class="node node-shareholder" role="group" aria-label="株主">
+    <p class="node-name">若様</p>
+    <p class="node-role">株主</p>
+    <span class="node-model">HUMAN</span>
+  </div>
+
+  <!-- 株主 → CEO コネクター -->
+  <div class="connector-v connector-v-short" aria-hidden="true"></div>
+
+  <!-- CEO -->
+  <div class="node node-ceo" role="group" aria-label="CEO">
+    <p class="node-name">九条 零</p>
+    <p class="node-role">CEO</p>
+    <span class="node-model badge-opus">claude-opus</span>
+  </div>
+
+  <!-- CEO → 部門長 枝分かれ -->
+  <div class="branch-container" aria-hidden="true">
+    <div class="connector-v connector-v-short"></div>
+    <div class="branch-bar-wrap"></div>
+  </div>
+
+  <!-- 部門長グリッド -->
+  <div class="reports-grid" role="list" aria-label="部門長一覧">
+
+    <!-- analyst -->
+    <div class="report-col" role="listitem">
+      <div class="connector-v" aria-hidden="true"></div>
+      <div class="node node-sonnet" aria-label="経営企画部長 / CFO兼務">
+        <p class="node-name">白河 凛</p>
+        <p class="node-role">経営企画部長 / CFO</p>
+        <span class="node-model badge-sonnet">claude-sonnet</span>
+      </div>
+    </div>
+
+    <!-- product-manager -->
+    <div class="report-col" role="listitem">
+      <div class="connector-v" aria-hidden="true"></div>
+      <div class="node node-sonnet" aria-label="事業開発部長">
+        <p class="node-name">桐谷 翔</p>
+        <p class="node-role">事業開発部長</p>
+        <span class="node-model badge-sonnet">claude-sonnet</span>
+      </div>
+    </div>
+
+    <!-- writer -->
+    <div class="report-col" role="listitem">
+      <div class="connector-v" aria-hidden="true"></div>
+      <div class="node node-sonnet" aria-label="広報部長">
+        <p class="node-name">藤崎 あおい</p>
+        <p class="node-role">広報部長</p>
+        <span class="node-model badge-sonnet">claude-sonnet</span>
+      </div>
+    </div>
+
+    <!-- site-builder -->
+    <div class="report-col" role="listitem">
+      <div class="connector-v" aria-hidden="true"></div>
+      <div class="node node-sonnet" aria-label="Web制作担当">
+        <p class="node-name">黒崎 蓮</p>
+        <p class="node-role">Web制作担当</p>
+        <span class="node-model badge-sonnet">claude-sonnet</span>
+      </div>
+    </div>
+
+    <!-- x-manager -->
+    <div class="report-col" role="listitem">
+      <div class="connector-v" aria-hidden="true"></div>
+      <div class="node node-haiku" aria-label="マーケティング部長 / CMO">
+        <p class="node-name">七瀬 美咲</p>
+        <p class="node-role">マーケティング部長 (CMO)</p>
+        <span class="node-model badge-haiku">claude-haiku</span>
+      </div>
+    </div>
+
+    <!-- video-creator -->
+    <div class="report-col" role="listitem">
+      <div class="connector-v" aria-hidden="true"></div>
+      <div class="node node-haiku" aria-label="動画制作担当">
+        <p class="node-name">朝比奈 陸</p>
+        <p class="node-role">動画制作担当</p>
+        <span class="node-model badge-haiku">claude-haiku</span>
+      </div>
+    </div>
+
+    <!-- legal -->
+    <div class="report-col" role="listitem">
+      <div class="connector-v" aria-hidden="true"></div>
+      <div class="node node-haiku" aria-label="法務部長">
+        <p class="node-name">氷室 志帆</p>
+        <p class="node-role">法務部長</p>
+        <span class="node-model badge-haiku">claude-haiku</span>
+      </div>
+    </div>
+
+  </div><!-- /reports-grid -->
+
+</div><!-- /org-chart -->
+
+<!-- 横連携 -->
+<section class="lateral-section" aria-labelledby="lateral-heading">
+  <h2 id="lateral-heading">横連携（作業レベル）</h2>
+  <p class="section-desc">指揮系統外の直接連携。判断レベルの意思決定はCEO経由。</p>
+  <div class="lateral-list" role="list">
+
+    <div class="lateral-item" role="listitem">
+      <span class="node-tag tag-sonnet">藤崎 あおい（writer）</span>
+      <span class="lateral-connector" aria-label="双方向連携">
+        <span class="dashes" aria-hidden="true"></span>
+        ↔
+        <span class="dashes" aria-hidden="true"></span>
+      </span>
+      <span class="node-tag tag-sonnet">黒崎 蓮（site-builder）</span>
+      <span class="lateral-purpose">文面をHTMLに反映 / レイアウト制約の共有</span>
+    </div>
+
+    <div class="lateral-item" role="listitem">
+      <span class="node-tag tag-sonnet">白河 凛（analyst）</span>
+      <span class="lateral-connector" aria-label="双方向連携">
+        <span class="dashes" aria-hidden="true"></span>
+        ↔
+        <span class="dashes" aria-hidden="true"></span>
+      </span>
+      <span class="node-tag tag-sonnet">桐谷 翔（product-manager）</span>
+      <span class="lateral-purpose">数値・KPI分析 / 事業戦略のすり合わせ</span>
+    </div>
+
+    <div class="lateral-item" role="listitem">
+      <span class="node-tag tag-sonnet">藤崎 あおい（writer）</span>
+      <span class="lateral-connector" aria-label="双方向連携">
+        <span class="dashes" aria-hidden="true"></span>
+        ↔
+        <span class="dashes" aria-hidden="true"></span>
+      </span>
+      <span class="node-tag tag-haiku">氷室 志帆（legal）</span>
+      <span class="lateral-purpose">外部公開コンテンツの法務確認</span>
+    </div>
+
+    <div class="lateral-item" role="listitem">
+      <span class="node-tag tag-haiku">七瀬 美咲（x-manager）</span>
+      <span class="lateral-connector" aria-label="双方向連携">
+        <span class="dashes" aria-hidden="true"></span>
+        ↔
+        <span class="dashes" aria-hidden="true"></span>
+      </span>
+      <span class="node-tag tag-sonnet">藤崎 あおい（writer）</span>
+      <span class="lateral-purpose">SNS投稿の原稿確認 / メッセージの整合性</span>
+    </div>
+
+    <div class="lateral-item" role="listitem">
+      <span class="node-tag tag-haiku">朝比奈 陸（video-creator）</span>
+      <span class="lateral-connector" aria-label="双方向連携">
+        <span class="dashes" aria-hidden="true"></span>
+        ↔
+        <span class="dashes" aria-hidden="true"></span>
+      </span>
+      <span class="node-tag tag-sonnet">藤崎 あおい（writer）</span>
+      <span class="lateral-purpose">動画スクリプトのコピー制作依頼</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- フッター -->
+<footer class="page-footer">
+  <span>仮想機関AI計画 &mdash; 組織図 v1.0</span>
+  <span>2026-02-19 &nbsp;|&nbsp; site-builder: 黒崎 蓮</span>
+</footer>
+
+</body>
+</html>

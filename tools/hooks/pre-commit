@@ -1,0 +1,96 @@
+#!/bin/bash
+# =============================================================
+# AI Agency HQ — pre-commit hook
+# =============================================================
+# Detects changes to organizational files and runs static tests
+# before allowing a commit. Scenario tests are too expensive for
+# pre-commit; run those manually after major org changes.
+#
+# Install:
+#   git config core.hooksPath tools/hooks
+#
+# Skip (emergency only):
+#   git commit --no-verify
+# =============================================================
+
+set -e
+
+# Files that trigger the test suite
+ORG_PATTERNS=(
+    "CLAUDE.md"
+    ".claude/agents/"
+    ".claude/agent-memory/"
+    "docs/status.md"
+    "docs/plan.md"
+    "docs/ceo-manual.md"
+    "docs/design-rules.md"
+    "tests/"
+)
+
+# Check if any staged files match org patterns
+staged_files=$(git diff --cached --name-only --diff-filter=ACMR 2>/dev/null || true)
+
+if [ -z "$staged_files" ]; then
+    exit 0
+fi
+
+trigger=false
+matched_files=""
+
+for file in $staged_files; do
+    for pattern in "${ORG_PATTERNS[@]}"; do
+        if [[ "$file" == $pattern* ]] || [[ "$file" == "$pattern" ]]; then
+            trigger=true
+            matched_files="$matched_files  $file\n"
+            break
+        fi
+    done
+done
+
+if [ "$trigger" = false ]; then
+    # No org files changed — skip tests
+    exit 0
+fi
+
+# ─── Run Static Tests ──────────────────────────────────
+echo ""
+echo "╔══════════════════════════════════════════════════╗"
+echo "║  Org files changed — running static tests...    ║"
+echo "╚══════════════════════════════════════════════════╝"
+echo ""
+echo "Changed files:"
+echo -e "$matched_files"
+
+# Find python3
+PYTHON=$(command -v python3 2>/dev/null || command -v python 2>/dev/null)
+if [ -z "$PYTHON" ]; then
+    echo "WARNING: python3 not found, skipping tests"
+    exit 0
+fi
+
+# Check if pytest is available
+if ! $PYTHON -c "import pytest" 2>/dev/null; then
+    echo "WARNING: pytest not installed, skipping tests"
+    echo "  Install: pip3 install pytest pyyaml"
+    exit 0
+fi
+
+# Run tests
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "$REPO_ROOT"
+
+if $PYTHON -m pytest tests/ --tb=short -q 2>&1; then
+    echo ""
+    echo "✓ All static tests passed"
+    echo ""
+else
+    echo ""
+    echo "╔══════════════════════════════════════════════════╗"
+    echo "║  COMMIT BLOCKED — static tests failed           ║"
+    echo "║                                                  ║"
+    echo "║  Fix the failing tests before committing.        ║"
+    echo "║  Or skip with: git commit --no-verify            ║"
+    echo "╚══════════════════════════════════════════════════╝"
+    echo ""
+    exit 1
+fi

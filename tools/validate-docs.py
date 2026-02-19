@@ -56,7 +56,7 @@ required_files = {
 }
 
 agents = ["analyst", "writer", "site-builder", "x-manager",
-          "video-creator", "product-manager", "legal"]
+          "video-creator", "product-manager", "legal", "narrator"]
 
 for a in agents:
     required_files[f".claude/agents/{a}.md"] = f"エージェント定義({a})"
@@ -134,9 +134,9 @@ if status_raw:
         print(f"  {PASS} 最優先セクションに未着手アクションなし")
 
 
-# ─── 5. MEMORY.md のキャラ設定チェック ─────────────────
+# ─── 5. MEMORY.md 存在 & 行数チェック ─────────────────
 
-print("\n--- 5. MEMORY.md キャラ設定チェック ---")
+print("\n--- 5. MEMORY.md 行数チェック ---")
 
 all_agents_with_ceo = ["ceo"] + agents
 
@@ -146,60 +146,39 @@ for a in all_agents_with_ceo:
         continue
 
     lines = mem_raw.split("\n")
-    has_char = False
-    for line in lines[:15]:  # 先頭15行以内にキャラ設定があるか
-        if "口調" in line or "一人称" in line or "あなたは" in line:
-            has_char = True
-            break
-
-    if has_char:
-        print(f"  {PASS} {a}: キャラ設定あり（先頭15行以内）")
-    else:
-        errors.append(f"[{a}/MEMORY.md] 先頭15行にキャラ設定が見つからない")
-        print(f"  {FAIL} {a}: キャラ設定なし")
-
-    # 200行超えチェック
     line_count = len(lines)
+
     if line_count > 200:
         warnings.append(
             f"[{a}/MEMORY.md] {line_count}行（200行超過 → 末尾が切り捨てられる可能性）")
         print(f"  {WARN} {a}: {line_count}行（200行超過！）")
     elif line_count > 170:
         print(f"  {WARN} {a}: {line_count}行（200行に近い）")
-
-
-# ─── 6. agents/*.md と MEMORY.md の口調キーワード照合 ──
-
-print("\n--- 6. 口調キーワード照合（agents/*.md vs MEMORY.md） ---")
-
-for a in agents:
-    agent_raw = read_file(f".claude/agents/{a}.md")
-    mem_raw = read_file(f".claude/agent-memory/{a}/MEMORY.md")
-    if not agent_raw or not mem_raw:
-        continue
-
-    # agents/*.mdから一人称を抽出
-    agent_pronoun = re.search(r"一人称[:：]\s*[「「]([^」」]+)[」」]", agent_raw)
-    mem_pronoun = re.search(r"一人称[:：]\s*[「「]([^」」]+)[」」]", mem_raw)
-
-    if agent_pronoun and mem_pronoun:
-        ap = agent_pronoun.group(1)
-        mp = mem_pronoun.group(1)
-        if ap != mp:
-            errors.append(
-                f"[{a}] 一人称不一致: agents/*.md=「{ap}」 vs MEMORY.md=「{mp}」")
-            print(f"  {FAIL} {a}: 一人称不一致「{ap}」vs「{mp}」")
-        else:
-            print(f"  {PASS} {a}: 一人称一致「{ap}」")
-    elif agent_pronoun and not mem_pronoun:
-        # site-builderは一人称を使わないキャラ（意図的）
-        if a == "site-builder":
-            print(f"  {PASS} {a}: 一人称なし（意図的）")
-        else:
-            errors.append(f"[{a}] MEMORY.mdに一人称の記載なし")
-            print(f"  {FAIL} {a}: MEMORY.mdに一人称なし")
     else:
-        print(f"  {WARN} {a}: 一人称の抽出に失敗")
+        print(f"  {PASS} {a}: {line_count}行")
+
+
+# ─── 6. narrator キャラ設定チェック ──────────────────────
+
+print("\n--- 6. narrator キャラ一元管理チェック ---")
+
+narrator_raw = read_file(".claude/agents/narrator.md")
+if narrator_raw:
+    # narrator.md に全8キャラの一人称が含まれているか
+    expected_chars = {
+        "九条": "CEO", "白河": "analyst", "桐谷": "PM",
+        "藤崎": "writer", "黒崎": "site-builder", "七瀬": "x-manager",
+        "朝比奈": "video-creator", "氷室": "legal",
+    }
+    for surname, role in expected_chars.items():
+        if surname in narrator_raw:
+            print(f"  {PASS} {surname}({role}): narrator.mdに定義あり")
+        else:
+            errors.append(f"[narrator.md] {surname}({role})のキャラ定義が見つからない")
+            print(f"  {FAIL} {surname}({role}): narrator.mdに定義なし")
+else:
+    errors.append("[narrator.md] ファイルが存在しない")
+    print(f"  {FAIL} narrator.md が存在しない")
 
 
 # ─── 7. plan.md の「要調査」残存チェック ───────────────

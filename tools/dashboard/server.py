@@ -29,6 +29,7 @@ AGENTS = {
     "site-builder":    {"name": "黒崎 蓮",   "role": "Web制作担当",       "color": "#6b7280", "initials": "蓮"},
     "video-creator":   {"name": "朝比奈 陸",  "role": "動画制作担当",      "color": "#10b981", "initials": "陸"},
     "legal":           {"name": "氷室 志帆",  "role": "法務部長",         "color": "#8b5cf6", "initials": "志"},
+    "narrator":        {"name": "語り部",     "role": "ナレーター",        "color": "#14b8a6", "initials": "語"},
     "ceo":             {"name": "九条 零",    "role": "CEO",             "color": "#ef4444", "initials": "零"},
 }
 UNKNOWN = {"name": "Unknown", "role": "不明", "color": "#94a3b8", "initials": "?"}
@@ -84,30 +85,92 @@ def parse_jsonl(filepath):
                 "time": timestamp,
                 "agent_id": data.get("agentId", ""),
                 "usage": message.get("usage", {}),
+                "agent_setting": data.get("agentSetting", ""),
             })
     return messages
 
 
-def detect_agent(messages):
-    for msg in messages[:3]:
-        if msg.get("role") != "user":
-            continue
-        text = msg.get("text", "")
-        for key in AGENTS:
-            if f"\uff08{key}\uff09" in text or f"({key})" in text:
-                return key
-    for msg in messages[:10]:
-        if msg.get("role") != "assistant":
-            continue
-        text = msg.get("text", "")
-        for key, info in AGENTS.items():
-            if info["name"] in text or info["role"] in text:
-                return key
-    for msg in messages[:3]:
-        aid = msg.get("agent_id", "").lower()
-        for key in AGENTS:
-            if key in aid:
-                return key
+def _extract_task_calls(parent_path):
+    """Parse parent JSONL for Task tool calls with subagent_type."""
+    calls = []
+    try:
+        with open(parent_path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    data = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                message = data.get("message", {}) or {}
+                content = message.get("content", [])
+                if not isinstance(content, list):
+                    continue
+                for block in content:
+                    if not isinstance(block, dict):
+                        continue
+                    if block.get("type") == "tool_use" and block.get("name") == "Task":
+                        inp = block.get("input", {}) or {}
+                        st = inp.get("subagent_type", "")
+                        prompt = inp.get("prompt", "")
+                        if st:
+                            calls.append({"subagent_type": st, "prompt": prompt})
+    except OSError:
+        pass
+    return calls
+
+
+def detect_agent(messages, jsonl_path=""):
+    """Detect agent from parsed messages. Data-driven, no heuristics.
+
+    Priority:
+    1. agent-setting record (definitive)
+    2. Parent session Task tool call cross-reference (for subagents)
+    3. File path in tool calls (agent reads own memory/definition)
+    """
+    # 1. agent-setting record
+    for msg in messages:
+        setting = msg.get("agent_setting", "")
+        if setting and setting in AGENTS:
+            return setting
+
+    # 2. Parent session cross-reference (subagent paths: .../parent-id/subagents/agent-xxx.jsonl)
+    if jsonl_path:
+        p = Path(jsonl_path)
+        if p.parent.name == "subagents":
+            parent_dir = p.parent.parent
+            parent_jsonl = parent_dir.parent / f"{parent_dir.name}.jsonl"
+            if parent_jsonl.exists():
+                task_calls = _extract_task_calls(str(parent_jsonl))
+                if len(task_calls) == 1:
+                    return task_calls[0]["subagent_type"]
+                elif len(task_calls) > 1:
+                    first_text = ""
+                    for msg in messages:
+                        if msg.get("role") == "user" and msg.get("text"):
+                            first_text = msg["text"]
+                            break
+                    if first_text:
+                        for tc in task_calls:
+                            if tc["prompt"] and (
+                                first_text.startswith(tc["prompt"][:100])
+                                or tc["prompt"].startswith(first_text[:100])
+                            ):
+                                return tc["subagent_type"]
+
+    # 3. File path in Read/Glob tool calls
+    for msg in messages[:30]:
+        for tc in msg.get("tools", []):
+            inp = tc.get("input", {}) or {}
+            for field in ("file_path", "path", "pattern"):
+                val = str(inp.get(field, ""))
+                if not val:
+                    continue
+                for key in AGENTS:
+                    if f"agent-memory/{key}/" in val or f"agents/{key}" in val:
+                        return key
+
     return "unknown"
 
 
@@ -187,7 +250,7 @@ def api_agents():
             if not msgs:
                 continue
 
-            agent_key = detect_agent(msgs)
+            agent_key = detect_agent(msgs, jsonl_path=jf)
             msg_type = detect_msg_type(msgs)
             timestamps = [m["time"] for m in msgs if m["time"]]
             total_in = sum(
@@ -313,7 +376,7 @@ def api_health():
         "docs/ceo-manual.md": "CEOマニュアル",
     }
     agents_list = ["analyst", "writer", "site-builder", "x-manager",
-                   "video-creator", "product-manager", "legal"]
+                   "video-creator", "product-manager", "legal", "narrator"]
     for a in agents_list:
         required[f".claude/agents/{a}.md"] = f"エージェント定義({a})"
         required[f".claude/agent-memory/{a}/MEMORY.md"] = f"メモリ({a})"
@@ -363,23 +426,21 @@ def api_health():
             warn_count += 1
     checks.append(cost_check)
 
-    # 4. MEMORY.md character check
+    # 4. MEMORY.md existence check (character settings moved to narrator)
     mem_results = []
     all_agents = ["ceo"] + agents_list
     for a in all_agents:
         mem_raw = read_file(f".claude/agent-memory/{a}/MEMORY.md")
         if mem_raw is None:
-            mem_results.append({"agent": a, "char": False, "lines": 0})
+            mem_results.append({"agent": a, "exists": False, "lines": 0})
+            err_count += 1
             continue
         lines = mem_raw.split("\n")
-        has_char = any("口調" in l or "一人称" in l or "あなたは" in l for l in lines[:15])
-        mem_results.append({"agent": a, "char": has_char, "lines": len(lines),
+        mem_results.append({"agent": a, "exists": True, "lines": len(lines),
                             "over200": len(lines) > 200})
-        if not has_char:
-            err_count += 1
         if len(lines) > 200:
             warn_count += 1
-    checks.append({"name": "MEMORY.mdキャラ設定", "items": mem_results})
+    checks.append({"name": "MEMORY.md存在チェック", "items": mem_results})
 
     # 5. plan.md "要調査"
     youchousa = 0

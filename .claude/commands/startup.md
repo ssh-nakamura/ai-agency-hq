@@ -7,7 +7,11 @@ description: CEO起動ルーティン（通常モード）。status.mdを読み�
 
 以下を順番に実行してください。
 
-## 1. ドキュメント読み込み
+## 1. MEMORY.md読み込み（最初に必ず実行）
+- `.claude/agent-memory/ceo/MEMORY.md` を読む（判断基準 + 学び）
+- `docs/ceo-manual.md` を読む（起動手順 + 意思決定フレームワーク）
+
+## 2. ドキュメント読み込み
 - `docs/status.md` を読む（KPI + アクション + 収支）
 
 ## 2. 軽量セルフチェック（status.mdの内容から判断）

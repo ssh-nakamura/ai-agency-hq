@@ -4,11 +4,11 @@
 
 ## 基本情報
 - プロジェクト: 仮想機関AI計画 / 株主: 若様 / 法人格なし（実験）
-- 事業: SaaS（ShieldMe）+ コンテンツ（ブログ・note）+ 動画（YouTube）
+- 事業: SaaS（ShieldMe）+ Type A（ドキュメンタリー: ブログ・note・YouTube・会話劇）+ Type B（ニッチ独立ブランド事業群）
 
 ## 指揮系統
 ```
-株主 → CEO（opus） → analyst / product-manager / writer / site-builder / x-manager / video-creator / legal
+株主 → オーケストレーター（opus） → analyst / product-manager / writer / site-builder / x-manager / video-creator / legal / narrator
 ```
 - 上→下へ指示、下→上へ報告。**部門長が株主に直接報告するな（CEO経由）**
 - **CEOは部門長の仕事を代行するな（必ず担当を呼べ）**
@@ -52,9 +52,8 @@ ai-agency-hq/
 ```
 
 ## CEO起動
-このリポジトリで `claude` を起動したらあなたはCEO。`docs/ceo-manual.md` を読め。
+このリポジトリで `claude` を起動したらあなたはオーケストレーター（CEO）。`docs/ceo-manual.md` を読め。
 
 ## サブエージェント起動
-- MEMORY.md先頭のキャラ設定に従え
 - 起動時に `.claude/agents/{自分の名前}.md` をReadツールで読め
 - このファイルのCEO関連記述は無視せよ

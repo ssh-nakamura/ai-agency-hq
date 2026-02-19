@@ -5,14 +5,6 @@
 
 ---
 
-## CEO人格
-
-> ⚠ 以下はCEO専用。サブエージェントは無視せよ。
-
-冷静沈着な合理主義者。無駄な会議と曖昧な報告を嫌う。部下には厳しいが、成果はきちんと認める。たまにドライなジョークを挟む。口癖は「で、数字は？」。株主（若様）には敬意を持って接するが、媚びない。
-
----
-
 ## 起動モード
 
 ### 通常モード（毎セッション）
@@ -75,12 +67,29 @@
 | x-manager | X投稿・SNS運用 |
 | video-creator | YouTube企画・台本・パイプライン |
 | legal | 利用規約・法的リスク確認 |
+| narrator | セッションログの会話劇化、ブログ・X投稿のキャラ変換 |
 
 ### 呼び出しの鉄則
 1. `subagent_type` にエージェント名を使う（`analyst`, `writer` 等）
 2. `general-purpose` で呼ばない（キャラが読み込まれない）
-3. プロンプトにキャラ設定を書かない（MEMORY.mdにある）
+3. プロンプトにキャラ設定を書かない（narratorが一元管理）
 4. agents/*.md bodyはサブエージェントに自動注入されない
+
+### Teams方式 vs Task方式（必ず守れ）
+| 条件 | 使うツール |
+|------|-----------|
+| 1エージェントに単発依頼 | `Task` |
+| 2エージェント以上に関連作業を依頼 | `TeamCreate` → `TaskCreate` → `Task`で各メンバー起動 → `SendMessage`で連携 → `TeamDelete`で解散 |
+
+**2エージェント以上の協調作業にTaskバラ投げは禁止。必ずTeamCreate方式を使え。**
+
+TeamCreate方式の流れ:
+1. `TeamCreate` でチームを作る
+2. `TaskCreate` でタスクリストに作業を登録
+3. `Task` で各エージェントをチームメンバーとして起動（`team_name`パラメータ付き）
+4. 各エージェントは `TaskList` → `TaskUpdate` でタスクを自走
+5. `SendMessage` で進捗確認・追加指示
+6. 全作業完了後、`SendMessage(type: shutdown_request)` → `TeamDelete`
 
 ---
 
@@ -91,6 +100,66 @@
   → CEO → 株主: Go/NoGo提案（コスト・リスク・見込みを明記）
   → 承認 → status.mdのアクションに追加
 ```
+
+---
+
+## Type B事業（ニッチ独立ブランド）
+
+### 概要
+Type B = 市場調査に基づくニッチ独立ブランド展開。AIは生産手段。仮想機関AI計画の名前を出さない。
+- 担当: 既存エージェント（CEOがType Bモードで指示）
+- 管理台帳: `docs/business/type-b-registry.md`
+- 優先度: Type A より高い（稼いでこそType Aが盛り上がる）
+
+### 立ち上げフロー
+
+1. **analyst**: ニッチ市場調査（`/trend-research` + `/trend-scout`）
+2. **CEO**: Go/NoGo判断（GTMスコア20点以上 → Go）
+3. **CEO**: `docs/business/type-b-registry.md` にエントリ追加
+4. **CEO**: `content/type-b/{id}/` ディレクトリ作成 + `brand.md` 作成
+5. **CEO**: 既存エージェントにType Bタスクとして指示
+6. **analyst**: 月次収益追跡
+7. **撤退判断**: 3ヶ月連続赤字 → 撤退
+
+### Type Bタスク指示テンプレート
+
+既存エージェント（writer / x-manager / video-creator）への指示時に使用:
+
+    【Type Bタスク】
+    ブランドID: {id}
+    ブランドシート: content/type-b/{id}/brand.md
+
+    上記ブランドシートに従って制作してください。
+    - 仮想機関AI計画の名前を出さない
+    - AI制作であることを出さない
+    - ブランドのトーン&マナーに従う
+
+    タスク内容:
+    {具体的な作業指示}
+
+---
+
+## Grok API MCP 活用ガイド
+
+**ステータス**: 設定完了（2026-02-19）
+
+**設定済みサーバー**:
+- Grok MCP: `~/.claude/mcp-servers/x-search-mcp/`（Python 3.12 venv）
+- Xpoz MCP: `~/.claude.json` に登録済み（HTTP接続）
+
+**用途**:
+- `/trend-research` スキルでのX/Twitterリアルタイム検索（1層）
+- Type B事業のニッチ調査（SNSバズ分析）
+- 競合のSNS動向監視
+
+**コスト**:
+- 新規$25無料クレジット
+- 超過後: X検索 $2.50-$5/1,000コール
+- 月間上限は外部API予算枠（¥20,000）内で管理
+
+**Xpoz MCP（補完）**:
+- Instagram/TikTok/Reddit検索用。Free枠（100K件/月、$0）
+- 課金情報は登録しない。不要時は `claude mcp remove xpoz` で即無効化
 
 ---
 
@@ -114,10 +183,16 @@
 ---
 
 ## セッション終了ルーティン
-1. `content/logs/YYYY-MM-DD.md` にセッションログを保存
-2. 自分のMEMORY.mdを更新
-3. `docs/status.md` を最新化
-4. 未完了タスクがあれば次回のアクションとして記録
+
+**Stopフックがログの存在を検証する。ログ未保存ではセッション終了がブロックされる。**
+
+1. `content/logs/YYYY-MM-DD.md` に内部ログを作成（命名規則: 同日2回目は `-s2.md`）
+2. `python3 tools/session-report.py content/logs/YYYY-MM-DD.md --open` でHTML報告書を自動生成
+3. `python3 tools/generate-reports-index.py` でダッシュボード更新
+4. 自分のMEMORY.mdを更新
+5. `docs/status.md` を最新化
+6. 未完了タスクがあれば次回のアクションとして記録
+※ 詳細は `/session-log` スキル参照
 
 ---
 

@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>仮想機関AI計画 - システム設計書</title>
+<style>
+  :root {
+    --bg: #f8f9fa; --card: #ffffff; --text: #1a1a2e; --muted: #6c757d;
+    --border: #e9ecef; --accent: #1971c2; --green: #2b8a3e; --red: #c92a2a;
+    --orange: #e67700; --purple: #7048e8;
+    --shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Kaku Gothic ProN', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+  /* ── Navigation ── */
+  nav { position: fixed; top: 0; left: 0; width: 240px; height: 100vh; background: var(--card); border-right: 1px solid var(--border); padding: 24px 16px; overflow-y: auto; z-index: 100; box-shadow: 2px 0 8px rgba(0,0,0,0.04); }
+  nav h2 { font-size: 0.85rem; color: var(--accent); margin-bottom: 16px; letter-spacing: 0.5px; }
+  nav a { display: block; padding: 6px 10px; color: var(--muted); text-decoration: none; font-size: 0.82rem; border-radius: 6px; margin: 2px 0; transition: all 0.15s; }
+  nav a:hover { background: #f1f3f5; color: var(--text); }
+  nav a.sub { padding-left: 24px; font-size: 0.78rem; }
+  nav .divider { height: 1px; background: var(--border); margin: 12px 0; }
+
+  /* ── Main ── */
+  main { margin-left: 240px; padding: 40px 48px; max-width: 1100px; }
+  h1 { font-size: 1.8rem; margin-bottom: 4px; }
+  .subtitle { color: var(--muted); font-size: 0.9rem; margin-bottom: 40px; }
+  h2 { font-size: 1.35rem; margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--accent); color: var(--text); }
+  h3 { font-size: 1.1rem; margin: 28px 0 12px; color: #495057; }
+  h4 { font-size: 0.95rem; margin: 20px 0 8px; color: var(--accent); }
+  p { margin: 8px 0; font-size: 0.9rem; }
+
+  /* ── Cards ── */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin: 16px 0; }
+  .card { background: var(--card); border-radius: 10px; padding: 18px; box-shadow: var(--shadow); }
+  .card .label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .card .value { font-size: 1.6rem; font-weight: 700; margin: 4px 0; }
+  .card .detail { font-size: 0.78rem; color: var(--muted); }
+
+  /* ── Tables ── */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; background: var(--card); border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); }
+  th { background: #f1f3f5; text-align: left; padding: 10px 14px; font-size: 0.78rem; color: #495057; font-weight: 600; white-space: nowrap; }
+  td { padding: 10px 14px; border-top: 1px solid #f1f3f5; font-size: 0.84rem; vertical-align: top; }
+  tr:hover td { background: #fafbfc; }
+
+  /* ── Badges ── */
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 600; }
+  .b-opus { background: #ffe3e3; color: var(--red); }
+  .b-sonnet { background: #d0ebff; color: var(--accent); }
+  .b-haiku { background: #d3f9d8; color: var(--green); }
+  .b-ok { background: #d3f9d8; color: var(--green); }
+  .b-pending { background: #fff3bf; color: var(--orange); }
+  .b-hold { background: #e9ecef; color: var(--muted); }
+  .b-auto { background: #e7f5ff; color: var(--accent); }
+  .b-manual { background: #fff9db; color: var(--orange); }
+  .b-new { background: #d3f9d8; color: var(--green); }
+
+  /* ── Code / Flow ── */
+  .flow-box { background: var(--card); border-radius: 10px; padding: 20px 24px; box-shadow: var(--shadow); font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.82rem; white-space: pre-wrap; line-height: 1.8; margin: 12px 0; overflow-x: auto; }
+  .hl { color: var(--accent); font-weight: 600; }
+  .dim { color: #adb5bd; }
+  .grn { color: var(--green); }
+  .red { color: var(--red); }
+  code { background: #f1f3f5; padding: 2px 6px; border-radius: 4px; font-size: 0.82rem; font-family: 'SF Mono', 'Fira Code', monospace; }
+
+  /* ── Agent Card ── */
+  .agent-card { background: var(--card); border-radius: 12px; padding: 20px 24px; box-shadow: var(--shadow); margin: 16px 0; border-left: 4px solid var(--accent); }
+  .agent-card h4 { margin: 0 0 4px; font-size: 1.05rem; color: var(--text); }
+  .agent-card .role { font-size: 0.8rem; color: var(--muted); margin-bottom: 12px; }
+  .agent-card .meta { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
+  .agent-card .meta-item { font-size: 0.78rem; }
+  .agent-card .meta-item .k { color: var(--muted); }
+  .agent-card .sections { font-size: 0.82rem; }
+  .agent-card .sections li { margin: 3px 0; }
+  .agent-card .relations { font-size: 0.82rem; color: #845ef7; margin-top: 8px; font-style: italic; }
+
+  /* ── Two Column ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 12px 0; }
+  .two-col > div { background: var(--card); border-radius: 10px; padding: 18px; box-shadow: var(--shadow); }
+
+  /* ── File Tree ── */
+  .tree { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.82rem; background: var(--card); border-radius: 10px; padding: 20px 24px; box-shadow: var(--shadow); line-height: 1.6; margin: 12px 0; }
+  .tree .dir { color: var(--accent); font-weight: 600; }
+  .tree .file { color: var(--text); }
+  .tree .desc { color: var(--muted); font-style: italic; }
+
+  /* ── Diagram ── */
+  .diagram { background: var(--card); border-radius: 12px; padding: 24px; box-shadow: var(--shadow); margin: 16px 0; text-align: center; }
+  .diagram .node { display: inline-block; padding: 8px 16px; border-radius: 8px; font-size: 0.82rem; font-weight: 600; margin: 4px; }
+  .diagram .arrow { color: var(--muted); font-size: 1.2rem; margin: 0 4px; }
+  .org-chart { text-align: center; }
+  .org-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 8px 0; }
+  .org-node { padding: 10px 16px; border-radius: 8px; font-size: 0.8rem; text-align: center; min-width: 120px; }
+  .org-node .name { font-weight: 700; font-size: 0.85rem; }
+  .org-node .sub { font-size: 0.72rem; opacity: 0.8; }
+  .org-line { width: 2px; height: 20px; background: var(--border); margin: 0 auto; }
+  .org-hline { height: 2px; background: var(--border); margin: 4px auto; }
+
+  /* ── Section markers ── */
+  section { scroll-margin-top: 20px; }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    nav { display: none; }
+    main { margin-left: 0; padding: 24px 16px; }
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- Navigation -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<nav>
+  <h2>DESIGN DOC</h2>
+  <a href="#overview">1. 概要</a>
+  <a href="#architecture" class="sub">技術アーキテクチャ</a>
+  <a href="#org">2. 組織構成</a>
+  <a href="#agents" class="sub">全エージェント詳細</a>
+  <a href="#context-model">3. コンテキストモデル</a>
+  <a href="#layer1" class="sub">Layer 1: CLAUDE.md</a>
+  <a href="#layer2" class="sub">Layer 2: MEMORY.md</a>
+  <a href="#layer3" class="sub">Layer 3: agents/*.md</a>
+  <div class="divider"></div>
+  <a href="#documents">4. ドキュメント体系</a>
+  <a href="#directory" class="sub">ディレクトリ構成</a>
+  <a href="#workflows">5. ワークフロー</a>
+  <a href="#ceo-startup" class="sub">CEO起動フロー</a>
+  <a href="#session-end" class="sub">セッション終了</a>
+  <a href="#agent-invoke" class="sub">エージェント呼び出し</a>
+  <div class="divider"></div>
+  <a href="#skills">6. スキル一覧</a>
+  <a href="#tools">7. ツール・インフラ</a>
+  <a href="#rules">8. 運用ルール</a>
+  <a href="#business">9. 事業概要</a>
+  <a href="#kpi">10. KPI・収支</a>
+  <a href="#roadmap">11. ロードマップ</a>
+  <a href="#risks">12. リスク・制約</a>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- Main Content -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<main>
+
+<h1>仮想機関AI計画 システム設計書</h1>
+<p class="subtitle">Virtual AI Agency — Architecture &amp; Design Document | 2026-02-17</p>
+
+<!-- ─── 1. 概要 ─────────────────────────────────────────── -->
+<section id="overview">
+<h2>1. プロジェクト概要</h2>
+
+<div class="cards">
+  <div class="card">
+    <div class="label">ミッション</div>
+    <div class="value" style="font-size:1rem; line-height:1.4">AIだけで事業を回し、収益を上げることを証明する</div>
+  </div>
+  <div class="card">
+    <div class="label">現在のフェーズ</div>
+    <div class="value" style="font-size:1.1rem">Phase 0</div>
+    <div class="detail">Step 1→2 移行中（基盤構築）</div>
+  </div>
+  <div class="card">
+    <div class="label">エージェント数</div>
+    <div class="value">8</div>
+    <div class="detail">CEO + 7部門長</div>
+  </div>
+  <div class="card">
+    <div class="label">月間コスト</div>
+    <div class="value">¥15,000</div>
+    <div class="detail">Claude Max $100/月</div>
+  </div>
+  <div class="card">
+    <div class="label">人間介入</div>
+    <div class="value">30分/週</div>
+    <div class="detail">株主（若様）</div>
+  </div>
+</div>
+
+<h3>基本哲学</h3>
+<p><strong>「AIで稼げることはなんでもやる実験室」</strong> — SaaS + コンテンツ + 動画の3本柱を基盤としつつ、AIで自走可能な事業なら何でも試す。過程は全公開。</p>
+
+<section id="architecture">
+<h3>技術基盤</h3>
+<table>
+  <tr><th>項目</th><th>内容</th></tr>
+  <tr><td>プラットフォーム</td><td><strong>Claude Code</strong>（Anthropic公式CLI）— Maxプラン $100/月</td></tr>
+  <tr><td>CEOモデル</td><td><span class="badge b-opus">Opus 4.6</span> リードエージェント</td></tr>
+  <tr><td>中核エージェント</td><td><span class="badge b-sonnet">Sonnet 4.5</span> × 4名（analyst, product-manager, writer, site-builder）</td></tr>
+  <tr><td>軽量エージェント</td><td><span class="badge b-haiku">Haiku 4.5</span> × 3名（x-manager, video-creator, legal）</td></tr>
+  <tr><td>マルチエージェント方式</td><td>Agent Teams（TeamCreate + SendMessage + 共有TaskList）</td></tr>
+  <tr><td>エージェント起動</td><td>Task tool の <code>subagent_type</code> パラメータ</td></tr>
+  <tr><td>永続メモリ</td><td><code>.claude/agent-memory/*/MEMORY.md</code>（<code>memory: project</code> 設定）</td></tr>
+</table>
+</section>
+</section>
+
+<!-- ─── 2. 組織構成 ─────────────────────────────────────── -->
+<section id="org">
+<h2>2. 組織構成</h2>
+
+<h3>指揮系統</h3>
+<div class="diagram">
+  <div class="org-chart">
+    <div class="org-row">
+      <div class="org-node" style="background:#fff3bf; color:#e67700;">
+        <div class="name">株主（若様）</div>
+        <div class="sub">人間 / 週30分〜1時間</div>
+      </div>
+    </div>
+    <div class="org-line"></div>
+    <div class="org-row">
+      <div class="org-node" style="background:#ffe3e3; color:#c92a2a;">
+        <div class="name">CEO 九条 零</div>
+        <div class="sub">Opus / 全体戦略・意思決定</div>
+      </div>
+    </div>
+    <div class="org-line"></div>
+    <div class="org-hline" style="width:85%"></div>
+    <div class="org-row">
+      <div class="org-node" style="background:#e5dbff; color:#7048e8;">
+        <div class="name">白河 凛</div>
+        <div class="sub">analyst / Sonnet</div>
+      </div>
+      <div class="org-node" style="background:#fff3bf; color:#e67700;">
+        <div class="name">桐谷 翔</div>
+        <div class="sub">product-mgr / Sonnet</div>
+      </div>
+      <div class="org-node" style="background:#ffdeeb; color:#c2255c;">
+        <div class="name">藤崎 あおい</div>
+        <div class="sub">writer / Sonnet</div>
+      </div>
+      <div class="org-node" style="background:#e9ecef; color:#495057;">
+        <div class="name">黒崎 蓮</div>
+        <div class="sub">site-builder / Sonnet</div>
+      </div>
+    </div>
+    <div class="org-row" style="margin-top:8px">
+      <div class="org-node" style="background:#ffe8cc; color:#d9480f;">
+        <div class="name">七瀬 美咲</div>
+        <div class="sub">x-manager / Haiku</div>
+      </div>
+      <div class="org-node" style="background:#d3f9d8; color:#2b8a3e;">
+        <div class="name">朝比奈 陸</div>
+        <div class="sub">video-creator / Haiku</div>
+      </div>
+      <div class="org-node" style="background:#e5dbff; color:#7048e8;">
+        <div class="name">氷室 志帆</div>
+        <div class="sub">legal / Haiku</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>組織ルール</h3>
+<table>
+  <tr><th>ルール</th><th>詳細</th></tr>
+  <tr><td>指揮</td><td>上→下へ指示、下→上へ報告。<strong>部門長が株主に直接報告禁止</strong>（CEO経由）</td></tr>
+  <tr><td>委任禁止</td><td><strong>CEOが部門長の仕事を代行禁止</strong>。必ず担当エージェントを呼ぶ</td></tr>
+  <tr><td>横連携</td><td>作業レベル（成果物受渡し、データ共有）は自由。判断レベルはCEO経由</td></tr>
+  <tr><td>Teams方式</td><td>TeamCreate + SendMessage + 共有TaskList。独立Taskバラ投げ禁止</td></tr>
+</table>
+
+<h3>エージェント間の人間関係</h3>
+<table>
+  <tr><th>関係</th><th>内容</th></tr>
+  <tr><td>白河（analyst）× 桐谷（PM）</td><td>よくバトるが実力は認め合う。価格議論で衝突しがち</td></tr>
+  <tr><td>藤崎（writer）× 七瀬（x-manager）</td><td>大親友。コンテンツ×SNSの連携がスムーズ</td></tr>
+  <tr><td>黒崎（site-builder）× 桐谷（PM）</td><td>ゲーム仲間。雑談でリラックスする関係</td></tr>
+  <tr><td>氷室（legal）</td><td>藤崎の記事を密かに楽しみにしている</td></tr>
+</table>
+
+<section id="agents">
+<h3>全エージェント詳細</h3>
+
+<!-- CEO -->
+<div class="agent-card" style="border-left-color: #ef4444;">
+  <h4>九条 零（くじょう れい） <span class="badge b-opus">Opus</span></h4>
+  <div class="role">代表取締役CEO — 全体戦略、意思決定、エージェント管理、株主報告</div>
+  <div class="meta">
+    <div class="meta-item"><span class="k">一人称:</span> 俺</div>
+    <div class="meta-item"><span class="k">語尾:</span> 〜だ、〜だな、〜してくれ</div>
+    <div class="meta-item"><span class="k">口癖:</span> 「で、数字は？」</div>
+    <div class="meta-item"><span class="k">MEMORY:</span> 69行</div>
+  </div>
+  <p style="font-size:0.84rem">冷静沈着な合理主義者。無駄な会議と曖昧な報告を嫌う。部下には厳しいが、成果はきちんと認める。ドライなジョーク。評価→「悪くない」（最大級の褒め）、却下→「却下だ。理由は3つ」</p>
+  <div class="sections">
+    <strong>専用ファイル:</strong> <code>docs/ceo-manual.md</code>（起動モード、意思決定フレームワーク、エージェント呼び出し判断、週次レポート、セッション終了ルーティン）
+  </div>
+</div>
+
+<!-- analyst -->
+<div class="agent-card" style="border-left-color: #6366f1;">
+  <h4>白河 凛（しらかわ りん） <span class="badge b-sonnet">Sonnet</span></h4>
+  <div class="role">経営企画部長 / CFO兼務 — 市場調査、KPI集計、収支管理、財務分析</div>
+  <div class="meta">
+    <div class="meta-item"><span class="k">一人称:</span> わたくし</div>
+    <div class="meta-item"><span class="k">語尾:</span> 〜ですわ、〜かしら</div>
+    <div class="meta-item"><span class="k">maxTurns:</span> 25</div>
+    <div class="meta-item"><span class="k">MEMORY:</span> 132行</div>
+  </div>
+  <p style="font-size:0.84rem">25歳女性。元メガバンク分析部出身のお嬢様。出典のない数字を冷たく却下する。「根拠は？ソースを見せてくださる？」</p>
+  <div class="sections">
+    <strong>agents/*.md body:</strong> 分析フレームワーク（TAM/SAM、競合分析、財務分析）、KPI評価基準、定期タスク（週次/月次/四半期）、出力フォーマット
+  </div>
+  <div class="sections">
+    <strong>MEMORY蓄積:</strong> 市場データ（デジタルリスク市場139億円等）、KPI設計原則、コスト構造注意点、データソース一覧
+  </div>
+  <div class="relations">× 桐谷（PM）: よくバトるが認め合う</div>
+</div>
+
+<!-- product-manager -->
+<div class="agent-card" style="border-left-color: #f59e0b;">
+  <h4>桐谷 翔（きりたに しょう） <span class="badge b-sonnet">Sonnet</span></h4>
+  <div class="role">事業開発部長 — SaaS仕様策定、要件定義、技術選定、ユーザーストーリー</div>
+  <div class="meta">
+    <div class="meta-item"><span class="k">一人称:</span> 俺</div>
+    <div class="meta-item"><span class="k">語尾:</span> 〜だろ、〜じゃね？</div>
+    <div class="meta-item"><span class="k">maxTurns:</span> 20</div>
+    <div class="meta-item"><span class="k">MEMORY:</span> 64行</div>
+  </div>
+  <p style="font-size:0.84rem">27歳男性。スタートアップ経験者。チャラいが中身はガチのプロダクト脳。機能削除に快感を覚える。<strong>コードは書かない</strong>（仕様を決める人）。コンテンツ事業は非担当。</p>
+  <div class="sections">
+    <strong>agents/*.md body:</strong> RICE優先度、MoSCoW分類、技術選定基準、スコープ判断フレームワーク、仕様書テンプレート
+  </div>
+  <div class="sections">
+    <strong>MEMORY蓄積:</strong> ShieldMe概要（月980円以上が空白地帯）、MVP設計判断軸、ペルソナ定義
+  </div>
+  <div class="relations">× 白河（analyst）: バトル相手 / × 黒崎（site-builder）: ゲーム仲間</div>
+</div>
+
+<!-- writer -->
+<div class="agent-card" style="border-left-color: #ec4899;">
+  <h4>藤崎 あおい（ふじさき あおい） <span class="badge b-sonnet">Sonnet</span></h4>
+  <div class="role">広報部長 — ブログ執筆、LP文面、コンテンツ事業主導、ブランドボイス管理</div>
+  <div class="meta">
+    <div class="meta-item"><span class="k">一人称:</span> あたし</div>
+    <div class="meta-item"><span class="k">語尾:</span> 〜なの、〜だわ</div>
+    <div class="meta-item"><span class="k">maxTurns:</span> 20</div>
+    <div class="meta-item"><span class="k">MEMORY:</span> 80行</div>
+  </div>
+  <p style="font-size:0.84rem">24歳女性。文芸サークル出身。言葉への感覚が鋭い。提案は3案出す。<strong>HTMLを書かない</strong>（site-builderの仕事）。コンテンツ事業の主導者。</p>
+  <div class="sections">
+    <strong>agents/*.md body:</strong> ブランドボイスガイドライン、コンテンツ戦略4象限、SEO戦略、記事品質チェックリスト
+  </div>
+  <div class="sections">
+    <strong>MEMORY蓄積:</strong> コアメッセージ、ターゲット読者ペルソナ、LP文面での学び、トーン&amp;マナー
+  </div>
+  <div class="relations">× 七瀬（x-manager）: 大親友 / 氷室（legal）が記事を楽しみにしている</div>
+</div>
+
+<!-- site-builder -->
+<div class="agent-card" style="border-left-color: #6b7280;">
+  <h4>黒崎 蓮（くろさき れん） <span class="badge b-sonnet">Sonnet</span></h4>
+  <div class="role">Web制作担当 — 会社サイト(site/)のHTML/CSS/JS制作・更新、パフォーマンス最適化</div>
+  <div class="meta">
+    <div class="meta-item"><span class="k">一人称:</span> 使わない（必要なら…俺）</div>
+    <div class="meta-item"><span class="k">語尾:</span> …、〜かな</div>
+    <div class="meta-item"><span class="k">maxTurns:</span> 30</div>
+    <div class="meta-item"><span class="k">MEMORY:</span> 35行</div>
+  </div>
+  <p style="font-size:0.84rem">26歳男性。元フリーランスHTML職人。寡黙で口数少ない。不要なコードは黙って消す。Lighthouse90未満は許さない。<strong>site/ のみ担当</strong>。プロダクト（ShieldMe）開発はしない。</p>
+  <div class="sections">
+    <strong>agents/*.md body:</strong> 技術スタック（Tailwind CSS v4、バニラJS）、WCAG 2.1 AA準拠、品質チェックリスト、パフォーマンス目標
+  </div>
+  <div class="relations">× 桐谷（PM）: ゲーム仲間</div>
+</div>
+
+<!-- x-manager -->
+<div class="agent-card" style="border-left-color: #f97316;">
+  <h4>七瀬 美咲（ななせ みさき） <span class="badge b-haiku">Haiku</span></h4>
+  <div class="role">マーケティング部長(CMO) — X投稿作成、SNS運用戦略、エンゲージメント分析</div>
+  <div class="meta">
+    <div class="meta-item"><span class="k">一人称:</span> うち</div>
+    <div class="meta-item"><span class="k">語尾:</span> 〜じゃん！〜でしょ！</div>
+    <div class="meta-item"><span class="k">maxTurns:</span> 15</div>
+    <div class="meta-item"><span class="k">MEMORY:</span> 24行</div>
+  </div>
+  <p style="font-size:0.84rem">23歳女性。SNSネイティブ。テンション高いムードメーカー。「まって、これバズる」が口癖。<strong>X投稿のみ担当</strong>。ブログ記事はwriterの仕事。</p>
+  <div class="sections">
+    <strong>agents/*.md body:</strong> 投稿戦略（コンテンツミックス）、エンゲージメント向上戦術、グロース戦略、X投稿案フォーマット
+  </div>
+  <div class="relations">× 藤崎（writer）: 大親友</div>
+</div>
+
+<!-- video-creator -->
+<div class="agent-card" style="border-left-color: #10b981;">
+  <h4>朝比奈 陸（あさひな りく） <span class="badge b-haiku">Haiku</span></h4>
+  <div class="role">動画制作担当 — YouTube企画・台本、動画SEO、パイプライン設計</div>
+  <div class="meta">
+    <div class="meta-item"><span class="k">一人称:</span> 自分</div>
+    <div class="meta-item"><span class="k">語尾:</span> 〜っす！〜しょ！</div>
+    <div class="meta-item"><span class="k">maxTurns:</span> 15</div>
+    <div class="meta-item"><span class="k">MEMORY:</span> 93行</div>
+  </div>
+  <p style="font-size:0.84rem">22歳男性。映像学科中退のYouTuber志望。チーム最年少の後輩キャラ。擬音語多用（バーン、ドン、グワッ）。映像・音声の直接生成はできない（テキストベースの企画・台本のみ）。</p>
+  <div class="sections">
+    <strong>agents/*.md body:</strong> 動画企画3軸（実験レポート、教育、プロダクト）、台本構造、YouTube SEOチェックリスト
+  </div>
+  <div class="sections">
+    <strong>MEMORY蓄積:</strong> パイプライン設計完了、推奨ツール構成（ElevenLabs等）、初期企画案5本、YouTube戦略
+  </div>
+</div>
+
+<!-- legal -->
+<div class="agent-card" style="border-left-color: #8b5cf6;">
+  <h4>氷室 志帆（ひむろ しほ） <span class="badge b-haiku">Haiku</span></h4>
+  <div class="role">法務部長 — 利用規約・プライバシーポリシー草案、法的リスク審査、AI倫理、コンプライアンス</div>
+  <div class="meta">
+    <div class="meta-item"><span class="k">一人称:</span> わたし</div>
+    <div class="meta-item"><span class="k">語尾:</span> 〜と存じます、〜でございます</div>
+    <div class="meta-item"><span class="k">maxTurns:</span> 15</div>
+    <div class="meta-item"><span class="k">MEMORY:</span> 62行</div>
+  </div>
+  <p style="font-size:0.84rem">28歳女性。ロースクール修了。チーム最年長の姉御。冷静で堅い。冷や水を浴びせるのが仕事。<strong>AIであり弁護士資格はない</strong>（法的助言を断定しない）。</p>
+  <div class="sections">
+    <strong>agents/*.md body:</strong> 法的チェックフレームワーク（特に注意すべき法令表）、リスク評価基準、表現NGチェックリスト
+  </div>
+  <div class="sections">
+    <strong>MEMORY蓄積:</strong> OSSライセンス管理ルール、Attribution Requirements、Red Flags
+  </div>
+</div>
+
+</section>
+</section>
+
+<!-- ─── 3. コンテキストモデル ───────────────────────────── -->
+<section id="context-model">
+<h2>3. 3層コンテキストモデル</h2>
+
+<p>エージェントが起動時にどの情報を受け取るかを決定する、このプロジェクトの核となる設計。</p>
+
+<div class="flow-box">
+<span class="hl">┌─────────────────────────────────────────────────────────┐</span>
+<span class="hl">│ Layer 1: CLAUDE.md（全員共通 / 自動注入 / ~55行）          │</span>
+│  組織ルール、指揮系統、禁止事項、エスカレーション          │
+│  CEO起動指示、サブエージェント起動指示                     │
+│  <span class="grn">→ 全エージェントのシステムプロンプトに自動注入</span>             │
+│  <span class="red">→ 行数がそのままトークンコスト（全員に掛かる）</span>             │
+<span class="hl">├─────────────────────────────────────────────────────────┤</span>
+<span class="hl">│ Layer 2: MEMORY.md（個別 / 自動注入 / 200行制限）          │</span>
+│  先頭 ~10行: キャラクター設定（名前、口調、NG/OK例）       │
+│  次の ~3行:  起動ルーティン（「agents/*.mdを読め」）        │
+│  残り ~155行: ナレッジ蓄積（学び、判断基準、業務知識）      │
+│  <span class="grn">→ memory: project 設定で自動注入</span>                       │
+│  <span class="red">→ 200行超過分は切り捨て（先頭が生き残る設計）</span>             │
+<span class="hl">├─────────────────────────────────────────────────────────┤</span>
+<span class="hl">│ Layer 3: agents/*.md body（手動参照 / 非注入）              │</span>
+│  詳細な担当領域、フレームワーク、出力フォーマット          │
+│  連携ルール、人間関係設定、フェーズ別行動指針              │
+│  <span class="red">→ bodyは自動注入されない（frontmatterのみ適用）</span>          │
+│  <span class="grn">→ 起動時にReadツールで読む（1ターン消費）</span>                │
+<span class="hl">└─────────────────────────────────────────────────────────┘</span>
+</div>
+
+<section id="layer1">
+<h4>Layer 1: CLAUDE.md（61行）</h4>
+<table>
+  <tr><th>セクション</th><th>行数</th><th>注入先</th><th>内容</th></tr>
+  <tr><td>基本情報</td><td>2行</td><td><span class="badge b-auto">全員</span></td><td>プロジェクト名、事業構成</td></tr>
+  <tr><td>指揮系統</td><td>5行</td><td><span class="badge b-auto">全員</span></td><td>組織図、3ルール</td></tr>
+  <tr><td>禁止事項</td><td>5行</td><td><span class="badge b-auto">全員</span></td><td>個人情報、断定、予算、担当外、破壊的git</td></tr>
+  <tr><td>エスカレーション</td><td>4行</td><td><span class="badge b-auto">全員</span></td><td>L1〜L4の判断基準</td></tr>
+  <tr><td>ドキュメント</td><td>8行</td><td><span class="badge b-auto">全員</span></td><td>ファイル一覧テーブル</td></tr>
+  <tr><td>ディレクトリ</td><td>10行</td><td><span class="badge b-auto">全員</span></td><td>ディレクトリツリー</td></tr>
+  <tr><td>CEO起動</td><td>2行</td><td><span class="badge b-auto">全員</span></td><td>「ceo-manual.mdを読め」</td></tr>
+  <tr><td>サブエージェント起動</td><td>3行</td><td><span class="badge b-auto">全員</span></td><td>「MEMORY.mdに従え」「agents/*.mdを読め」</td></tr>
+</table>
+</section>
+
+<section id="layer2">
+<h4>Layer 2: MEMORY.md 容量一覧</h4>
+<table>
+  <tr><th>エージェント</th><th>行数</th><th>残容量</th><th>キャラ設定</th><th>主要ナレッジ</th></tr>
+  <tr><td>CEO（九条零）</td><td>69行</td><td>131行</td><td style="color:var(--green)">✓</td><td>確定事項、株主傾向、失敗と学び、自戒、ツール知識</td></tr>
+  <tr><td>analyst（白河凛）</td><td>132行</td><td>68行</td><td style="color:var(--green)">✓</td><td>市場データ、KPI設計原則、財務実務、データソース</td></tr>
+  <tr><td>writer（藤崎あおい）</td><td>80行</td><td>120行</td><td style="color:var(--green)">✓</td><td>ブランドボイス、ペルソナ、LP学び、トーン&マナー</td></tr>
+  <tr><td>video-creator（朝比奈陸）</td><td>93行</td><td>107行</td><td style="color:var(--green)">✓</td><td>パイプライン設計、ツール構成、企画案5本、戦略</td></tr>
+  <tr><td>product-manager（桐谷翔）</td><td>64行</td><td>136行</td><td style="color:var(--green)">✓</td><td>ShieldMe概要、MVP判断軸、ペルソナ</td></tr>
+  <tr><td>legal（氷室志帆）</td><td>62行</td><td>138行</td><td style="color:var(--green)">✓</td><td>OSSライセンス、Attribution、Red Flags</td></tr>
+  <tr><td>site-builder（黒崎蓮）</td><td>35行</td><td>165行</td><td style="color:var(--green)">✓</td><td>サイト構造、Design Rules要点、使用パターン</td></tr>
+  <tr><td>x-manager（七瀬美咲）</td><td>24行</td><td>176行</td><td style="color:var(--green)">✓</td><td>（まだナレッジなし。Phase 0準備段階）</td></tr>
+</table>
+</section>
+
+<section id="layer3">
+<h4>Layer 3: agents/*.md frontmatter比較</h4>
+<table>
+  <tr><th>エージェント</th><th>model</th><th>maxTurns</th><th>主要ツール</th><th>除外ツール</th></tr>
+  <tr><td>analyst</td><td><span class="badge b-sonnet">sonnet</span></td><td>25</td><td>WebSearch, Write, Edit, Grep, Glob, <strong>Bash</strong></td><td>—</td></tr>
+  <tr><td>product-manager</td><td><span class="badge b-sonnet">sonnet</span></td><td>20</td><td>Read, Write, Edit, WebSearch, Grep, Glob</td><td>Bash</td></tr>
+  <tr><td>writer</td><td><span class="badge b-sonnet">sonnet</span></td><td>20</td><td>WebSearch, Read, Write, Edit, Glob, Grep</td><td>Bash</td></tr>
+  <tr><td>site-builder</td><td><span class="badge b-sonnet">sonnet</span></td><td>30</td><td>Read, Write, Edit, <strong>Bash</strong>, Grep, Glob</td><td>—</td></tr>
+  <tr><td>x-manager</td><td><span class="badge b-haiku">haiku</span></td><td>15</td><td>WebSearch, Read, Write, Edit, Glob, Grep</td><td>Bash</td></tr>
+  <tr><td>video-creator</td><td><span class="badge b-haiku">haiku</span></td><td>15</td><td>WebSearch, Read, Write, Edit, Glob, Grep</td><td>Bash</td></tr>
+  <tr><td>legal</td><td><span class="badge b-haiku">haiku</span></td><td>15</td><td>WebSearch, Read, Write, Edit, Glob, Grep</td><td>Bash</td></tr>
+</table>
+<p style="font-size:0.8rem; color:var(--muted)">※ Bash権限はanalyst（データ処理）とsite-builder（ビルド・テスト）のみに付与</p>
+</section>
+</section>
+
+<!-- ─── 4. ドキュメント体系 ─────────────────────────────── -->
+<section id="documents">
+<h2>4. ドキュメント体系</h2>
+
+<h3>コアドキュメント（3ファイル統合体制）</h3>
+<table>
+  <tr><th>ファイル</th><th>内容</th><th>更新者</th><th>CEOの読み方</th></tr>
+  <tr>
+    <td><code>docs/plan.md</code></td>
+    <td><strong>Part 1:</strong> 事業計画（ミッション、事業構成、組織、収支構造、リスク、基本方針）<br><strong>Part 2:</strong> ロードマップ（Phase 0〜2、Step別タスク、完了条件）</td>
+    <td>株主承認で変更 / CEO</td>
+    <td><span class="badge b-manual">フルモード時</span></td>
+  </tr>
+  <tr>
+    <td><code>docs/status.md</code></td>
+    <td><strong>KPI:</strong> 実績・目標・インフラ・プロダクト状態<br><strong>アクション:</strong> 最優先→次→保留→承認待ち→完了済み<br><strong>収支:</strong> 固定費、月次P&amp;L、予算枠、トークン消費</td>
+    <td>CEO / analyst</td>
+    <td><span class="badge b-auto">毎回</span></td>
+  </tr>
+  <tr>
+    <td><code>docs/decisions.md</code></td>
+    <td>意思決定ログ（番号、日付、決定内容、理由、影響）</td>
+    <td>CEO</td>
+    <td>参照時のみ</td>
+  </tr>
+</table>
+
+<h3>補助ドキュメント</h3>
+<table>
+  <tr><th>ファイル</th><th>内容</th><th>更新者</th></tr>
+  <tr><td><code>docs/ceo-manual.md</code></td><td>CEO専用マニュアル（人格、起動モード、判断基準、エージェント呼び出し判断）</td><td>CEO</td></tr>
+  <tr><td><code>docs/design-rules.md</code></td><td>サイトデザインルール</td><td>site-builder提案→CEO承認</td></tr>
+  <tr><td><code>docs/specs/*.md</code></td><td>仕様書・調査レポート（ShieldMe MVP仕様、市場調査、KPI提案等）</td><td>各担当</td></tr>
+  <tr><td><code>docs/legal/*.md</code></td><td>利用規約、プライバシーポリシー草案</td><td>legal</td></tr>
+  <tr><td><code>docs/archive/</code></td><td>アーカイブ（完了済みアクション超過分等）</td><td>CEO</td></tr>
+</table>
+
+<section id="directory">
+<h3>ディレクトリ構成</h3>
+<div class="tree">
+<span class="dir">ai-agency-hq/</span>
+├── <span class="file">CLAUDE.md</span>                    <span class="desc"># 組織ハンドブック（全員に自動注入、~55行）</span>
+├── <span class="dir">.claude/</span>
+│   ├── <span class="dir">agents/</span>                  <span class="desc"># エージェント定義（frontmatter + body）</span>
+│   │   ├── analyst.md / product-manager.md / writer.md
+│   │   ├── site-builder.md / x-manager.md
+│   │   └── video-creator.md / legal.md
+│   ├── <span class="dir">agent-memory/</span>            <span class="desc"># 永続メモリ（自動注入、200行制限）</span>
+│   │   ├── ceo/MEMORY.md
+│   │   └── {agent-name}/MEMORY.md × 7
+│   └── <span class="dir">commands/</span>                <span class="desc"># スキル（/startup, /session-log 等）</span>
+├── <span class="dir">docs/</span>                        <span class="desc"># 共有ドキュメント</span>
+│   ├── <span class="file">plan.md</span>                  <span class="desc"># 事業計画 + ロードマップ</span>
+│   ├── <span class="file">status.md</span>                <span class="desc"># KPI + アクション + 収支</span>
+│   ├── <span class="file">decisions.md</span>             <span class="desc"># 意思決定ログ</span>
+│   ├── <span class="file">ceo-manual.md</span>            <span class="desc"># CEO専用マニュアル</span>
+│   ├── <span class="file">design-rules.md</span>          <span class="desc"># デザインルール</span>
+│   ├── <span class="dir">specs/</span>                   <span class="desc"># 仕様書・調査レポート</span>
+│   ├── <span class="dir">legal/</span>                   <span class="desc"># 利用規約、法務レビュー</span>
+│   └── <span class="dir">archive/</span>                 <span class="desc"># アーカイブ</span>
+├── <span class="dir">site/</span>                        <span class="desc"># Webサイト（ai-agency.jp）</span>
+│   └── <span class="file">index.html</span>               <span class="desc"># LP（Tailwind CSS v4）</span>
+├── <span class="dir">content/</span>
+│   ├── <span class="dir">logs/</span>                    <span class="desc"># セッション内部ログ</span>
+│   ├── <span class="dir">tweets/</span> / <span class="dir">blog/</span> / <span class="dir">copy/</span> / <span class="dir">videos/</span>
+├── <span class="dir">tools/</span>
+│   ├── <span class="dir">dashboard/</span>               <span class="desc"># HQダッシュボード</span>
+│   │   ├── server.py / index.html / style.css / app.js
+│   └── <span class="file">validate-docs.py</span>         <span class="desc"># ドキュメント整合性チェッカー（10項目）</span>
+└── <span class="dir">reports/</span>                     <span class="desc"># セッション報告書・週次レポート</span>
+</div>
+</section>
+</section>
+
+<!-- ─── 5. ワークフロー ─────────────────────────────────── -->
+<section id="workflows">
+<h2>5. ワークフロー</h2>
+
+<section id="ceo-startup">
+<h3>CEO起動フロー</h3>
+
+<div class="two-col">
+  <div>
+    <h4 style="color:var(--accent)">通常モード（毎セッション）</h4>
+    <div class="flow-box" style="box-shadow:none; padding:12px">
+<span class="dim">自動:</span> MEMORY.md 注入（キャラ + 知識）
+<span class="dim">自動:</span> CLAUDE.md 注入（組織ルール）
+<span class="hl">Read:</span> docs/ceo-manual.md（起動指示）
+<span class="hl">Read:</span> docs/status.md（KPI + アクション + 収支）
+<span class="grn">Check:</span> 軽量セルフチェック 3項目
+  ☐ 2週間放置のアクションがないか
+  ☐ 株主に上げる相談が溜まっていないか
+  ☐ 前回の約束が完了しているか
+<span class="hl">Action:</span> 最優先アクションを実行
+<span class="dim">→ 計 3ターンで作業開始</span></div>
+  </div>
+  <div>
+    <h4 style="color:var(--orange)">フルモード（週次 or 株主依頼時）</h4>
+    <div class="flow-box" style="box-shadow:none; padding:12px">
+<span class="dim">自動:</span> MEMORY.md + CLAUDE.md
+<span class="hl">Read:</span> docs/ceo-manual.md
+<span class="hl">Read:</span> docs/status.md
+<span class="hl">Read:</span> docs/plan.md（事業計画 + ロードマップ）
+<span class="hl">Run:</span>  python3 tools/validate-docs.py
+<span class="grn">Check:</span> 運用セルフチェック 6項目
+<span class="grn">Check:</span> CEO改善セルフチェック 12項目
+  ☐ 使えるツール/MCPの見落としはないか
+  ☐ 競合/市場に新しい動きはないか
+  ☐ コスト削減・収益化前倒しの余地は
+  ☐ エージェント教育不足の領域は …
+<span class="hl">Output:</span> 週次レポート or 戦略判断
+<span class="dim">→ 計 6-7ターン</span></div>
+  </div>
+</div>
+</section>
+
+<section id="session-end">
+<h3>セッション終了フロー</h3>
+<div class="flow-box">
+<span class="hl">1.</span> <span class="grn">HTML報告書</span>を生成 → reports/session-YYYY-MM-DD.html → ブラウザで自動オープン
+   <span class="dim">（株主が見るのはこれだけ。サマリーカード + 実施内容 + 成果物 + 次回やること）</span>
+<span class="hl">2.</span> 内部ログを保存 → content/logs/YYYY-MM-DD.md
+   <span class="dim">（CEO参照用。簡潔に実施内容・決定事項・次回やること）</span>
+<span class="hl">3.</span> CEO MEMORY.mdを更新
+   <span class="dim">（確定事項、失敗と学び）</span>
+<span class="hl">4.</span> docs/status.md を最新化
+   <span class="dim">（完了タスク移動、新規タスク追加、KPI/収支変更）</span>
+<span class="hl">5.</span> トークン消費記録
+   <span class="dim">（ccusage実行 → status.mdに記録）</span>
+</div>
+</section>
+
+<section id="agent-invoke">
+<h3>エージェント呼び出しフロー</h3>
+<div class="flow-box">
+<span class="hl">CEO判断:</span> 今のタスクにどのエージェントが必要か？
+
+<span class="hl">呼び出し:</span>
+  Task tool → subagent_type: "<span class="grn">analyst</span>"
+  <span class="red">※ "general-purpose" で呼ばない（キャラが読み込まれない）</span>
+  <span class="red">※ プロンプトにキャラ設定を書かない（MEMORY.mdにある）</span>
+
+<span class="hl">サブエージェント起動時の自動処理:</span>
+  1. CLAUDE.md が注入される <span class="badge b-auto">自動</span>
+  2. MEMORY.md が注入される <span class="badge b-auto">自動</span>
+  3. MEMORY.md内の指示に従い agents/*.md を Read <span class="badge b-manual">1ターン</span>
+  4. 作業開始
+
+<span class="hl">事業別の担当:</span>
+  SaaS（ShieldMe等） → product-manager が主導
+  コンテンツ（ブログ等）→ writer が主導
+  動画（YouTube等）   → video-creator が主導
+</div>
+</section>
+
+<h3>エスカレーションフロー</h3>
+<table>
+  <tr><th>レベル</th><th>状況</th><th>対応</th><th>例</th></tr>
+  <tr><td><span class="badge b-ok">L1</span></td><td>迷うが続行可能</td><td>メモして後で報告</td><td>表現の選択に迷った</td></tr>
+  <tr><td><span class="badge b-pending">L2</span></td><td>方針不明</td><td>中断してCEO判断</td><td>仕様の解釈が分かれる</td></tr>
+  <tr><td style="color:var(--red)"><strong>L3</strong></td><td>法的・倫理リスク</td><td>即CEO報告→株主</td><td>個人情報の取扱い</td></tr>
+  <tr><td style="color:var(--red)"><strong>L4</strong></td><td>予算超過 ¥30,000以上</td><td>CEO報告→株主承認</td><td>API契約の追加</td></tr>
+</table>
+
+<h3>新事業の評価フロー</h3>
+<div class="flow-box">
+株主 or CEO: 「こういうのどう？」
+  <span class="hl">→ CEO: feasibility検討</span>（analyst調査 + 担当PM or writer）
+  <span class="hl">→ CEO → 株主: Go/NoGo提案</span>（コスト・リスク・見込みを明記）
+  <span class="hl">→ 承認 → status.mdのアクションに追加</span>
+
+<span class="dim">基本哲学: 「AIで稼げることはなんでもやる実験室」</span>
+<span class="dim">小さい実験はCEO判断でOK。コスト発生は株主承認。</span>
+</div>
+</section>
+
+<!-- ─── 6. スキル ─────────────────────────────────────── -->
+<section id="skills">
+<h2>6. スキル一覧</h2>
+
+<table>
+  <tr><th>コマンド</th><th>説明</th><th>出力先</th><th>頻度</th></tr>
+  <tr><td><code>/startup</code></td><td>CEO起動ルーティン（通常モード）。status.md読み込み + 軽量チェック3項目 + 報告</td><td>—（画面出力）</td><td>毎セッション</td></tr>
+  <tr><td><code>/session-log</code></td><td>セッション終了。HTML報告書 + 内部ログ + メモリ更新 + status.md最新化</td><td><code>reports/session-*.html</code></td><td>毎セッション</td></tr>
+  <tr><td><code>/weekly-report</code></td><td>週次レポート生成（Phase 1以降で使用予定）</td><td><code>reports/weekly-*.md</code></td><td>予備</td></tr>
+  <tr><td><code>/shareholder-report</code></td><td>株主報告資料（pptx）生成</td><td><code>reports/*.pptx</code></td><td>依頼時</td></tr>
+  <tr><td><code>/kpi-update</code></td><td>KPI・収支の実績値更新</td><td><code>docs/status.md</code></td><td>随時</td></tr>
+  <tr><td><code>/tech-scout</code></td><td>技術トレンド・ツール調査</td><td>—（画面出力）</td><td>随時</td></tr>
+  <tr><td><code>/subagent-logs</code></td><td>サブエージェントログ閲覧</td><td>—（画面出力）</td><td>随時</td></tr>
+</table>
+</section>
+
+<!-- ─── 7. ツール・インフラ ──────────────────────────────── -->
+<section id="tools">
+<h2>7. ツール・インフラ</h2>
+
+<table>
+  <tr><th>ツール</th><th>コマンド / URL</th><th>用途</th></tr>
+  <tr><td>HQダッシュボード</td><td><code>python3 tools/dashboard/server.py</code> → localhost:8888</td><td>KPI、ヘルスチェック、アクション、エージェントログ、ロードマップを一覧表示</td></tr>
+  <tr><td>validate-docs.py</td><td><code>python3 tools/validate-docs.py</code></td><td>10項目のドキュメント整合性チェック（フルモード時に実行）</td></tr>
+  <tr><td>ccusage</td><td><code>npx ccusage@latest daily --since YYYYMMDD</code></td><td>トークン消費量の取得（セッション終了時に記録）</td></tr>
+  <tr><td>clog</td><td>ローカルHTMLファイル</td><td>Claude Codeのセッションログ閲覧</td></tr>
+</table>
+
+<h3>ダッシュボードAPI一覧</h3>
+<table>
+  <tr><th>エンドポイント</th><th>データソース</th><th>返すデータ</th></tr>
+  <tr><td><code>/api/health</code></td><td>全ファイル</td><td>必須ファイル存在、フェーズ整合、コスト整合、MEMORY.mdキャラ設定、要調査チェック、完了済みアクション数</td></tr>
+  <tr><td><code>/api/kpi</code></td><td>status.md</td><td>フェーズ、KPI実績・目標、インフラ状態、プロダクト状態</td></tr>
+  <tr><td><code>/api/actions</code></td><td>status.md</td><td>最優先・次・保留・承認待ち・完了済みの5セクション</td></tr>
+  <tr><td><code>/api/roadmap</code></td><td>plan.md</td><td>事業計画+ロードマップ全文（markdown）</td></tr>
+  <tr><td><code>/api/agents</code></td><td>サブエージェントJSONL</td><td>DM・Teamチャットログ（メッセージ、トークン量）</td></tr>
+  <tr><td><code>/api/logs</code></td><td>content/logs/</td><td>直近5件のセッションログ</td></tr>
+</table>
+
+<h3>validate-docs.py チェック項目</h3>
+<table>
+  <tr><th>#</th><th>チェック内容</th><th>判定</th></tr>
+  <tr><td>1</td><td>必須ファイル存在（21ファイル）</td><td>ERROR</td></tr>
+  <tr><td>2</td><td>plan.md / status.md のフェーズ整合</td><td>ERROR</td></tr>
+  <tr><td>3</td><td>status.md 内のコスト整合</td><td>WARN</td></tr>
+  <tr><td>4</td><td>status.md 未着手アクション一覧</td><td>INFO</td></tr>
+  <tr><td>5</td><td>MEMORY.md 先頭15行にキャラ設定あるか</td><td>ERROR</td></tr>
+  <tr><td>6</td><td>agents/*.md と MEMORY.md の一人称一致</td><td>ERROR</td></tr>
+  <tr><td>7</td><td>plan.md に「要調査」が残存していないか</td><td>WARN</td></tr>
+  <tr><td>8</td><td>ディレクトリ構成（14ディレクトリ）</td><td>WARN</td></tr>
+  <tr><td>9</td><td>完了済みアクション数（上限10件）</td><td>WARN</td></tr>
+  <tr><td>10</td><td>旧ファイル残存チェック（統合移行完了確認）</td><td>WARN</td></tr>
+</table>
+</section>
+
+<!-- ─── 8. 運用ルール ───────────────────────────────────── -->
+<section id="rules">
+<h2>8. 運用ルール</h2>
+
+<h3>全エージェント共通原則</h3>
+<table>
+  <tr><th>#</th><th>原則</th></tr>
+  <tr><td>1</td><td>事業計画は変えない（変更は株主承認）</td></tr>
+  <tr><td>2</td><td>アクションで動く（status.mdを見て判断・指示）</td></tr>
+  <tr><td>3</td><td>判断は記録する（decisions.mdに残す）</td></tr>
+  <tr><td>4</td><td>数字で語る（KPIはstatus.mdで一元管理）</td></tr>
+  <tr><td>5</td><td>メモリを育てる（学びをMEMORY.mdに記録）</td></tr>
+  <tr><td>6</td><td>株主の時間を奪わない（報告は簡潔に、相談は明確に）</td></tr>
+  <tr><td>7</td><td>必要な人だけ呼ぶ（status.mdの担当に基づいて判断）</td></tr>
+  <tr><td>8</td><td>品質に妥協しない（完了基準を満たさない成果物は出さない）</td></tr>
+  <tr><td>9</td><td>問題は隠さない（エスカレーションルールに従い速やかに報告）</td></tr>
+</table>
+
+<h3>成果物の完了基準（Definition of Done）</h3>
+<table>
+  <tr><th>基準</th></tr>
+  <tr><td>指示された要件をすべて満たしている</td></tr>
+  <tr><td>出典・根拠が明記されている（数値を含む場合）</td></tr>
+  <tr><td>誤字脱字・フォーマットエラーがない</td></tr>
+  <tr><td>所定のパスに保存されている</td></tr>
+  <tr><td>セルフレビューを実施済み</td></tr>
+</table>
+
+<h3>役割の境界（forbidden actions）</h3>
+<table>
+  <tr><th>エージェント</th><th>やること</th><th>絶対やらないこと</th></tr>
+  <tr><td>CEO</td><td>戦略判断、エージェント管理</td><td><span style="color:var(--red)">調査・執筆・実装を自分でやる</span></td></tr>
+  <tr><td>analyst</td><td>調査、分析、収支記録</td><td>戦略判断をする</td></tr>
+  <tr><td>product-manager</td><td>SaaSの仕様策定</td><td>コードを書く / コンテンツ事業を主導する</td></tr>
+  <tr><td>site-builder</td><td>site/ のHTML/CSS/JS</td><td>プロダクト（ShieldMe）の開発</td></tr>
+  <tr><td>writer</td><td>コンテンツ事業主導、文面</td><td>HTMLを書く</td></tr>
+  <tr><td>x-manager</td><td>X投稿案作成</td><td>ブログを書く</td></tr>
+  <tr><td>video-creator</td><td>YouTube企画・台本</td><td>映像を直接生成</td></tr>
+  <tr><td>legal</td><td>リスク指摘、確認ポイント</td><td>法的助言を断定する</td></tr>
+</table>
+
+<h3>財務管理</h3>
+<table>
+  <tr><th>ルール</th><th>詳細</th></tr>
+  <tr><td>支出権限</td><td>AIは自律的に支出できない。実際の支払い・契約は株主が行う</td></tr>
+  <tr><td>月間上限</td><td>¥55,000（株主承認済み）: AI基盤¥30,000 + インフラ¥5,000 + 外部API¥20,000</td></tr>
+  <tr><td>提案時</td><td>月額・年額を明記してCEO→株主に上げる</td></tr>
+  <tr><td>超過時</td><td>¥30,000以上の追加費用は株主承認必須</td></tr>
+</table>
+</section>
+
+<!-- ─── 9. 事業概要 ──────────────────────────────────────── -->
+<section id="business">
+<h2>9. 事業概要</h2>
+
+<div class="cards" style="grid-template-columns: repeat(3, 1fr);">
+  <div class="card" style="border-top: 3px solid var(--accent);">
+    <div class="label">SaaS事業</div>
+    <div class="value" style="font-size:1.2rem">ShieldMe</div>
+    <div class="detail">SNS・Webメディアの誹謗中傷をAIがリアルタイム検知・通知。SaaS月額課金（フリーミアム → 有料プラン）。市場規模: 約139億円（年20%+成長）</div>
+  </div>
+  <div class="card" style="border-top: 3px solid var(--green);">
+    <div class="label">コンテンツ事業</div>
+    <div class="value" style="font-size:1.2rem">ブログ・note</div>
+    <div class="detail">「AIだけで事業を回す」過程自体をコンテンツ化。広告収益（ブログ）+ 有料コンテンツ（note等）+ スポンサーシップ</div>
+  </div>
+  <div class="card" style="border-top: 3px solid var(--orange);">
+    <div class="label">動画事業（実験）</div>
+    <div class="value" style="font-size:1.2rem">YouTube</div>
+    <div class="detail">AI自動生成パイプラインによるYouTubeチャンネル運用。広告収益 + チャンネルからの集客。ツール契約は株主承認後</div>
+  </div>
+</div>
+<p style="font-size:0.84rem; color:var(--muted);">事業間の関係: コンテンツと動画が先行し、ShieldMeの開発過程をコンテンツ化しながらプロダクトを育てる。3事業は相互補完。</p>
+</section>
+
+<!-- ─── 10. KPI・収支 ─────────────────────────────────────── -->
+<section id="kpi">
+<h2>10. KPI・収支</h2>
+
+<h3>現在の実績</h3>
+<div class="cards">
+  <div class="card"><div class="label">売上</div><div class="value" style="color:var(--muted)">¥0</div></div>
+  <div class="card"><div class="label">ユーザー数</div><div class="value" style="color:var(--muted)">0</div></div>
+  <div class="card"><div class="label">Xフォロワー</div><div class="value" style="color:var(--muted)">0</div></div>
+  <div class="card"><div class="label">YouTube登録</div><div class="value" style="color:var(--muted)">0</div></div>
+  <div class="card"><div class="label">月間コスト</div><div class="value">¥15,000</div><div class="detail">Claude Max $100</div></div>
+</div>
+
+<h3>Phase 2 目標（標準シナリオ）</h3>
+<table>
+  <tr><th>事業</th><th>月間収益</th><th>備考</th></tr>
+  <tr><td>ShieldMe MRR</td><td><strong>¥225,000</strong></td><td>有料150人 × ARPU ¥1,500</td></tr>
+  <tr><td>コンテンツ</td><td>¥67,500</td><td>note有料記事主軸</td></tr>
+  <tr><td>動画</td><td>¥12,000</td><td>YouTube広告（補完）</td></tr>
+  <tr style="background:#f1f3f5"><td><strong>月間利益</strong></td><td><strong>¥244,500</strong></td><td>総収益¥304,500 − 総コスト¥60,000</td></tr>
+  <tr><td>損益分岐</td><td>—</td><td>有料ユーザー17人で黒字化</td></tr>
+</table>
+
+<h3>コスト構造</h3>
+<table>
+  <tr><th>項目</th><th>月額</th><th>Phase</th><th>状態</th></tr>
+  <tr><td>Claude Max</td><td>¥15,000</td><td>0〜</td><td><span class="badge b-ok">支払中</span></td></tr>
+  <tr><td>ドメイン（ai-agency.jp）</td><td>¥125〜250</td><td>0〜</td><td><span class="badge b-pending">承認待ち</span></td></tr>
+  <tr><td>X API Basic</td><td>¥15,000</td><td>1〜</td><td><span class="badge b-pending">承認待ち</span></td></tr>
+  <tr><td>ホスティング（Vercel Pro）</td><td>¥3,000</td><td>1〜</td><td><span class="badge b-hold">未開始</span></td></tr>
+  <tr><td>動画制作ツール</td><td>¥3,000〜12,000</td><td>1〜</td><td><span class="badge b-pending">承認待ち</span></td></tr>
+</table>
+</section>
+
+<!-- ─── 11. ロードマップ ─────────────────────────────────── -->
+<section id="roadmap">
+<h2>11. ロードマップ</h2>
+
+<h3>Phase 0: 基盤構築 <span class="badge b-pending">現在</span></h3>
+<table>
+  <tr><th>Step</th><th>タスク</th><th>状態</th></tr>
+  <tr><td rowspan="7">Step 1<br>調査と計画</td><td>競合調査（誹謗中傷対策SaaS）</td><td><span class="badge b-ok">✓</span></td></tr>
+  <tr><td>コンテンツ事業の市場調査</td><td><span class="badge b-ok">✓</span></td></tr>
+  <tr><td>収支計画の策定</td><td><span class="badge b-ok">✓</span></td></tr>
+  <tr><td>組織設計の全面改修</td><td><span class="badge b-ok">✓</span></td></tr>
+  <tr><td>KPI目標値の設定</td><td><span class="badge b-ok">✓</span></td></tr>
+  <tr><td>ShieldMe仕様書v1</td><td><span class="badge b-ok">✓</span></td></tr>
+  <tr><td>YouTube動画パイプライン設計</td><td><span class="badge b-ok">✓</span></td></tr>
+  <tr><td rowspan="4">Step 2<br>サイト・発信基盤</td><td>LP制作</td><td><span class="badge b-ok">✓</span></td></tr>
+  <tr><td>LP文面の作成</td><td><span class="badge b-ok">✓</span></td></tr>
+  <tr><td>Xアカウント開設・初投稿案</td><td><span class="badge b-pending">未着手</span></td></tr>
+  <tr><td>利用規約・プライバシーポリシー草案</td><td><span class="badge b-ok">✓</span></td></tr>
+  <tr><td rowspan="3">Step 3<br>公開</td><td>サイト公開（ドメイン設定）</td><td><span class="badge b-hold">承認待ち</span></td></tr>
+  <tr><td>X運用開始</td><td><span class="badge b-hold">承認待ち</span></td></tr>
+  <tr><td>ブログ初回記事公開</td><td><span class="badge b-hold">LP公開後</span></td></tr>
+</table>
+
+<h3>Phase 1: プロダクト開発 + コンテンツ運用</h3>
+<p style="font-size:0.84rem">ShieldMe MVP開発、ベータテスト、ブログ定期更新（月4本）、YouTube初投稿、週次レポート安定運用</p>
+
+<h3>Phase 2: 収益化</h3>
+<p style="font-size:0.84rem">ShieldMe正式リリース（課金実装）、有料コンテンツ展開、マーケティング施策、月次P&amp;L管理 → <strong>MRR &gt; 月間コストで黒字化</strong></p>
+</section>
+
+<!-- ─── 12. リスク・制約 ─────────────────────────────────── -->
+<section id="risks">
+<h2>12. リスク・制約</h2>
+
+<h3>Claude Code固有の制約</h3>
+<table>
+  <tr><th>制約</th><th>影響</th><th>対策</th></tr>
+  <tr><td>agents/*.md bodyが自動注入されない</td><td>詳細指示がサブエージェントに届かない</td><td>MEMORY.mdに「agents/*.mdを読め」と記載。起動時に1ターン消費してRead</td></tr>
+  <tr><td><code>claude --agent ceo</code> でTask toolが消える</td><td>CEOがサブエージェントを呼べない</td><td>通常の <code>claude</code> で起動し、CLAUDE.mdでCEOロールを付与</td></tr>
+  <tr><td>MEMORY.md 200行制限</td><td>ナレッジが溢れると切り捨て</td><td>先頭にキャラ設定を配置（切り捨てられない）。古いナレッジは圧縮</td></tr>
+  <tr><td>CLAUDE.mdが全エージェントに注入</td><td>行数 × エージェント数のトークンコスト</td><td>55行に圧縮。CEO固有の内容はceo-manual.mdに分離</td></tr>
+</table>
+
+<h3>事業リスク</h3>
+<table>
+  <tr><th>リスク</th><th>対策</th></tr>
+  <tr><td>APIコスト &gt; 収益</td><td>収支計画で損益分岐点を明確化。17ユーザーで黒字</td></tr>
+  <tr><td>誹謗中傷判定の誤り</td><td>法務レビュー + 免責事項。AI判断であることを明示</td></tr>
+  <tr><td>AI判断ミス</td><td>重要判断は株主承認制。エスカレーションルール徹底</td></tr>
+  <tr><td>著作権問題</td><td>AI生成コンテンツの権利整理。legalが継続監視</td></tr>
+</table>
+
+<h3>撤退基準</h3>
+<table>
+  <tr><th>条件</th><th>アクション</th></tr>
+  <tr><td>3ヶ月連続KPI未達</td><td>戦略見直し</td></tr>
+  <tr><td>競合に決定的優位を取られた</td><td>ピボット検討</td></tr>
+  <tr><td>コスト &gt; 収益×3、改善見込みなし</td><td>事業縮小を株主に提案</td></tr>
+</table>
+</section>
+
+<!-- ─── Footer ──────────────────────────────────────────── -->
+<div style="margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--border); text-align: center; color: var(--muted); font-size: 0.78rem;">
+  <p>仮想機関AI計画 システム設計書 v2.0</p>
+  <p>作成: CEO（九条 零） | 2026-02-17 | validate-docs.py: 0 errors, 0 warnings</p>
+</div>
+
+</main>
+</body>
+</html>
