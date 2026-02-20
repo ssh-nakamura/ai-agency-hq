@@ -36,7 +36,7 @@
 | docs/ceo-manual.md | CEO専用マニュアル |
 | docs/design-rules.md | サイトデザインルール |
 | docs/specs/ | プロダクト仕様書 |
-| docs/research/ | 調査レポート（analyst） |
+| docs/research/ | 調査レポート15本（媒体別5本・海外ニッチ・ローカライズ・anti-slop・Type A/B戦略等） |
 | docs/legal/ | 利用規約、法務レビュー |
 
 ## ディレクトリ
