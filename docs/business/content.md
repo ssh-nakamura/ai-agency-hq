@@ -24,7 +24,7 @@
 | Xフォロワー数 | 0 | 目標値未設定（要設定） |
 | note有料記事単価 | - | ¥1,000〜¥2,000（想定） |
 
-出典: docs/specs/kpi-proposal.md、docs/specs/market-research-content.md
+出典: docs/research/kpi-proposal.md、docs/research/market-research-content.md
 
 ---
 

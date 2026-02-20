@@ -5,29 +5,67 @@ description: KPIと収支を更新する。status.mdを最新の実績値に更�
 
 # KPI・収支更新
 
+## 引数
+- $ARGUMENTS: なし（常にフル更新）
+
 ## 手順
 
-1. 現在の値を読み込む:
-   - `docs/status.md`（KPI + 収支セクション）
+### 1. 現在値の確認（自動）
 
-2. 株主に以下を確認する:
-   - 売上の変化はあるか（新規収入等）
-   - 新しい支出はあるか
-   - Xフォロワー数（手動確認が必要な場合）
-   - プラン使用率（%）
+```python
+python3 -c "
+import sys; sys.path.insert(0, '.')
+from tools.core.status_parser import StatusParser
+import json
 
-3. ccusageでトークン消費量を取得:
-   ```bash
-   npx ccusage@latest daily --since YYYYMMDD
-   npx ccusage@latest monthly
-   ```
+sp = StatusParser()
+print('=== KPI ===')
+print(json.dumps(sp.get_kpi(), ensure_ascii=False))
+print('=== FINANCE ===')
+print(json.dumps(sp.get_finance(), ensure_ascii=False))
+print('=== FIXED COSTS ===')
+print(json.dumps(sp.get_fixed_costs(), ensure_ascii=False))
+"
+```
 
-4. 確認結果に基づき `docs/status.md` を更新:
-   - KPIセクション（実績テーブル）を更新
-   - 収支セクション（月次収支テーブル）を更新
-   - トークン消費記録を更新
+### 2. トークン消費取得（自動）
 
-5. 更新後のサマリーを報告:
+```python
+python3 tools/core/ccusage.py --json
+```
+
+結果をstatus.mdのトークン消費テーブルに反映:
+
+```python
+python3 -c "
+import sys, json; sys.path.insert(0, '.')
+from tools.core.status_parser import StatusParser
+from tools.core.ccusage import run_daily, totals
+
+rows = run_daily()
+sp = StatusParser()
+sp.update_token_table(rows)
+t = totals(rows)
+print(f'Updated: {t[\"total_tokens_m\"]}M tokens, \${t[\"total_cost_usd\"]}')
+"
+```
+
+### 3. 株主に確認
+
+以下は自動取得できないため、株主に確認:
+- 売上の変化はあるか（新規収入等）
+- 新しい支出はあるか
+- Xフォロワー数（手動確認が必要な場合）
+- プラン使用率（%）
+
+### 4. status.md更新
+
+確認結果に基づき `docs/status.md` を更新:
+- KPIセクション（実績テーブル）を更新
+- 収支セクション（月次収支テーブル）を更新
+- トークン消費記録を更新（Step 2で自動反映済み）
+
+### 5. 報告
 
 ```
 **KPI更新完了**

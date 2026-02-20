@@ -206,6 +206,7 @@ expected_dirs = [
     "site",
     "docs",
     "docs/specs",
+    "docs/research",
     "docs/legal",
     "docs/archive",
     "content/logs",

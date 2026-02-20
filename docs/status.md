@@ -5,7 +5,7 @@
 
 ---
 
-## 現在のフェーズ: Phase 0 - Step 1→2 移行中
+## 現在のフェーズ: Phase 0 - Day 0（2026-02-19 リセット）
 
 最終更新: 2026-02-19
 
@@ -31,6 +31,7 @@
 | コンテンツ月間収益 | ¥67,500 |
 | 動画月間収益 | ¥12,000 |
 | Type B ニッチ事業群 | 未設定（初事業立ち上げ後） |
+| 投資事業 | 未設定（ペーパートレード実績確定後） |
 | 月間利益 | ¥244,500+ |
 | 損益分岐ユーザー数 | 17 |
 
@@ -51,48 +52,48 @@
 
 ## アクション
 
-### 最優先
+### 最優先（Phase 0: 公開・発信）
 | ID | アクション | 担当 | 状態 | 備考 |
 |----|-----------|------|------|------|
-| A-012 | ShieldMe価格プランの再検証（API単価実測含む） | product-manager + analyst | 未着手 | Phase 1開始前に100件実測 |
+| A-024 | ドメイン取得（ai-agency.jp） | CEO + 株主 | 株主承認待ち | S-003 |
+| A-025 | サイト公開（本番デプロイ） | site-builder | 未着手 | ドメイン取得後 |
+| A-026 | Xアカウント開設 | x-manager | 未着手 | — |
+| A-027 | X初投稿 | x-manager | 未着手 | アカウント開設後 |
+| A-028 | ブログ初記事公開 | writer | 未着手 | サイト公開後 |
 
-### 次に着手
+### 次に着手（Phase 0完了後 → Phase 1）
 | ID | アクション | 担当 | 状態 | 前提条件 |
 |----|-----------|------|------|---------|
-| A-019 | 海外コンテンツローカライズ戦略の策定 | writer + video-creator | 未着手 | 海外トレンドリサーチ |
-| A-020 | 英語版コンテンツ展開の設計 | writer + site-builder | 未着手 | サイト多言語化 |
-| A-008 | X初投稿案の作成 | x-manager | 未着手 | LP完成後 |
-| A-013 | ブログ初回記事の執筆（日英両方） | writer | 未着手 | LP公開後 |
+| A-012 | ShieldMe価格プランの再検証（API単価実測含む） | product-manager + analyst | 未着手 | Phase 1開始前に100件実測 |
+| A-029 | YouTube チャンネル開設 | video-creator | 未着手 | ツール契約後（S-002） |
 
 ### 保留（Phase 1以降）
 | ID | アクション | 担当 | 備考 |
 |----|-----------|------|------|
 | A-014 | ShieldMe MVP開発（別リポジトリ） | 開発チーム | X API契約後 |
-| A-015 | YouTubeチャンネル開設・初動画制作 | video-creator | ツール契約後 |
-| A-017 | Claude-Memプラグインの導入 | CEO | 要評価 |
-| A-018 | claude-office-skills導入 | CEO + site-builder | 要評価 |
+| A-019 | 海外コンテンツローカライズ戦略の策定 | writer + video-creator | 海外トレンドリサーチ後 |
+| A-020 | 英語版コンテンツ展開の設計 | writer + site-builder | サイト多言語化後 |
 
 ### 株主承認待ち
 | ID | 承認事項 | 金額 | 備考 |
 |----|---------|------|------|
 | S-001 | X API Basic契約 | $100/月 | ShieldMe MVP開発に必須 |
 | S-002 | 動画制作ツール契約 | ¥3,000〜12,000/月 | 構成選択 |
-| S-003 | ドメイン取得（ai-agency.jp） | 年間¥1,500〜3,000 | サイト公開に必要 |
-| S-004 | ~~xAI APIキー取得（Grok API MCP用）~~ | ~~$25無料~~ | **設定完了**（2026-02-19） |
+| S-003 | ドメイン取得（ai-agency.jp） | 年間¥1,500〜3,000 | サイト公開に必要。**Phase 0のボトルネック** |
 
 ### 完了済み（直近10件）
 | ID | アクション | 担当 | 完了日 | 成果物 |
 |----|-----------|------|--------|--------|
+| A-023 | スキル体系全面改修（18スキル化 + tools/core/） | CEO | 2026-02-19 | .claude/commands/, tools/core/ |
 | A-022 | business-plan.md 要調査項目の補完 | CEO | 2026-02-16 | plan.md反映済み |
 | A-009 | 利用規約・プライバシーポリシー草案 | legal | 2026-02-15 | docs/legal/ |
 | A-016 | MEMORY.mdキャラ注入方式に移行 | CEO | 2026-02-16 | .claude/agent-memory/ |
-| A-021 | スキル作成 | CEO | 2026-02-15 | .claude/commands/*.md |
+| A-021 | スキル作成（初版） | CEO | 2026-02-15 | .claude/commands/*.md |
 | A-007 | LP制作 | site-builder | 2026-02-15 | site/index.html |
-| A-004 | KPI目標値の提案 | analyst | 2026-02-15 | docs/specs/kpi-proposal.md |
+| A-004 | KPI目標値の提案 | analyst | 2026-02-15 | docs/research/kpi-proposal.md |
 | A-005 | ShieldMe MVP仕様書 | product-manager | 2026-02-15 | docs/specs/shieldme-mvp-spec.md |
 | A-006 | LP文面のドラフト | writer | 2026-02-15 | content/copy/lp-draft-v1.md |
 | A-011 | YouTube動画パイプライン設計 | video-creator | 2026-02-15 | docs/specs/video-pipeline-design.md |
-| A-010 | Agent Teams方式改修 | CEO | 2026-02-15 | CLAUDE.md |
 
 > 10件超過分は docs/archive/actions-2026.md
 
@@ -101,6 +102,24 @@
 - ID: `A-` + 通し番号（リセットしない）
 - `未着手` → `進行中` → `完了` → 完了済みに移動
 - 完了済みは直近10件のみ。超過分はアーカイブ
+
+---
+
+## 成果物マップ
+
+> 各部門の成果物がどこにあるか。
+
+| 部門 | 格納先 | 主な成果物 |
+|------|--------|-----------|
+| analyst | `docs/research/` | 市場調査、競合分析、KPI提案、収支シミュレーション |
+| product-manager | `docs/specs/` | ShieldMe仕様書、機能設計書 |
+| writer | `content/blog/`, `content/copy/` | ブログ記事、LP文面、広告コピー |
+| x-manager | `content/tweets/` | X投稿案 |
+| video-creator | `docs/specs/`, `content/videos/` | 動画パイプライン設計、企画・台本 |
+| site-builder | `site/` | Webサイト |
+| legal | `docs/legal/` | 利用規約、プライバシーポリシー、リスクレビュー |
+| narrator | `content/blog/`, `content/videos/` | キャラ口調変換テキスト |
+| CEO | `docs/`, `reports/` | plan.md, status.md, 株主報告、週次レポート |
 
 ---
 
@@ -149,7 +168,5 @@
 - ccusageのAPI換算コスト合計: $80.88（参考値。Maxプランの実利用枠とは異なる）
 - **株主ダッシュボード実測: 約30%消費**（2026-02-19時点）
 - Maxプランの利用枠はレートリミット方式（5時間リセット + 週間上限）であり、ccusageのAPI換算コストとは計測基準が異なる
-- 通常セッション: CEO + 1〜2エージェント
-- 重いセッション: CEO + 3〜5エージェント
 
 > 注意: ccusageの$コストはAPI従量課金換算であり、Maxプランの実利用枠の消化率を示すものではない。実利用枠は株主ダッシュボードで確認すること。

@@ -106,26 +106,34 @@
 
 ---
 
-## 今回のセッションで学んだこと（2026-02-15）
+## 調査レポート一覧（詳細は各ファイル参照）
 
-### KPI目標設定の実践
-- Phase 0〜2の12ヶ月で、標準シナリオ月間利益¥244,500を目標
-- ShieldMe単体での損益分岐点は有料ユーザー17人（標準ARPU ¥1,500）
-- コンテンツ事業はnote主軸（月¥67,500）、ブログは補完（月¥7,500）
-- 動画事業は補完的位置づけ（月¥12,000）、収益化は後回しでもOK
+| レポート | ファイル | 主要知見 |
+|---------|---------|---------|
+| Type A戦略 | `docs/research/content-analysis-type-a.md` | note有料記事主軸。質特化 |
+| Type B戦略 | `docs/research/content-analysis-type-b.md` | ニッチ独立ブランド展開 |
+| anti-slop | `docs/research/anti-slop-guide.md` | 55個のNG表現。一人称エピソード重視 |
+| 海外ニッチ | `docs/research/overseas-niche-analysis.md` | タイムマシン戦略。EN→JPラグ2-4年 |
+| ローカライズ | `.claude/agent-memory/analyst/localization-strategy.md` | 成功/失敗パターン |
+| note | `docs/research/platform-note.md` | メンバーシップ+81.3%。1アカウント制限がType Bボトルネック |
+| TikTok | `docs/research/platform-tiktok.md` | 集客チャネルとして活用。収益主体にしない |
+| YouTube | `docs/research/platform-youtube.md` | AI量産規制強化。質特化月1-2本。RPM金融¥900-1,350 |
+| Instagram | `docs/research/platform-instagram.md` | フェイスレスAI英語圏爆発。日本語は空白 |
+| ブログ | `docs/research/platform-blog.md` | AdSenseモデル死亡。デジタル商品+リカーリングアフィのみ生存 |
 
-### 調査レポートレビューの実践
-- 既存3レポートを評価: 競合★★★★☆、コンテンツ★★★★★、コスト★★★★☆
-- 主な指摘: 価格根拠の補強、API実測の必要性、RPM下方修正
-
-### 次のアクション
-- Claude Max利用料の実額確認（株主に依頼）
-- `docs/state.json` へのKPI目標値反映（CEO承認後）
-- 週次KPI追跡の開始準備
-
----
+## 重要数値（引用用）
+- Substack $500K+/年: 52アカウント以上。The Rundown AI: 200万読者・7桁収益/年
+- Google HCU後: 量産AIサイト最大90%トラフィック消滅
+- note売上41.41億円(+25%)、営利2.56億円(+385%)。メンバーシップ > 有料記事
+- YouTube 2026年1月AI量産収益停止。ショートの収益効率はロングの1/50-1/100
+- Instagram: フェイスレスAI新規マネタイズ事業の38%(+217% vs 2022)
+- ブログ: デジタル商品の収益効率はAdSenseの8.4倍
+- **空白地帯S評価**: 職種特化AIテンプレ(note) / AI活用術フェイスレス(IG)
+- **空白地帯A評価**: AI SaaS比較(ブログ) / AIツール解説(YouTube) / 日本語AIニュースレター
 
 ## 今後の改善点
-- 競合の価格改定を定期監視する仕組み（月次）
-- API単価の実測データを蓄積し、価格モデルを精緻化
-- ユーザーインタビューの実施（支払意思額の検証）
+- 競合の価格改定を定期監視（月次）
+- API単価の実測データ蓄積・価格モデル精緻化
+- Type B事業のKPI目標値をCEO承認後にstatus.mdへ反映
+- r/juststart の2026年トレンドを月1回モニタリング
+- 日本語ASPでのリカーリングアフィリエイト案件の実在確認

@@ -2,7 +2,7 @@
 
 > 原則: 1つの情報は1箇所にだけ書く。
 > - 「次回やること」→ status.md に一元化
-> - KPI数値 → status.md / docs/specs/kpi-proposal.md に一元化
+> - KPI数値 → status.md / docs/research/kpi-proposal.md に一元化
 > - 成果物一覧 → status.md / docs/decisions.md に一元化
 > - セッション詳細 → content/logs/ に一元化
 > ここには**判断基準・学び・株主傾向・ツール知識**だけ書く。

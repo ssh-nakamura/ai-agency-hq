@@ -23,7 +23,7 @@ AI自動生成パイプラインでYouTubeチャンネルを運用し、広告�
 | 動画本数 | 0 | 月4本以上（Phase 1） |
 | 広告RPM | - | ¥500〜¥1,500（想定。ジャンル・品質依存） |
 
-出典: docs/specs/kpi-proposal.md、docs/specs/video-pipeline-design.md
+出典: docs/research/kpi-proposal.md、docs/specs/video-pipeline-design.md
 
 ---
 

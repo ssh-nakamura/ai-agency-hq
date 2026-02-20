@@ -21,7 +21,7 @@ SNS・Webメディアの誹謗中傷をAIがリアルタイム検知・通知す
 | 損益分岐ユーザー数 | - | 17人 |
 | チャーンレート | - | 5%以下（目標） |
 
-出典: docs/specs/kpi-proposal.md
+出典: docs/research/kpi-proposal.md
 
 ---
 

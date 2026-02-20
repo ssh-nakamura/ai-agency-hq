@@ -4,7 +4,7 @@
 
 ## 基本情報
 - プロジェクト: 仮想機関AI計画 / 株主: 若様 / 法人格なし（実験）
-- 事業: SaaS（ShieldMe）+ Type A（ドキュメンタリー: ブログ・note・YouTube・会話劇）+ Type B（ニッチ独立ブランド事業群）
+- 事業: SaaS（ShieldMe）+ Type A（ドキュメンタリー）+ Type B（ニッチブランド群）+ 投資（ai-trading-hq、別管理）
 
 ## 指揮系統
 ```
@@ -35,7 +35,8 @@
 | docs/decisions.md | 意思決定ログ |
 | docs/ceo-manual.md | CEO専用マニュアル |
 | docs/design-rules.md | サイトデザインルール |
-| docs/specs/ | 仕様書・調査レポート |
+| docs/specs/ | プロダクト仕様書 |
+| docs/research/ | 調査レポート（analyst） |
 | docs/legal/ | 利用規約、法務レビュー |
 
 ## ディレクトリ
@@ -46,6 +47,7 @@ ai-agency-hq/
 ├── site/                  # Webサイト
 ├── docs/                  # 上記ドキュメント
 ├── content/{logs,tweets,blog,copy,videos}/
+├── tools/core/            # 共有Pythonモジュール
 ├── tools/dashboard/       # HQダッシュボード
 ├── tools/validate-docs.py # 整合性チェッカー
 └── reports/               # 週次レポート・株主報告
