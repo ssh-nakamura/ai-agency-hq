@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Teams + tmux 操作ガイド</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #f5f5f5;
+    color: #1a1a1a;
+    line-height: 1.7;
+    padding: 2rem 1rem;
+}
+.container { max-width: 900px; margin: 0 auto; }
+header {
+    background: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 1.5rem;
+}
+header h1 { font-size: 1.5rem; color: #111; margin-bottom: 0.5rem; }
+header .meta { color: #666; font-size: 0.9rem; }
+section {
+    background: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 1.5rem;
+}
+section h2 {
+    font-size: 1.2rem;
+    color: #111;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+section h3 {
+    font-size: 1rem;
+    color: #333;
+    margin: 1.2rem 0 0.5rem;
+}
+.step-list {
+    list-style: none;
+    counter-reset: step;
+    padding: 0;
+}
+.step-list > li {
+    counter-increment: step;
+    position: relative;
+    padding-left: 3.5rem;
+    margin-bottom: 1.5rem;
+    min-height: 2.5rem;
+}
+.step-list > li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: #2563eb;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+.step-list > li .title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #111;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+.step-list > li .desc {
+    color: #555;
+    font-size: 0.9rem;
+}
+code, .cmd {
+    font-family: 'SF Mono', 'Menlo', 'Monaco', monospace;
+    font-size: 0.85rem;
+}
+.cmd-block {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin: 0.5rem 0 1rem;
+    overflow-x: auto;
+    line-height: 1.6;
+}
+.cmd-block .comment { color: #6a9955; }
+.cmd-block .prompt { color: #569cd6; }
+.cmd-block .cmd-text { color: #ce9178; }
+.cmd-block .output { color: #888; }
+.key {
+    display: inline-block;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0.1rem 0.5rem;
+    font-family: 'SF Mono', 'Menlo', monospace;
+    font-size: 0.8rem;
+    color: #333;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    min-width: 1.8rem;
+    text-align: center;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.5rem 0 1rem;
+    font-size: 0.9rem;
+}
+th, td {
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e5e5;
+}
+th {
+    background: #f8f8f8;
+    font-weight: 600;
+    color: #333;
+    font-size: 0.85rem;
+}
+tr:hover { background: #fafafa; }
+.diagram {
+    background: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1.2rem;
+    margin: 0.5rem 0 1rem;
+    font-family: 'SF Mono', 'Menlo', monospace;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    overflow-x: auto;
+    white-space: pre;
+}
+.warn {
+    background: #fff8e1;
+    border-left: 4px solid #ffc107;
+    padding: 0.8rem 1rem;
+    border-radius: 0 8px 8px 0;
+    margin: 0.5rem 0 1rem;
+    font-size: 0.9rem;
+    color: #6d5200;
+}
+.info {
+    background: #e3f2fd;
+    border-left: 4px solid #2196f3;
+    padding: 0.8rem 1rem;
+    border-radius: 0 8px 8px 0;
+    margin: 0.5rem 0 1rem;
+    font-size: 0.9rem;
+    color: #0d47a1;
+}
+.vs-table td:first-child { font-weight: 600; }
+.checkmark { color: #2e7d32; }
+.crossmark { color: #c62828; }
+.footer {
+    text-align: center;
+    color: #999;
+    font-size: 0.8rem;
+    margin-top: 2rem;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+    <h1>Agent Teams + tmux 操作ガイド</h1>
+    <div class="meta">仮想機関AI計画 | 作成: 2026-02-21 | 対象: 株主</div>
+</header>
+
+<!-- ================================ -->
+<!-- 前提知識 -->
+<!-- ================================ -->
+<section>
+    <h2>Agent Teams とは</h2>
+    <p>複数のAIエージェントが<strong>同じプロジェクト上で並列に動き、互いに通信しながら作業する</strong>仕組み。</p>
+
+    <h3>複数ターミナルでclaude起動するのとは別物</h3>
+    <table class="vs-table">
+        <tr>
+            <th></th>
+            <th>複数ターミナルで各自claude</th>
+            <th>Agent Teams</th>
+        </tr>
+        <tr>
+            <td>関係性</td>
+            <td>バラバラの個人事業主</td>
+            <td>1つの会社のチーム</td>
+        </tr>
+        <tr>
+            <td>タスク共有</td>
+            <td><span class="crossmark">なし</span></td>
+            <td><span class="checkmark">共有タスクリスト</span></td>
+        </tr>
+        <tr>
+            <td>メッセージ</td>
+            <td><span class="crossmark">送れない</span></td>
+            <td><span class="checkmark">SendMessageで直接やりとり</span></td>
+        </tr>
+        <tr>
+            <td>ファイル競合</td>
+            <td><span class="crossmark">壊す可能性あり</span></td>
+            <td><span class="checkmark">リーダーが制御</span></td>
+        </tr>
+    </table>
+</section>
+
+<!-- ================================ -->
+<!-- 事前設定 -->
+<!-- ================================ -->
+<section>
+    <h2>事前設定（済み）</h2>
+    <p>以下は2026-02-21に設定完了。変更不要。</p>
+    <div class="cmd-block">
+        <span class="comment"># ~/.claude/settings.json</span><br>
+        {<br>
+        &nbsp;&nbsp;"env": {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "<span class="cmd-text">1</span>"<br>
+        &nbsp;&nbsp;},<br>
+        &nbsp;&nbsp;"teammateMode": "<span class="cmd-text">auto</span>"<br>
+        }
+    </div>
+    <div class="info">
+        <strong>auto</strong> = tmuxの中ならペイン分割、tmuxなしなら1画面モード（Shift+↓で切替）。
+    </div>
+</section>
+
+<!-- ================================ -->
+<!-- 実行手順 -->
+<!-- ================================ -->
+<section>
+    <h2>毎回の実行手順</h2>
+
+    <ol class="step-list">
+        <li>
+            <span class="title">ターミナルを開く</span>
+            <span class="desc">Terminal.app でも iTerm2 でも何でもOK。</span>
+        </li>
+
+        <li>
+            <span class="title">tmuxセッションを作る</span>
+            <div class="cmd-block">
+                <span class="prompt">$</span> <span class="cmd-text">tmux new-session -s work</span>
+            </div>
+            <span class="desc">画面の下に<strong>緑のバー</strong>が出たらtmuxの中にいる。これが唯一の確認ポイント。</span>
+        </li>
+
+        <li>
+            <span class="title">claudeを起動する</span>
+            <div class="cmd-block">
+                <span class="prompt">$</span> <span class="cmd-text">cd ~/ai_prodcut/ai-agency-hq</span><br>
+                <span class="prompt">$</span> <span class="cmd-text">claude</span>
+            </div>
+        </li>
+
+        <li>
+            <span class="title">CEOに指示を出す（普通に話すだけ）</span>
+            <div class="cmd-block">
+                <span class="comment"># 例: トレンド調査を実行</span><br>
+                <span class="prompt">&gt;</span> <span class="cmd-text">/trend-research AI副業</span>
+            </div>
+            <span class="desc">CEOが TeamCreate → analyst と writer を起動 → <strong>自動的にペインが分割される</strong>。</span>
+        </li>
+
+        <li>
+            <span class="title">全員が動いてるのを眺める</span>
+            <span class="desc">基本は見てるだけでOK。CEOが勝手にメンバーに指示を出し、メンバーが勝手にタスクを取って動く。</span>
+            <div class="diagram">┌──────────────────┬──────────────────┐
+│  CEO（リーダー）   │  Analyst          │
+│  データ収集中...    │  市場評価中...     │
+├──────────────────┼──────────────────┤
+│  Writer           │                  │
+│  コンテンツ評価中... │                  │
+└──────────────────┴──────────────────┘</div>
+        </li>
+
+        <li>
+            <span class="title">終了</span>
+            <span class="desc">CEOが全作業完了後に TeamDelete で解散する。その後:</span>
+            <div class="cmd-block">
+                <span class="comment"># claude を終了</span><br>
+                <span class="prompt">&gt;</span> <span class="cmd-text">/exit</span><br><br>
+                <span class="comment"># tmux を終了</span><br>
+                <span class="prompt">$</span> <span class="cmd-text">exit</span>
+            </div>
+        </li>
+    </ol>
+</section>
+
+<!-- ================================ -->
+<!-- tmux操作 -->
+<!-- ================================ -->
+<section>
+    <h2>tmux 操作リファレンス</h2>
+
+    <div class="warn">
+        tmuxの操作は全て <span class="key">Ctrl</span> + <span class="key">b</span> を押して<strong>離してから</strong>次のキーを押す。同時押しではない。
+    </div>
+
+    <h3>ペイン操作（これだけ覚えれば使える）</h3>
+    <table>
+        <tr>
+            <th>やりたいこと</th>
+            <th>操作</th>
+        </tr>
+        <tr>
+            <td>隣のペインに移動</td>
+            <td><span class="key">Ctrl</span> + <span class="key">b</span> → <span class="key">o</span></td>
+        </tr>
+        <tr>
+            <td>ペインを全画面にする / 戻す</td>
+            <td><span class="key">Ctrl</span> + <span class="key">b</span> → <span class="key">z</span></td>
+        </tr>
+        <tr>
+            <td>過去のログをスクロール</td>
+            <td><span class="key">Ctrl</span> + <span class="key">b</span> → <span class="key">[</span> → 矢印キー → <span class="key">q</span> で戻る</td>
+        </tr>
+    </table>
+
+    <h3>離席・復帰</h3>
+    <table>
+        <tr>
+            <th>やりたいこと</th>
+            <th>操作</th>
+        </tr>
+        <tr>
+            <td>離席（裏で動き続ける）</td>
+            <td><span class="key">Ctrl</span> + <span class="key">b</span> → <span class="key">d</span></td>
+        </tr>
+        <tr>
+            <td>戻ってくる</td>
+            <td><code>tmux attach</code></td>
+        </tr>
+        <tr>
+            <td>セッション一覧を見る</td>
+            <td><code>tmux ls</code></td>
+        </tr>
+    </table>
+
+    <h3>知っておくと便利</h3>
+    <table>
+        <tr>
+            <th>やりたいこと</th>
+            <th>操作</th>
+        </tr>
+        <tr>
+            <td>ペインを矢印キーで選ぶ</td>
+            <td><span class="key">Ctrl</span> + <span class="key">b</span> → <span class="key">↑</span><span class="key">↓</span><span class="key">←</span><span class="key">→</span></td>
+        </tr>
+        <tr>
+            <td>ペインのサイズ変更</td>
+            <td><span class="key">Ctrl</span> + <span class="key">b</span> 長押し → 矢印キー</td>
+        </tr>
+        <tr>
+            <td>スクロール中に検索</td>
+            <td>スクロールモード中に <span class="key">/</span> → 文字入力 → <span class="key">n</span> で次へ</td>
+        </tr>
+        <tr>
+            <td>セッションを強制終了</td>
+            <td><code>tmux kill-session -t work</code></td>
+        </tr>
+    </table>
+</section>
+
+<!-- ================================ -->
+<!-- in-process mode -->
+<!-- ================================ -->
+<section>
+    <h2>tmuxなしの場合（in-process モード）</h2>
+    <p>tmuxを起動せずに <code>claude</code> を直接起動した場合は、1つのターミナルで全員が動く。</p>
+    <table>
+        <tr>
+            <th>やりたいこと</th>
+            <th>操作</th>
+        </tr>
+        <tr>
+            <td>次のメンバーを見る</td>
+            <td><span class="key">Shift</span> + <span class="key">↓</span></td>
+        </tr>
+        <tr>
+            <td>前のメンバーに戻る</td>
+            <td><span class="key">Shift</span> + <span class="key">↑</span></td>
+        </tr>
+        <tr>
+            <td>タスクリスト表示</td>
+            <td><span class="key">Ctrl</span> + <span class="key">t</span></td>
+        </tr>
+        <tr>
+            <td>メンバーに話しかける</td>
+            <td>そのメンバーに切替えてから入力 → Enter</td>
+        </tr>
+    </table>
+    <div class="info">
+        分割表示はないが、機能は同じ。画面が小さいノートPCではこちらの方が見やすい場合もある。
+    </div>
+</section>
+
+<!-- ================================ -->
+<!-- トラブルシューティング -->
+<!-- ================================ -->
+<section>
+    <h2>トラブルシューティング</h2>
+    <table>
+        <tr>
+            <th>症状</th>
+            <th>原因</th>
+            <th>対処</th>
+        </tr>
+        <tr>
+            <td>ペインが分割されない</td>
+            <td>tmuxの外でclaudeを起動した</td>
+            <td><code>tmux new-session -s work</code> してからclaude起動</td>
+        </tr>
+        <tr>
+            <td>TeamCreateが使えない</td>
+            <td>環境変数が未設定 or セッション再起動が必要</td>
+            <td><code>~/.claude/settings.json</code> 確認 → claude再起動</td>
+        </tr>
+        <tr>
+            <td>tmuxの中でキーが効かない</td>
+            <td>Ctrl+b の後に間を空けていない</td>
+            <td>Ctrl+b を押して<strong>手を離してから</strong>次のキーを押す</td>
+        </tr>
+        <tr>
+            <td>画面が狭すぎる</td>
+            <td>ペインが多すぎる</td>
+            <td><span class="key">Ctrl+b</span> → <span class="key">z</span> で1つを全画面に</td>
+        </tr>
+        <tr>
+            <td>前回のセッションが残ってる</td>
+            <td>tmux kill し忘れ</td>
+            <td><code>tmux ls</code> で確認 → <code>tmux kill-session -t 名前</code></td>
+        </tr>
+        <tr>
+            <td>画面がフリーズした</td>
+            <td>スクロールモードに入ってる</td>
+            <td><span class="key">q</span> を押せばスクロールモードを抜ける</td>
+        </tr>
+    </table>
+</section>
+
+<!-- ================================ -->
+<!-- フロー図 -->
+<!-- ================================ -->
+<section>
+    <h2>全体フロー</h2>
+    <div class="diagram">ターミナル開く
+    │
+    ▼
+tmux new-session -s work        ← 緑バー出たらOK
+    │
+    ▼
+cd ~/ai_prodcut/ai-agency-hq
+claude                           ← CEO起動
+    │
+    ▼
+株主が指示（例: /trend-research AI副業）
+    │
+    ▼
+CEO が TeamCreate
+  → Task(analyst) を起動          ← 自動でペイン追加
+  → Task(writer) を起動           ← 自動でペイン追加
+    │
+    ▼
+┌────────────┬────────────┐
+│ CEO        │ Analyst    │      全員がリアルタイムで動く
+├────────────┼────────────┤      Ctrl+b → o でペイン切替
+│ Writer     │            │      基本は見てるだけ
+└────────────┴────────────┘
+    │
+    ▼
+全タスク完了
+  → CEO が TeamDelete で解散
+  → /exit で claude 終了
+  → exit で tmux 終了</div>
+</section>
+
+<div class="footer">仮想機関AI計画 Agent Teams Guide | 2026-02-21</div>
+
+</div>
+</body>
+</html>

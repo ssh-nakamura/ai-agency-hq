@@ -361,6 +361,40 @@ def api_agents():
     return {"dms": dms, "teams": teams}
 
 
+# ── API: /api/research ───────────────────────────────────
+
+def api_research():
+    research_dir = REPO_DIR / "docs" / "research"
+    if not research_dir.exists():
+        return {"files": []}
+    files = sorted(research_dir.glob("*.md"))
+    result = []
+    for f in files:
+        content = f.read_text(encoding="utf-8")
+        # Extract first heading as title
+        title = f.stem
+        for line in content.split("\n"):
+            if line.startswith("# "):
+                title = line.lstrip("# ").strip()
+                break
+        # Extract summary (first non-empty, non-heading line)
+        summary = ""
+        for line in content.split("\n"):
+            stripped = line.strip()
+            if stripped and not stripped.startswith("#") and not stripped.startswith(">") and not stripped.startswith("|") and not stripped.startswith("-"):
+                summary = stripped[:150]
+                break
+        result.append({
+            "name": f.name,
+            "title": title,
+            "summary": summary,
+            "size": len(content),
+            "lines": content.count("\n") + 1,
+            "content": content,
+        })
+    return {"files": result}
+
+
 # ── API: /api/health ──────────────────────────────────────
 
 def api_health():
@@ -550,6 +584,70 @@ def api_logs():
     return {"logs": logs}
 
 
+# ── API: /api/niche-scans ─────────────────────────────────
+
+def api_niche_scans():
+    scans_dir = REPO_DIR / "content" / "niche-analysis" / "scans"
+    if not scans_dir.exists():
+        return {"scans": []}
+
+    scans = []
+    for scan_dir in sorted(scans_dir.iterdir(), reverse=True):
+        if not scan_dir.is_dir() or scan_dir.name == "archive":
+            continue
+        eval_dir = scan_dir / "eval"
+        sc_dir = scan_dir / "scorecards"
+        niches = []
+
+        if eval_dir.exists():
+            for eval_file in sorted(eval_dir.glob("*.json")):
+                niche_id = eval_file.stem
+                try:
+                    eval_data = json.loads(eval_file.read_text(encoding="utf-8"))
+                except (json.JSONDecodeError, OSError):
+                    continue
+
+                steps = eval_data.get("steps", {})
+                # Calculate quick summary scores
+                s1 = steps.get("step1_demand", {})
+                s6 = steps.get("step6_localization", {})
+                s4 = steps.get("step4_supply", {})
+
+                yt_en = s1.get("en", {}).get("yt_top20_views", 0)
+                yt_jp = s1.get("jp", {}).get("yt_top20_views", 0)
+                pub_jp = s4.get("jp", {}).get("twitter_publishers", 0)
+                yt_ratio = s6.get("yt_ratio", 0)
+
+                niches.append({
+                    "id": niche_id,
+                    "keyword_en": eval_data.get("keywords", {}).get("en", ""),
+                    "keyword_jp": eval_data.get("keywords", {}).get("jp", ""),
+                    "yt_views_en": yt_en,
+                    "yt_views_jp": yt_jp,
+                    "publishers_jp": pub_jp,
+                    "yt_ratio": yt_ratio,
+                    "api_calls": eval_data.get("api_calls", {}).get("total", 0),
+                    "cost_usd": eval_data.get("api_calls", {}).get("estimated_cost_usd", 0),
+                    "eval_data": eval_data,
+                })
+
+        meta = {}
+        meta_path = scan_dir / "meta.json"
+        if meta_path.exists():
+            try:
+                meta = json.loads(meta_path.read_text(encoding="utf-8"))
+            except (json.JSONDecodeError, OSError):
+                pass
+
+        scans.append({
+            "date": scan_dir.name,
+            "meta": meta,
+            "niches": niches,
+        })
+
+    return {"scans": scans}
+
+
 # ── Static File Serving ───────────────────────────────────
 
 MIME_TYPES = {
@@ -575,11 +673,25 @@ class Handler(http.server.BaseHTTPRequestHandler):
             "/api/kpi": api_kpi,
             "/api/roadmap": api_roadmap,
             "/api/logs": api_logs,
+            "/api/research": api_research,
+            "/api/niche-scans": api_niche_scans,
         }
 
         if path in api_routes:
             data = api_routes[path]()
             self.respond(200, "application/json", json.dumps(data, ensure_ascii=False))
+            return
+
+        # Niche report HTML (serve static file)
+        if path.startswith("/api/niche-report"):
+            qs = urllib.parse.parse_qs(parsed.query)
+            date = qs.get("date", [""])[0]
+            if date:
+                report_path = REPO_DIR / "content" / "niche-analysis" / "scans" / date / "report.html"
+                if report_path.exists():
+                    self.respond(200, "text/html", report_path.read_text(encoding="utf-8"))
+                    return
+            self.respond(404, "text/plain", "Report not found")
             return
 
         # Static files

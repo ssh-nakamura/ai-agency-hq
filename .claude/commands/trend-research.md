@@ -1,6 +1,6 @@
 # Trend Research — リアルタイムトレンド調査（Team運用）
 
-> 「今何がバズっているか」「どこに空白があるか」をリアルタイムデータで調査する。
+> 「検索需要」と「ソーシャルバズ」を掛け合わせ、収益化できる空白地帯を見つける。
 > CEO + Analyst + Writer の3者がTeamで議論してGo/NoGo判断まで出す。
 
 ## 起動
@@ -11,21 +11,36 @@
 /trend-research AI副業 note        # 深掘り + 媒体指定
 ```
 
+## 中核コンセプト: バズ×需要マトリクス
+
+ソーシャルメディアとGoogle Trendsは**別の質問に答える**。両方見て初めて判断できる。
+
+| | バズ高（MCP） | バズ低（MCP） |
+|---|---|---|
+| **需要高（Google Trends）** | 検証済みトレンド。レッドオーシャンリスク | **静かな需要 = 最高のチャンス**（誰も作ってないのに検索されてる） |
+| **需要低（Google Trends）** | ノイズ・一過性。収益化困難 | トレンドではない |
+
+狙うのは **「需要高 × バズ低〜中」** のゾーン。
+
 ---
 
-## Step 0: MCP接続チェック（最初に必ず実行）
+## Step 0: ツール接続チェック（最初に必ず実行）
 
-**このスキルはMCPが動かないと意味がない。WebSearchで代替するな。**
+**MCPが動かないと意味がない。WebSearchで代替するな。**
 
 ```
-1. Grok MCP確認: x_get_trending を1回呼ぶ
-   → 成功 → Layer 1 OK
+1. Grok MCP確認: ToolSearch "+x_search" → x_get_trending を1回呼ぶ
+   → 成功 → バズ分析可能
    → 失敗 → 即エスカレーション（L2: 株主にMCP復旧を依頼）。調査中止。
 
-2. Xpoz MCP確認: Instagram で適当なキーワードを1回検索
-   → 成功 → Layer 2 OK
-   → 失敗 → 株主に報告「Xpoz MCP未接続。Layer 2（Instagram/TikTok/Reddit）スキップ」
-   → Xpozだけ死んでいる場合はLayer 1 + Layer 3で続行可。ただし株主に報告必須。
+2. Xpoz MCP確認: ToolSearch "+xpoz-mcp" → Instagram で適当なキーワード検索
+   → 成功 → クロスPF分析可能
+   → 失敗 → 株主に報告（L1）。Grok単独で続行可。
+
+3. Google Trends API確認: ステータス未定（alpha申請中）
+   → 申請URL: https://developers.google.com/search/apis/trends#apply
+   → 取得済みなら: python3 tools/core/google_trends.py status で確認
+   → 未取得なら: WebSearchで "{トピック} Google Trends 推移" を代替手段として使用
 
 ※ Grok MCPが死んでいる場合は調査を実行しない。WebSearchで代替は禁止。
 ```
@@ -45,18 +60,25 @@ TeamCreate:
 ### 1-2. タスク作成
 
 ```
-TaskCreate: "CEO: Layer 1-3 データ収集"
-  description: "Grok MCP + Xpoz MCP + WebSearchでトレンド生データを収集。共有フォーマットで整理してチームに送る"
+TaskCreate: "CEO: 需要ベースライン（Google Trends）"
+  description: "JP/US/その他のGoogle Trendsデータを取得。検索需要のベースラインを確立"
+
+TaskCreate: "CEO: バズ分析（Grok + Xpoz MCP）"
+  description: "Grok MCP + Xpoz MCPでソーシャルバズデータを収集"
+  blockedBy: [needs Google Trends baseline first]
+
+TaskCreate: "CEO: バズ×需要クロス分析 + タイムマシン検出"
+  description: "Google Trends × MCPデータを2x2マトリクスで分類。JP vs US比較でタイムマシン候補を特定。共有フォーマットで整理してチームに送る"
 
 TaskCreate: "Analyst: 市場評価"
-  description: "CEOの生データを受け取り、Trend Arbitrage 3条件 + 収益性試算 + 競合密度を評価"
+  description: "CEOの生データ（バズ×需要マトリクス付き）を受け取り、Trend Arbitrage 3条件 + 収益性試算 + 競合密度を評価"
 
 TaskCreate: "Writer: コンテンツ実現性評価"
   description: "CEOの生データを受け取り、媒体適合 + コンテンツ設計 + AI制作可能性を評価"
 
 TaskCreate: "3者合議: Go/NoGo判定"
   description: "CEO・Analyst・Writerの評価を突き合わせて最終判定。成果物をdocs/research/に保存"
-  blockedBy: [上の3タスク]
+  blockedBy: [Analyst, Writer完了後]
 ```
 
 ### 1-3. チームメンバーspawn
@@ -81,76 +103,86 @@ Task(writer):
 
 ## Step 2: CEO — データ収集フェーズ
 
-### Layer 1: Grok MCP — Xリアルタイムバズ（メイン）
+**順番が重要。需要→バズ→比較→補完の順で回す。**
 
-MCPツール3種を使い分ける:
+### Phase A: 検索需要の把握（Google Trends）【最初に実行】
 
-**`x_get_trending`** → 今Xで何がトレンドか一覧取得
-```
-→ トレンド一覧を取得。ここから「おっ」と思うものをピックアップ
-```
+**Google Trends API alpha 申請中。取得後にキーワード指定のInterest Over Time + Related Queriesが使える。**
 
-**`x_search_posts`** → キーワード指定でX投稿検索
-```
-→ テーマ指定時: そのテーマのリアルタイム投稿・エンゲージメントを取得
-→ スキャン時: トレンド一覧から気になるものを深掘り
+#### API取得後:
+```bash
+python3 tools/core/google_trends.py query "{トピック}" --geo JP
 ```
 
-**`x_get_user_posts`** → 特定ユーザーの投稿取得
+#### API未取得時（現在）:
 ```
-→ 業界インフルエンサーが何を話しているか確認
+1. WebSearch で "{トピック} Google Trends 推移 2026" を検索
+2. 検索結果から需要推移の傾向を把握
+```
+→ API取得まではこれが限界。精度は低い。
+
+### Phase B: バズ分析（Grok MCP）
+
+**`x_get_trending`** → Xトレンド一覧。Phase Aの結果と見比べる。
+```
+→ Google Trendsにもある = 検証済み需要
+→ Google Trendsにない = ソーシャル限定のノイズ or 超初期トレンド
 ```
 
-### Layer 2: Xpoz MCP — Instagram/TikTok/Reddit（補完）
-
-Grokが拾えないプラットフォームをカバーする。
-
+**`x_search_posts`** → キーワードでX投稿検索
 ```
-対応PF: Instagram, TikTok, Reddit（Twitter/Xも可だがGrokがメイン）
-Free枠: 100K件/月（課金情報登録不要）
-制限: トレンド調査のみに使用。社内情報を含む検索は禁止
+→ テーマ指定時: エンゲージメント + 投稿者属性を確認
+→ スキャン時: Phase Aの需要トピックのバズ状況を確認
 ```
 
-**検索パターン:**
+**`x_get_user_posts`** → 業界インフルエンサーの発信内容を確認
+
+### Phase C: クロスPF分析（Xpoz MCP）
+
+Grokが拾えないプラットフォームをカバー。
 
 | プラットフォーム | 検索内容 | 確認ポイント |
 |---------------|---------|------------|
-| **Instagram** | `{トピック}` でリール・投稿検索 | エンゲージメント率、ファセルス運用の有無、日本語コンテンツ密度 |
-| **TikTok** | `{トピック}` で動画検索 | 再生数、日本語 vs 英語の投稿比率、バズパターン |
-| **Reddit** | `r/japanlife`, `r/entrepreneur` 等で検索 | 英語圏の議論内容、日本未上陸のトピック発見 |
+| **Instagram** | `{トピック}` でリール・投稿検索 | エンゲージメント率、日本語コンテンツ密度 |
+| **TikTok** | `{トピック}` で動画検索 | 再生数、日本語 vs 英語比率 |
+| **Reddit** | `r/japanlife`, `r/entrepreneur` 等 | 英語圏の議論、日本未上陸トピック |
 
-**Xpoz → Grok比較（同トピックの温度差）:**
+**媒体間の温度差判定:**
 ```
-X/Twitterでバズ + Instagram/TikTokで弱い → テキスト向きニッチ（ブログ/note）
-X/Twitterで弱い + TikTok/Instagramでバズ → ビジュアル向きニッチ（YouTube/短尺動画）
-全PFでバズ → レッドオーシャン（避ける or 差別化必須）
-全PFで弱い → まだ早い or ニッチすぎ（タイムマシン候補として保留）
+X + Insta/TikTok 両方バズ → レッドオーシャン（差別化必須）
+Xだけバズ → テキスト向きニッチ（ブログ/note）
+Insta/TikTokだけバズ → ビジュアル向き（YouTube/短尺動画）
+全PFで弱い → まだ早い or ニッチすぎ（保留）
 ```
 
-### Layer 3: WebSearch — MCP非対応データの補完
+### Phase D: タイムマシン検出【毎回必須】
 
-**MCPのフォールバックではない。MCP非対応の媒体・指標を取るためのもの。**
+**MCP比較（英語 vs 日本語）を中心にする。Google Trends APIが使えるようになったら追加。**
+
+```
+1. Grok MCP: 同トピックを英語/日本語で検索
+   → 英語圏のX投稿量 vs 日本語のX投稿量
+
+2. Xpoz MCP: 同トピックをInstagram/Redditで検索
+   → 英語圏のビジュアルコンテンツ量 vs 日本語
+
+3. 総合判定:
+   MCP英語有/日本語無 → ★★★（最高のチャンス）
+   MCP英語有/日本語弱 → ★★
+   MCP英語有/日本語有 → ★（遅い）
+   MCP英語なし        → トレンドではない（除外）
+```
+
+### Phase E: 補完調査（WebSearch）
+
+**MCPのフォールバックではない。MCPが対応しない媒体のデータを取る。**
 
 | 検索対象 | クエリ例 | 目的 |
 |---------|---------|------|
-| Google Trends | `{トピック} Google Trends 2026` | 検索ボリューム推移の確認 |
-| YouTube | `{トピック} site:youtube.com` | 再生数・チャンネル数確認 |
-| note | `{トピック} site:note.com` | 有料記事の有無・スキ数確認 |
-| Substack/Beehiiv | `{トピック} site:substack.com` | 英語圏ニュースレターの存在確認 |
-
-### Layer 4: タイムマシン検出（英語→日本語ギャップ）【毎回必須】
-
-**毎回必ず実行。** 海外にあって日本にないものを見つける。
-
-```
-1. 英語でGrok + Xpoz検索: "{topic in English}"
-2. 日本語でGrok + Xpoz検索: "{同トピック日本語}"
-3. 比較:
-   - 英語あり・日本語あり → 参入遅い（★）
-   - 英語あり・日本語弱い → チャンス（★★）
-   - 英語あり・日本語なし → 最高のチャンス（★★★）
-   - 英語なし → トレンドではない（除外）
-```
+| YouTube | `{トピック} site:youtube.com` | 再生数・チャンネル数 |
+| note | `{トピック} site:note.com` | 有料記事・スキ数 |
+| Substack | `{トピック} site:substack.com` | 英語圏ニュースレター |
+| Amazon Kindle | `{トピック} site:amazon.co.jp Kindle` | 電子書籍の競合状況 |
 
 ---
 
@@ -161,51 +193,66 @@ X/Twitterで弱い + TikTok/Instagramでバズ → ビジュアル向きニッ�
 ```markdown
 ## トレンド生データ [日付]
 
-### Xバズ（Grok MCP取得）
-| # | トピック | 投稿例 | エンゲージメント | 熱量 |
-|---|---------|--------|----------------|------|
+### A. 検索需要ベースライン（Google Trends）
+| # | トピック | トラフィック | JP/US | ニュースソース |
+|---|---------|------------|-------|-------------|
 
-### クロスプラットフォーム状況（Xpoz MCP）
-| # | トピック | Instagram | TikTok | Reddit | YouTube | note | 媒体温度差 |
-|---|---------|-----------|--------|--------|---------|------|-----------|
+### B. ソーシャルバズ（Grok + Xpoz MCP）
+| # | トピック | X熱量 | Instagram | TikTok | Reddit | 媒体温度差 |
+|---|---------|-------|-----------|--------|--------|-----------|
 
-### タイムマシン候補（英語あり→日本語弱/なし）
-| # | 英語トピック | 海外状況 | 日本語状況 | 推定ラグ | チャンス度 |
-|---|------------|---------|-----------|---------|-----------|
+### C. バズ×需要マトリクス分類
+| # | トピック | 検索需要 | バズ | 分類 | 判断 |
+|---|---------|---------|------|------|------|
+| 1 | xxx | 高 | 低 | 静かな需要 | ★★★ 最優先調査 |
+| 2 | yyy | 高 | 高 | 検証済み | ★★ レッドオーシャン注意 |
+| 3 | zzz | 低 | 高 | ノイズ | ★ 見送り |
+
+### D. タイムマシン候補（Google Trends JP/US差 + MCP英日差）
+| # | トピック（英語） | Google US | Google JP | MCP英語 | MCP日本語 | チャンス度 |
+|---|----------------|----------|----------|--------|----------|-----------|
 ```
 
 ```
 SendMessage:
   type: "message"
   recipient: "trend-analyst"
-  content: [上のデータ + "市場評価フェーズの手順に従って評価せよ"]
+  content: [上のデータ + "バズ×需要マトリクスのC・Dセクションを重点的に評価せよ。市場評価フェーズの手順に従え"]
 
 SendMessage:
   type: "message"
   recipient: "trend-writer"
-  content: [上のデータ + "コンテンツ実現性評価フェーズの手順に従って評価せよ"]
+  content: [上のデータ + "Cセクションの★★★候補を優先してコンテンツ実現性を評価せよ"]
 ```
 
 ---
 
 ## Step 4: Analyst — 市場評価フェーズ
 
-CEOから生データを受け取ったら、以下を評価:
+CEOから生データ（バズ×需要マトリクス付き）を受け取ったら、以下を評価:
 
-### Trend Arbitrage 3条件判定
+### バズ×需要マトリクスの検証
 
-各候補に対して:
+CEOのマトリクス分類を検証・修正する:
+```
+- 「静かな需要（★★★）」候補 → 本当に検索需要があるか？ 競合は本当にいないか？
+- 「検証済み（★★）」候補 → 差別化の余地があるか？ ニッチを切り出せるか？
+- 「ノイズ（★）」候補 → 本当に一過性か？ 意外な収益モデルはないか？
+```
+
+### Trend Arbitrage 3条件判定（★★★候補を優先）
 
 | 条件 | 判定方法 | ○/× |
 |------|---------|------|
-| **Breakout（急上昇）** | 検索ボリューム推移、X投稿数の増加率 | |
-| **Information Gap（供給不足）** | 検索結果の質・鮮度、競合アカウント数 | |
+| **Breakout（急上昇）** | Google Trends推移 + X投稿数の増加率 | |
+| **Information Gap（供給不足）** | 検索需要あり + コンテンツ少ない（バズ×需要マトリクスの★★★ゾーン） | |
 | **High Intent（収益性）** | アフィリ単価、購買意欲、広告RPM | |
 
 ### 収益性の試算
 
 ```
-- 推定月間検索ボリューム: X
+- Google Trendsトラフィック指標: {RSSの数値}
+- 推定月間検索ボリューム: X（トラフィック指標から推定）
 - 推定CTR（1位想定）: Y%
 - 推定コンバージョン率: Z%
 - 推定単価（アフィリ or 有料記事）: ¥W
@@ -271,6 +318,7 @@ AnalystとWriterの報告が揃ったら、CEOが合議タスクを開始:
 | | トレンド熱量 | 収益性 × 競合密度 | 制作可能性 × 媒体適合 | Go/NoGo |
 
 ### Go判定の条件（全部満たす）
+- バズ×需要マトリクスで★★★ or ★★
 - Trend Arbitrage 3条件のうち2つ以上○
 - 推定月収 ¥30,000以上
 - AIで制作可能（一次データ不要 or 取得可能）
@@ -295,24 +343,30 @@ AnalystとWriterの報告が揃ったら、CEOが合議タスクを開始:
 
 ---
 
-## MCP設定情報
+## ツール設定情報
 
 ### Grok MCP（x_search）— 設定済み
 ```
 サーバー名: x_search
 ツール: x_search_posts, x_get_user_posts, x_get_trending
 コスト: xAI API（$25無料クレジット。超過後は従量課金 $2.50-5/1Kコール）
+キー管理: ~/.claude/mcp-servers/x-search-mcp/.env（正本。python-dotenvで読み込み）
 ```
 
-### Xpoz MCP（xpoz-mcp）— 要セットアップ
+### Xpoz MCP（xpoz-mcp）— 設定済み
 ```
-設定コマンド:
-claude mcp add --transport http --scope user xpoz-mcp https://mcp.xpoz.ai/mcp --header "Authorization: Bearer <Xpoz APIトークン>"
-
-取得先: https://www.xpoz.ai/ でアカウント作成 → APIトークン取得
+ツール: Instagram/TikTok/Reddit検索
 コスト: Free枠 100K件/月（課金情報登録不要）
-対応PF: Twitter/X, Instagram, TikTok, Reddit
-無効化: claude mcp remove xpoz-mcp
+キー管理: ~/.claude.json headers（HTTPトランスポートのため設定ファイルに必要）
+```
+
+### Google Trends API — alpha申請中
+```
+ステータス: 未取得
+申請URL: https://developers.google.com/search/apis/trends#apply
+エンドポイント: https://trends.googleapis.com/v1alpha/trends:query
+認証: OAuth 2.0（scope: trends.readonly）
+取得後にツール実装予定（設計案を先に出す）
 ```
 
 ### エスカレーション基準
@@ -320,8 +374,8 @@ claude mcp add --transport http --scope user xpoz-mcp https://mcp.xpoz.ai/mcp --
 | 状況 | 対応 | レベル |
 |------|------|--------|
 | Grok MCP応答なし | **調査中止。** 株主にMCP復旧を依頼 | L2 |
-| Xpoz MCP応答なし | 株主に報告。Layer 1 + Layer 3で続行 | L1 |
-| 両方応答なし | **調査中止。** 株主に全MCP復旧を依頼 | L2 |
+| Xpoz MCP応答なし | 株主に報告。Grok単独で続行 | L1 |
+| 両方MCP応答なし | **調査中止。** 株主に全MCP復旧を依頼 | L2 |
 | xAI無料クレジット枯渇 | 株主に従量課金の承認を依頼 | L4 |
 
 ---

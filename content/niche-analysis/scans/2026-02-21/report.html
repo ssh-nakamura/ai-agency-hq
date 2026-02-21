@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Niche Analysis Report — 2026-02-21</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans',sans-serif;background:#0a0a0a;color:#d0d0d0;line-height:1.6}
+.report{max-width:1100px;margin:0 auto;padding:32px 24px}
+
+/* Header */
+.report-header{margin-bottom:32px;border-bottom:1px solid #222;padding-bottom:24px}
+.report-header h1{font-size:26px;font-weight:800;color:#fff;letter-spacing:-0.5px}
+.report-header .meta{font-size:13px;color:#666;margin-top:6px}
+.report-header .meta span{margin-right:16px}
+
+/* Summary cards */
+.summary-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}
+.summary-card{background:#111;border:1px solid #1e1e1e;border-radius:10px;padding:16px}
+.summary-card .val{font-size:28px;font-weight:800;color:#fff}
+.summary-card .label{font-size:12px;color:#666;margin-top:2px}
+
+/* Section headers */
+.section-title{font-size:18px;font-weight:700;color:#fff;margin:32px 0 16px;padding-top:16px;border-top:1px solid #1a1a1a}
+
+/* Ranking table */
+.ranking-table{width:100%;border-collapse:collapse;margin-bottom:8px}
+.ranking-table th{font-size:11px;color:#666;font-weight:600;text-align:left;padding:8px 10px;border-bottom:1px solid #222;text-transform:uppercase;letter-spacing:0.5px}
+.ranking-table th:nth-child(n+3){text-align:right}
+.ranking-table th:nth-child(6){text-align:left}
+.rank-row{cursor:pointer;transition:background 0.15s}
+.rank-row:hover{background:#151515}
+.rank-row td{padding:10px;border-bottom:1px solid #151515}
+.rank-num{color:#555;font-weight:700;font-size:18px;width:30px}
+.niche-name{font-weight:600;color:#e0e0e0;font-size:14px}
+.niche-sub{font-size:11px;color:#555}
+.niche-name-sm{font-size:13px;font-weight:600;color:#ccc;white-space:nowrap}
+.num{text-align:right;font-variant-numeric:tabular-nums;color:#aaa}
+.warn-dot{color:#eab308;font-size:14px}
+
+/* Ratio bar */
+.ratio-bar{position:relative;height:20px;background:#1a1a1a;border-radius:4px;overflow:hidden;min-width:100px}
+.ratio-fill{height:100%;border-radius:4px;transition:width 0.3s}
+.ratio-label{position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.8)}
+
+/* Heatmap */
+.heatmap-table{width:100%;border-collapse:collapse;margin-bottom:32px}
+.heatmap-table th{font-size:11px;color:#666;font-weight:600;padding:6px 8px;border-bottom:1px solid #222}
+.heatmap-table td{padding:8px;border-bottom:1px solid #151515}
+
+/* Detail sections */
+.detail-section{background:#0f0f0f;border:1px solid #1a1a1a;border-radius:12px;padding:24px;margin-bottom:20px}
+.detail-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.detail-header h2{font-size:18px;font-weight:700;color:#fff}
+.en-label{font-size:14px;color:#555;font-weight:400}
+.detail-sub{font-size:12px;color:#444;margin-top:2px}
+.detail-score{font-size:32px;font-weight:800}
+
+/* Mini step cards */
+.mini-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:20px}
+.mini-card{background:#141414;border:1px solid #1e1e1e;border-radius:8px;padding:10px;text-align:center}
+.mini-label{font-size:10px;color:#666;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
+.mini-score{font-size:16px;margin:4px 0}
+.mini-comment{font-size:10px;color:#555;line-height:1.3}
+
+/* Data blocks */
+.data-block{background:#111;border:1px solid #1a1a1a;border-radius:8px;padding:14px;margin-bottom:12px}
+.data-block h3{font-size:13px;font-weight:600;color:#999;margin-bottom:10px}
+.data-block table{width:100%;border-collapse:collapse;font-size:12px}
+.data-block th{text-align:left;color:#555;font-size:10px;font-weight:600;padding:4px 8px;border-bottom:1px solid #1a1a1a;text-transform:uppercase}
+.data-block td{padding:5px 8px;border-bottom:1px solid #141414;color:#aaa}
+.data-block td.num{text-align:right}
+
+/* Grok details */
+.grok-details{margin-top:12px;border:1px solid #1a1a1a;border-radius:8px;overflow:hidden}
+.grok-details summary{padding:12px 14px;background:#111;cursor:pointer;font-size:13px;font-weight:600;color:#888}
+.grok-details summary:hover{background:#151515}
+.grok-details[open] summary{border-bottom:1px solid #1a1a1a}
+.grok-section{padding:12px 14px}
+.grok-section h4{font-size:11px;color:#666;font-weight:600;margin-bottom:8px;text-transform:uppercase}
+.grok-item{margin-bottom:10px;padding:8px;background:#0f0f0f;border-radius:6px;border-left:2px solid #2a2a2a}
+.grok-text{font-size:12px;color:#bbb;line-height:1.4;word-break:break-word}
+.grok-meta{font-size:10px;color:#555;margin-top:4px}
+.grok-more{font-size:11px;color:#555;font-style:italic}
+.dimmed{color:#444;font-style:italic}
+
+/* Warnings */
+.warn-box{margin-bottom:14px}
+.warn-badge{display:inline-block;background:rgba(234,179,8,0.1);color:#eab308;font-size:11px;padding:3px 8px;border-radius:4px;margin-right:6px;margin-bottom:4px}
+
+/* Footer */
+.report-footer{text-align:center;font-size:11px;color:#333;margin-top:40px;padding-top:20px;border-top:1px solid #1a1a1a}
+
+/* Responsive */
+@media(max-width:768px){
+    .summary-row{grid-template-columns:repeat(2,1fr)}
+    .mini-grid{grid-template-columns:repeat(4,1fr)}
+    .ranking-table th:nth-child(4),.ranking-table th:nth-child(5),
+    .ranking-table td:nth-child(4),.ranking-table td:nth-child(5){display:none}
+}
+</style>
+</head>
+<body>
+<div class="report">
+
+    <div class="report-header">
+        <h1>Niche Demand Analysis Report</h1>
+        <div class="meta">
+            <span>Scan: 2026-02-21</span>
+            <span>Niches: 8</span>
+            <span>API Calls: 124</span>
+            <span>Cost: $19.18</span>
+            <span>Generated: 2026-02-22 08:31</span>
+        </div>
+    </div>
+
+    <div class="summary-row">
+        <div class="summary-card">
+            <div class="val">8</div>
+            <div class="label">Niches Evaluated</div>
+        </div>
+        <div class="summary-card">
+            <div class="val" style="color:#22c55e">19/21</div>
+            <div class="label">Top Score — ストア哲学</div>
+        </div>
+        <div class="summary-card">
+            <div class="val" style="color:#eab308">5</div>
+            <div class="label">With Data Issues</div>
+        </div>
+        <div class="summary-card">
+            <div class="val">$19.18</div>
+            <div class="label">Total API Cost</div>
+        </div>
+    </div>
+
+    <div class="section-title">Ranking</div>
+    <table class="ranking-table">
+        <tr>
+            <th>#</th>
+            <th>Niche</th>
+            <th>Score</th>
+            <th>YT EN</th>
+            <th>YT JP</th>
+            <th>EN/JP Ratio</th>
+            <th>JP Publishers</th>
+        </tr>
+        
+        <tr class="rank-row" data-niche="stoicism">
+            <td class="rank-num">1</td>
+            <td>
+                <div class="niche-name">ストア哲学</div>
+                <div class="niche-sub">stoicism philosophy</div>
+            </td>
+            <td class="num" style="color:#22c55e;font-weight:700">19/21</td>
+            <td class="num">21,625,915</td>
+            <td class="num">3,333,376</td>
+            <td><div class="ratio-bar"><div class="ratio-fill" style="width:16%;background:#22c55e"></div><span class="ratio-label">6.5x</span></div></td>
+            <td class="num">20,527</td>
+        </tr>
+        <tr class="rank-row" data-niche="ai-prompts">
+            <td class="rank-num">2</td>
+            <td>
+                <div class="niche-name">AIプロンプト テンプレート</div>
+                <div class="niche-sub">AI prompts templates</div>
+            </td>
+            <td class="num" style="color:#eab308;font-weight:700">17/21</td>
+            <td class="num">7,011,714</td>
+            <td class="num">963,940</td>
+            <td><div class="ratio-bar"><div class="ratio-fill" style="width:18%;background:#22c55e"></div><span class="ratio-label">7.3x</span></div></td>
+            <td class="num">301,027</td>
+        </tr>
+        <tr class="rank-row" data-niche="data-visualization">
+            <td class="rank-num">3</td>
+            <td>
+                <div class="niche-name">データ可視化</div>
+                <div class="niche-sub">data visualization</div>
+            </td>
+            <td class="num" style="color:#eab308;font-weight:700">17/21</td>
+            <td class="num">5,838,290</td>
+            <td class="num">161,712</td>
+            <td><div class="ratio-bar"><div class="ratio-fill" style="width:90%;background:#22c55e"></div><span class="ratio-label">36.1x</span></div></td>
+            <td class="num">49,657</td>
+        </tr>
+        <tr class="rank-row" data-niche="faceless-youtube">
+            <td class="rank-num">4</td>
+            <td>
+                <div class="niche-name">顔出しなし YouTube <span class="warn-dot" title="Data quality issues">&#9888;</span></div>
+                <div class="niche-sub">faceless YouTube channel</div>
+            </td>
+            <td class="num" style="color:#eab308;font-weight:700">17/21</td>
+            <td class="num">—</td>
+            <td class="num">1,999,226</td>
+            <td><span class="ratio-label">—</span></td>
+            <td class="num">—</td>
+        </tr>
+        <tr class="rank-row" data-niche="personal-finance-beginner">
+            <td class="rank-num">5</td>
+            <td>
+                <div class="niche-name">お金の基礎知識 初心者 <span class="warn-dot" title="Data quality issues">&#9888;</span></div>
+                <div class="niche-sub">personal finance beginners</div>
+            </td>
+            <td class="num" style="color:#eab308;font-weight:700">17/21</td>
+            <td class="num">24,558,952</td>
+            <td class="num">26,605,653</td>
+            <td><div class="ratio-bar"><div class="ratio-fill" style="width:2%;background:#ef4444"></div><span class="ratio-label">0.9x</span></div></td>
+            <td class="num">—</td>
+        </tr>
+        <tr class="rank-row" data-niche="sleep-optimization">
+            <td class="rank-num">6</td>
+            <td>
+                <div class="niche-name">睡眠改善 科学 <span class="warn-dot" title="Data quality issues">&#9888;</span></div>
+                <div class="niche-sub">sleep optimization science</div>
+            </td>
+            <td class="num" style="color:#eab308;font-weight:700">15/21</td>
+            <td class="num">20,398,126</td>
+            <td class="num">128,696,905</td>
+            <td><div class="ratio-bar"><div class="ratio-fill" style="width:0%;background:#ef4444"></div><span class="ratio-label">0.2x</span></div></td>
+            <td class="num">31,523</td>
+        </tr>
+        <tr class="rank-row" data-niche="ai-newsletter">
+            <td class="rank-num">7</td>
+            <td>
+                <div class="niche-name">AIニュースレター <span class="warn-dot" title="Data quality issues">&#9888;</span></div>
+                <div class="niche-sub">AI newsletter</div>
+            </td>
+            <td class="num" style="color:#ef4444;font-weight:700">11/21</td>
+            <td class="num">1,122,443</td>
+            <td class="num">203,904</td>
+            <td><div class="ratio-bar"><div class="ratio-fill" style="width:14%;background:#22c55e"></div><span class="ratio-label">5.5x</span></div></td>
+            <td class="num">300,675</td>
+        </tr>
+        <tr class="rank-row" data-niche="trivia-shorts">
+            <td class="rank-num">8</td>
+            <td>
+                <div class="niche-name">雑学 ショート <span class="warn-dot" title="Data quality issues">&#9888;</span></div>
+                <div class="niche-sub">trivia shorts</div>
+            </td>
+            <td class="num" style="color:#ef4444;font-weight:700">9/21</td>
+            <td class="num">—</td>
+            <td class="num">—</td>
+            <td><span class="ratio-label">—</span></td>
+            <td class="num">—</td>
+        </tr>
+    </table>
+
+    <div class="section-title">Heatmap — 7 Steps</div>
+    <table class="heatmap-table">
+        <tr><th></th><th>需要</th><th>反応</th><th>質問</th><th>競合</th><th>需給差</th><th>EN/JP</th><th>商業</th><th>Total</th></tr>
+        
+        <tr>
+            <td class="niche-name-sm">ストア哲学</td>
+            <td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(234,179,8,0.15);text-align:center"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></td><td style="background:rgba(234,179,8,0.15);text-align:center"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td>
+            <td class="num" style="font-weight:700">19</td>
+        </tr>
+        <tr>
+            <td class="niche-name-sm">AIプロンプト テンプレート</td>
+            <td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td>
+            <td class="num" style="font-weight:700">17</td>
+        </tr>
+        <tr>
+            <td class="niche-name-sm">データ可視化</td>
+            <td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td>
+            <td class="num" style="font-weight:700">17</td>
+        </tr>
+        <tr>
+            <td class="niche-name-sm">顔出しなし YouTube</td>
+            <td style="background:rgba(234,179,8,0.15);text-align:center"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></td><td style="background:rgba(234,179,8,0.15);text-align:center"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td>
+            <td class="num" style="font-weight:700">17</td>
+        </tr>
+        <tr>
+            <td class="niche-name-sm">お金の基礎知識 初心者</td>
+            <td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td>
+            <td class="num" style="font-weight:700">17</td>
+        </tr>
+        <tr>
+            <td class="niche-name-sm">睡眠改善 科学</td>
+            <td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td>
+            <td class="num" style="font-weight:700">15</td>
+        </tr>
+        <tr>
+            <td class="niche-name-sm">AIニュースレター</td>
+            <td style="background:rgba(234,179,8,0.15);text-align:center"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></td><td style="background:rgba(234,179,8,0.15);text-align:center"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td>
+            <td class="num" style="font-weight:700">11</td>
+        </tr>
+        <tr>
+            <td class="niche-name-sm">雑学 ショート</td>
+            <td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td>
+            <td class="num" style="font-weight:700">9</td>
+        </tr>
+    </table>
+
+    <div class="section-title">Detail by Niche</div>
+    
+    <div class="detail-section" id="detail-stoicism">
+        <div class="detail-header">
+            <div>
+                <h2>ストア哲学 <span class="en-label">/ stoicism philosophy</span></h2>
+                <div class="detail-sub">ID: stoicism</div>
+            </div>
+            <div class="detail-score" style="color:#22c55e">19/21</div>
+        </div>
+        
+        <div class="mini-grid"><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong YouTube demand</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">High avg views (1,081,296)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Rich how-to demand</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></div><div class="mini-comment">Moderate competition (20,527)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></div><div class="mini-comment">Moderate gap (162)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong EN→JP opportunity (6.5x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong commercial signals (5/7 keywords)</div></div></div>
+
+        <div class="data-block">
+            <h3>Step 1: Demand Volume</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th></tr>
+                <tr><td>YouTube top20</td><td class="num">21,625,915</td><td class="num">3,333,376</td></tr>
+                <tr><td>Twitter (30d)</td><td class="num">9</td><td class="num">—</td></tr>
+                <tr><td>Reddit</td><td class="num">223</td><td class="num">14</td></tr>
+            </table>
+        </div>
+
+        <div class="data-block">
+            <h3>Step 2: Engagement</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th></tr>
+                <tr><td>Twitter posts</td><td class="num">7,631</td><td class="num">42,967</td></tr>
+                <tr><td>Avg likes</td><td class="num">287.6</td><td class="num">32</td></tr>
+                <tr><td>Instagram</td><td class="num">439</td><td class="num">—</td></tr>
+                <tr><td>YT avg views</td><td class="num">1,081,295.8</td><td class="num">166,668.8</td></tr>
+            </table>
+        </div>
+
+        <div class="data-block">
+            <h3>Step 4: Supply & Step 6: Localization</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th><th>EN/JP</th></tr>
+                <tr><td>YT channels</td><td class="num">12</td><td class="num">14</td><td class="num">6.5x</td></tr>
+                <tr><td>Twitter publishers</td><td class="num">6,114</td><td class="num">20,527</td><td class="num">0.3x</td></tr>
+                <tr><td>Gap score</td><td class="num">3,537.1</td><td class="num">162.4</td><td></td></tr>
+            </table>
+        </div>
+
+        <details class="grok-details">
+            <summary>Step 3: Knowledge Gap — Grok Raw Data</summary>
+            <div class="grok-section">
+                <h4>EN</h4>
+                <div class="grok-text">[
+  {
+    &quot;text&quot;: &quot;Hey besides Marcus Aurelius's meditations and Seneca's letters which stoicism books would you recommend?&quot;,
+    &quot;author&quot;: &quot;@_Perennius&quot;,
+    &quot;date&quot;: &quot;2026-02-10&quot;,
+    &quot;likes&quot;: 0
+  },
+  {
+    &quot;text&quot;: &quot;Can Stoicism actually help save the planet? 🌍 In my video, I break down simple, practical Stoic habits that reduce consumption, build resilient communities, and turn everyday choices into real climate wins.\n\nWatch now: https://www.youtube.com/watch?v=LgszPgfr6-I&amp;feature=youtu.be&quot;</div>
+            </div>
+            <div class="grok-section">
+                <h4>JP</h4>
+                <div class="grok-item"><div class="grok-text">年明けてからふと、中身の詰まった人間になってゆきたいと思ったのだけれど、一体どうすればいいのか全くわかりませんの。なので、ひとまず１日1ページストア哲学を読むを始めましたわ。以前、父に勧められたのだけれどなんだかうざったくてむかついたので放置していた本がありましたので。</div><div class="grok-meta">うきふじ @yula_daily &middot; 0 likes</div></div>
+<div class="grok-item"><div class="grok-text">ストア哲学でも学ぶかと思って本調べてたら、ぐでたま哲学勧められた🤣</div><div class="grok-meta">さくらんぼ🍒やる気ない投資家 @K55555555momo &middot; 9 likes</div></div>
+<div class="grok-item"><div class="grok-text">『迷いをたつためのストア哲学』読了 最近私が意識している、 ストア哲学についての本  主にエピクトテスの思想を軸にした入門書であり、 同時に「実践のための本」です  思想の説明で終わらず、 日常でどう考え、どう振る舞うかに 焦点が当てられていました #ストア哲学　#ストイシズム  以下感想↓</div><div class="grok-meta">akira | 短時間ルーティンで自分磨き @akira1999983 &middot; 0 likes</div></div>
+<div class="grok-item"><div class="grok-text">この本のよかった点は、 ストア派について、古代思想の紹介として 終わらせていないところ  認知行動療法や心理学など、 現代の科学との接点にも触れつつ、 実際にストア派を実践している 現代人の例が紹介されています  最後には、ストア哲学を身につけるための 12の精神的訓練を提示してあります</div><div class="grok-meta">akira | 短時間ルーティンで自分磨き @akira1999983 &middot; 0 likes</div></div>
+<div class="grok-item"><div class="grok-text">なぜ“必死な男”は選ばれないのか？ 古代ギリシャのストア哲学が教える誘惑の本質は 「感情を支配できるかどうか」 ✔ 反応を急がない ✔ 自分を安売りしない ✔ 揺るがない一貫性  魅力は“すること”ではなく“しないこと”から生まれる。 安定が欲望を生む理由を解説しました。 https://knowhowmaster.com/3382/</div><div class="grok-meta">知識の泉 @tisikinoizumi0 &middot; 1 likes</div></div>
+<div class="grok-more">+10 more results</div>
+            </div>
+        </details>
+
+        <details class="grok-details">
+            <summary>Step 7: Commercial Signals — Grok Raw Data</summary>
+            <div class="grok-section">
+                <h4>EN</h4>
+                <div class="grok-item"><div class="grok-text">philosophy accounts are printing millions and don't even know it
+the quiet mind: 152.5k followers, 16.1m likes posting stoicism slideshows
+bio says &quot;daily quotes 📖 original images and quotes&quot;
+zero mon</div><div class="grok-meta">@facelessecom &middot; 2 likes</div></div>
+<div class="grok-item"><div class="grok-text">Speed is for amateurs.
+Precision is for leaders.
+
+Anyone can react fast under emotion.
+Few can pause, regulate, and choose the right move when it counts.
+
+That pause is where judgment lives.
+
+📌check o</div><div class="grok-meta">@TacticalStoicHQ &middot; 1 likes</div></div>
+<div class="grok-item"><div class="grok-text">my private students actually make money trading their own personal accounts 
+
+I have gazillion testimonials https://www.stoicedge.com/c/testimonials/
+
+and a live leaderboard with verified results
+
+thi</div><div class="grok-meta">@StoicTA &middot; 3 likes</div></div>
+<div class="grok-item"><div class="grok-text">🚨WAKE UP CALL for traders:
+
+Ever wonder why your favorite YouTubers livestream their trading EVERY SINGLE DAY and constantly promote sim prop firms? 
+
+They’re NOT trading for profits. 
+
+They’re farmin</div><div class="grok-meta">@StoicTA &middot; 620 likes</div></div>
+<div class="grok-item"><div class="grok-text">14 months ago I had $0 revenue.
+
+Last month, I crossed $100,000 revenue.
+
+Here are the 10 Stoic principles that helped me beat procrastination and build a succesful business:</div><div class="grok-meta">@IAmPascio &middot; 221 likes</div></div>
+<div class="grok-more">+4 more results</div>
+            </div>
+            <div class="grok-section">
+                <h4>JP</h4>
+                <div class="grok-item"><div class="grok-text">最近ストア哲学の考え方について見てるんだけど面白いね𖠋
+
+簡単に言うと、コントロールの効かない外部要因に執着せず、理性に従って現状での最善の行動を取り心の平穏を保つって感じの考え方☝️
+
+これは副業をする際のマインドとしても活用できるよね🤔</div><div class="grok-meta">@kobit_fukugyo &middot; 1 likes</div></div>
+<div class="grok-item"><div class="grok-text">ストア哲学「自分が自分の思いどおりになるのは、あなたの行動や言葉や思考だけ」
+
+アプリ開発者のストア哲学
+
+思い通りになるのはあなたのコードだけ。
+
+ユーザーの反響？収益？
+
+そんなん思い通りになるわけない！</div><div class="grok-meta">@nodenodenode1 &middot; 6 likes</div></div>
+<div class="grok-item"><div class="grok-text">「今この瞬間に集中せよ。未来を思い煩うな。」
+
+▶ ストア哲学の一節で、&quot;今&quot;に意識を向けることで心が落ち着きます。</div><div class="grok-meta">@50over_side_job &middot; 8 likes</div></div>
+<div class="grok-item"><div class="grok-text">https://note.com/tumitatetoushi/n/n10643f640cd2
+
+JTC勤務×副業×インデックス投資。
+私の戦略は「数学的に正解」でした。
+話題の書『富の方程式』を完全解説📚
+
+・情熱を捨てて「稼ぐ」に集中
+・二次会に行かない「ストア哲学」
+・唯一のタダ飯「分散」
+
+今の投資に迷いがある人はぜひ読んでください🔥</div><div class="grok-meta">@ririoorio &middot; 1 likes</div></div>
+<div class="grok-item"><div class="grok-text">【本日の読書メモ】
+
+📚 心穏やか生きる哲学
+著: ブリジッド・ディレイニー
+訳: 鶴見紀子
+
+“ストア哲学の根本にあるのは、私たちは人々や物を所有しておらず、それらは宇宙からの借りものなのだという考え”
+
+#スキマ読書 #隙間時間 #パパママ</div><div class="grok-meta">@tsubakasun &middot; 3 likes</div></div>
+<div class="grok-more">+3 more results</div>
+            </div>
+        </details>
+    </div>
+    <div class="detail-section" id="detail-ai-prompts">
+        <div class="detail-header">
+            <div>
+                <h2>AIプロンプト テンプレート <span class="en-label">/ AI prompts templates</span></h2>
+                <div class="detail-sub">ID: ai-prompts</div>
+            </div>
+            <div class="detail-score" style="color:#eab308">17/21</div>
+        </div>
+        
+        <div class="mini-grid"><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong YouTube demand</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">High avg views (350,586)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Rich how-to demand</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Red ocean (301,027 publishers)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low gap (3)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong EN→JP opportunity (7.3x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong commercial signals (6/7 keywords)</div></div></div>
+
+        <div class="data-block">
+            <h3>Step 1: Demand Volume</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th></tr>
+                <tr><td>YouTube top20</td><td class="num">7,011,714</td><td class="num">963,940</td></tr>
+                <tr><td>Twitter (30d)</td><td class="num">1</td><td class="num">—</td></tr>
+                <tr><td>Reddit</td><td class="num">8,022</td><td class="num">7,570</td></tr>
+            </table>
+        </div>
+
+        <div class="data-block">
+            <h3>Step 2: Engagement</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th></tr>
+                <tr><td>Twitter posts</td><td class="num">500,000</td><td class="num">500,000</td></tr>
+                <tr><td>Avg likes</td><td class="num">39.2</td><td class="num">36.3</td></tr>
+                <tr><td>Instagram</td><td class="num">13,567</td><td class="num">—</td></tr>
+                <tr><td>YT avg views</td><td class="num">350,585.7</td><td class="num">48,197</td></tr>
+            </table>
+        </div>
+
+        <div class="data-block">
+            <h3>Step 4: Supply & Step 6: Localization</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th><th>EN/JP</th></tr>
+                <tr><td>YT channels</td><td class="num">20</td><td class="num">17</td><td class="num">7.3x</td></tr>
+                <tr><td>Twitter publishers</td><td class="num">303,370</td><td class="num">301,027</td><td class="num">1.0x</td></tr>
+                <tr><td>Gap score</td><td class="num">23.1</td><td class="num">3.2</td><td></td></tr>
+            </table>
+        </div>
+
+        <details class="grok-details">
+            <summary>Step 3: Knowledge Gap — Grok Raw Data</summary>
+            <div class="grok-section">
+                <h4>EN</h4>
+                <div class="grok-item"><div class="grok-text">Nice to see MiniMax on HF. If you have any quick notes on context length, tool use, and recommended decoding defaults, that’d help a lot. Also curious whether the listed benchmarks were run with the s</div><div class="grok-meta">@ysu_ChatData &middot; 0 likes</div></div>
+<div class="grok-item"><div class="grok-text">i did this as a beginner just kind of... doing things. with Dalle3 in 2024 again never used any prompt template schema as a beginner its unnecessary and JSON is awful. commas are the only thing needed</div><div class="grok-meta">@0thernes_ai &middot; 1 likes</div></div>
+<div class="grok-item"><div class="grok-text">[4/5] Here's the playbook to reclaim 3.5 hours this week: Pick your 3 most repetitive tasks Learn how to: Automate #1 with a simple prompt template Use embedded AI for #2 Set up an agentic workflow fo</div><div class="grok-meta">@nadavshomer &middot; 0 likes</div></div>
+<div class="grok-item"><div class="grok-text">Google has published official prompt guides for Lyria 3 — the AI music model inside @GeminiApp that turns text and images into songs 🎵 I read all of them so you don't have to. 50 actionable tips + a f</div><div class="grok-meta">@psmc0119 &middot; 3 likes</div></div>
+<div class="grok-item"><div class="grok-text">that's right! you can edit the prompt template, and give chatgpt precise instructions on how to organize your tabs!</div><div class="grok-meta">@adamhfry &middot; 18 likes</div></div>
+<div class="grok-more">+5 more results</div>
+            </div>
+            <div class="grok-section">
+                <h4>JP</h4>
+                <div class="grok-item"><div class="grok-text">AIに指示を与えるのをやめて、質問を投げかけるように変えてみてください。
+私は最近、すべてのプロンプトを命令形から質問形に切り替えました。これを使ってから、出力の質が平凡なものから上質なものに大きく向上したんですよね。
+下記が「ソクラテス式プロンプティング」です。
+初心者の方でもすぐに試せるシンプルなテンプレートを紹介します⇩
+
+プロンプトテンプレ：
+
+次のテーマについて、まず「どのような条件を満</div><div class="grok-meta">@conte1I &middot; 0 likes</div></div>
+<div class="grok-item"><div class="grok-text">AIをもっと思い通りに使いたいなら、まずはプロンプトの基本を押さえよう
+
+初心者が最初に覚えるべき基本テクニックを図解で紹介：
+
+「どうやって指示すればいいの？」と悩む前に、ブクマして見返して↓</div><div class="grok-meta">@shota7180 &middot; 341 likes</div></div>
+<div class="grok-item"><div class="grok-text">気づいたんやけど
+プロンプト毎回ゼロから書き直してた自分、めちゃ非効率で泣きそう。
+ゼロから書かなくて済む方法いくらでもあるんよな。
+
+AI使ってるのに上手くいったやり方を再現せずに毎回ガチャ回してた感じ。
+1回うまくいっても次で再現できなかったらただの偶然だもんな。
+
+だから今はこれで再現性高めてる👇
+① まずAIに逆質問させて条件を固める
+② 条件が揃ったら完成形まで詰める
+③ そのやり取りを</div><div class="grok-meta">@mori_mori_free &middot; 8 likes</div></div>
+<div class="grok-item"><div class="grok-text">AIにどう指示を出せばよいかわからない……を解決！
+
+すぐ使える プロンプト初心者向け 最初の80選を紹介：
+
+プロンプトをマスターする手順も掲載してるから保存必須</div><div class="grok-meta">@shota7180 &middot; 672 likes</div></div>
+<div class="grok-item"><div class="grok-text">AIに精度の高い成果物を出してもらうには、
+「具体」と「抽象」を混ぜた
+プロンプトを作ることが大事です。
+
+具体的な情報だけだと応用が効かない。
+抽象的な情報だけだとありきたりになる。
+
+じゃあ、どう混ぜるのか。                                                                                              </div><div class="grok-meta">@ishida_man_ai &middot; 3 likes</div></div>
+<div class="grok-more">+5 more results</div>
+            </div>
+        </details>
+
+        <details class="grok-details">
+            <summary>Step 7: Commercial Signals — Grok Raw Data</summary>
+            <div class="grok-section">
+                <h4>EN</h4>
+                <div class="grok-item"><div class="grok-text">Earn $50–$300/day using AI prompts.
+
+I’ve prepared a step-by-step AI Prompt Mastery guide that shows how beginners are using simple prompts to make money online.
+
+All you need:
+• Smartphone or Laptop
+</div><div class="grok-meta">Megha Khatun (@Buauty98) &middot; 21 likes</div></div>
+<div class="grok-item"><div class="grok-text">Earn $50–$300/day using AI prompts.
+
+I’ve prepared a step-by-step AI Prompt Mastery guide that shows how beginners are using simple prompts to make money online.
+
+All you need:
+• Smartphone or Laptop
+</div><div class="grok-meta">NATHAN ELLIS Ai (@NathanAi87765) &middot; 61 likes</div></div>
+<div class="grok-item"><div class="grok-text">I should charge $149 for this.
+
+But fuck it, I'm giving it away for free.
+
+I made a Google Veo 3 Mastery Guide that turns you into an AI filmmaker:
+
+→ 5-chapter video prompting mini-course
+→ 50+ copy-</div><div class="grok-meta">AI Guides (@free_ai_guides) &middot; 32 likes</div></div>
+<div class="grok-item"><div class="grok-text">You don’t need skills to make money with AI.
+
+You need the right prompts.
+
+I built a FREE guide that turns AI prompts into 💰
+Earning up to $5K/month.
+
+🎁 Giving it away today
+
+To get access:
+1. Like + </div><div class="grok-meta">XRandros (@Tech_XRandrosAI) &middot; 5 likes</div></div>
+<div class="grok-item"><div class="grok-text">Romantasy Empire From Alessandro Zamboni 
+#Romantasy #Empire  #AlessandroZamboni #RomantasyEmpire #KDP #Kindle #Publishing 
+Romantasy Empire From Alessandro Zamboni – shows you the steps to build incr</div><div class="grok-meta">Andrew Larder - Certified FORA Luxe Travel Advisor (@monopolyswapped) &middot; 1 likes</div></div>
+<div class="grok-more">+10 more results</div>
+            </div>
+            <div class="grok-section">
+                <h4>JP</h4>
+                <div class="grok-item"><div class="grok-text">クリーンな稼ぎ方にこだわりがない人は AIで有料note量産すれば後は仕組み化するだけで自動収益源を無限に作れる。 僕も非稼ぐ系の複数分野において、アカウント立ち上げ→投稿制作→レター作成→コンテンツ制作までほとんどAIで完結させてる。 これだけで自動で月数千〜数万稼いでくれるアカウントを作ることができる。 実際僕も毎月数十アカ単位で立ち上げてるが、ほとんどのアカが月1~5万程度は稼いでくれてる。</div><div class="grok-meta">てっど - @C_opo85 &middot; 242 likes</div></div>
+<div class="grok-item"><div class="grok-text">ブログ記事の執筆で使える『最強のAIプロンプト』をまとめました。 ・作業を効率化できる ・AI初心者でもコピペするだけで使える ・AIを活用したブログ講座生の収益が月1万円→月88万円 欲しい人いますかね？ いいね&amp;リプ『プロンプト』 で無料配布しようと思います😌</div><div class="grok-meta">クニトミ| ブログで累計5億 - @kunitomi1222 &middot; 567 likes</div></div>
+<div class="grok-item"><div class="grok-text">ヤバい、、 今までちまちま数時間かけて書いてたnoteがAI使ったらたった30分で書き終わった しかもこれ販売したら初月から5万稼げた もうこれなしではnote販売したくない 一瞬で数千文字の売れまくる記事を書いてくれる魔法のプロンプトを配布します いいねと「魔法」とリプしたら 自動で返信します</div><div class="grok-meta">シン - @sin_brain1 &middot; 437 likes</div></div>
+<div class="grok-item"><div class="grok-text">「もう無理・・Xアフィリのポスト文が浮かばない」 って人でも、「AIプロンプト作成シート」さえ使えばOK。 AIに指示するプロンプトが一瞬で作れます。 これはほぼコン限定でシェアしている裏技なんですが、多分9割の人は実行しないので特別に無料でシェアしますね。 やり方はとても簡単で、売りたい商品名とURLを入れるだけでOK。 なんと、１撃で94クリックされました。 興味がある方はこの投稿にいいねと </div><div class="grok-meta">うらん｜Xアフィリ伴走のマザー - @uran_kirakira &middot; 229 likes</div></div>
+<div class="grok-item"><div class="grok-text">在宅副業で使えるプロンプトを15個まとめたんですが、欲しい人いますかね？ 『本業の合間に副業で稼ぎたい…』 『もっと効率よく稼ぐ方法はないかな…』 実はこれ、AIで解決できます。 AIを活用すれば、従来の半分の作業時間で副業できる。 ぶっちゃけ、この方法を知らない副業リーマンは損してます。 いいね＆リプ『副業』で無料で受け取れます😌</div><div class="grok-meta">クニトミ| ブログで累計5億 - @kunitomi1222 &middot; 221 likes</div></div>
+<div class="grok-more">+10 more results</div>
+            </div>
+        </details>
+    </div>
+    <div class="detail-section" id="detail-data-visualization">
+        <div class="detail-header">
+            <div>
+                <h2>データ可視化 <span class="en-label">/ data visualization</span></h2>
+                <div class="detail-sub">ID: data-visualization</div>
+            </div>
+            <div class="detail-score" style="color:#eab308">17/21</div>
+        </div>
+        
+        <div class="mini-grid"><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong YouTube demand</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">High avg views (291,914)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Rich how-to demand</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Red ocean (49,657 publishers)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low gap (3)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong EN→JP opportunity (36.1x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong commercial signals (4/7 keywords)</div></div></div>
+
+        <div class="data-block">
+            <h3>Step 1: Demand Volume</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th></tr>
+                <tr><td>YouTube top20</td><td class="num">5,838,290</td><td class="num">161,712</td></tr>
+                <tr><td>Twitter (30d)</td><td class="num">315</td><td class="num">45</td></tr>
+                <tr><td>Reddit</td><td class="num">4,146</td><td class="num">17</td></tr>
+            </table>
+        </div>
+
+        <div class="data-block">
+            <h3>Step 2: Engagement</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th></tr>
+                <tr><td>Twitter posts</td><td class="num">204,926</td><td class="num">151,312</td></tr>
+                <tr><td>Avg likes</td><td class="num">132.8</td><td class="num">53.9</td></tr>
+                <tr><td>Instagram</td><td class="num">5,559</td><td class="num">—</td></tr>
+                <tr><td>YT avg views</td><td class="num">291,914.5</td><td class="num">8,085.6</td></tr>
+            </table>
+        </div>
+
+        <div class="data-block">
+            <h3>Step 4: Supply & Step 6: Localization</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th><th>EN/JP</th></tr>
+                <tr><td>YT channels</td><td class="num">18</td><td class="num">18</td><td class="num">36.1x</td></tr>
+                <tr><td>Twitter publishers</td><td class="num">90,391</td><td class="num">49,657</td><td class="num">1.8x</td></tr>
+                <tr><td>Gap score</td><td class="num">64.6</td><td class="num">3.3</td><td></td></tr>
+            </table>
+        </div>
+
+        <details class="grok-details">
+            <summary>Step 3: Knowledge Gap — Grok Raw Data</summary>
+            <div class="grok-section">
+                <h4>EN</h4>
+                <div class="grok-item"><div class="grok-text">@Datahaven_xyz, your project on predictive analytics is super cool! What tools are you using for data visualization, and do you have any recommendations for a beginner?</div><div class="grok-meta">Qaasim 🖤🫎 (@Qasim_00000) &middot; 0 likes</div></div>
+<div class="grok-item"><div class="grok-text">📊 - If you have skills in Tableau data visualization software And want to volunteer a bit of your time for human rights in Rojava or Syria We need help on a project ✌🏼 📩 My DMs are open 🙏🏼 RT apprecia</div><div class="grok-meta">Arya (@aryusj1) &middot; 13 likes</div></div>
+<div class="grok-item"><div class="grok-text">Hi sumit sir i am fresher with strong sql skills,and did projects on powerbi and basic python for data cleaning and data visualization, I am applying to so many companies but still even not getting re</div><div class="grok-meta">aditya (@adityaKoushik6) &middot; 0 likes</div></div>
+<div class="grok-item"><div class="grok-text">Solution Guide | #Tableau | #WOW2026 | Week 6 | Can you account for nulls in your averages? blog: https://donnacoles.home.blog/2026/02/15/can-you-account-for-nulls-in-your-averages/ cc: @YusukeNakanis</div><div class="grok-meta">Donna Coles (@donnacoles30) &middot; 8 likes</div></div>
+<div class="grok-item"><div class="grok-text">Thanks for your dataviz work on the Epstein files! If you have a moment, please let us know what would most help others preparing a dataset for presentation like that on future occasions. Did you cons</div><div class="grok-meta">HighlandGNU (@HighlandGNU) &middot; 1 likes</div></div>
+<div class="grok-more">+1 more results</div>
+            </div>
+            <div class="grok-section">
+                <h4>JP</h4>
+                <div class="grok-item"><div class="grok-text">難易度高そうだが、こんな風にデータ可視化してみたい。BIツールでは再現てきないかもしれないがTableauなら何とかなるのかな？</div><div class="grok-meta">@edogawa_aki &middot; 2 likes</div></div>
+<div class="grok-item"><div class="grok-text">これは…もしかして…サッカー⚽️？ 初心者OK！可視化コンペ日本一が教えるTableauを使ったデータ可視化講座（ハンズオン付き） https://west-sec.connpass.com/event/376054/</div><div class="grok-meta">@missa_iii_ &middot; 12 likes</div></div>
+<div class="grok-item"><div class="grok-text">Looker Studioって？ Googleの無料データ可視化ツール。</div><div class="grok-meta">@yuta_beginner &middot; 5 likes</div></div>
+<div class="grok-item"><div class="grok-text">データ可視化ツールTableauの &quot;本当の使い方&quot;,知っていますか？</div><div class="grok-meta">@bizboost_akiba &middot; 3 likes</div></div>
+<div class="grok-item"><div class="grok-text">初心者OK！Tableauを使ったデータ可視化術（ハンズオン付き）</div><div class="grok-meta">@missa_iii_ &middot; 3 likes</div></div>
+<div class="grok-more">+10 more results</div>
+            </div>
+        </details>
+
+        <details class="grok-details">
+            <summary>Step 7: Commercial Signals — Grok Raw Data</summary>
+            <div class="grok-section">
+                <h4>EN</h4>
+                <div class="grok-item"><div class="grok-text">Effective data visualization is essential for statistical analysis and informed decision-making. That’s why my online course, Data Visualization in R Using ggplot2 &amp; Friends, includes a dedicated sect</div><div class="grok-meta">@JoachimSchork &middot; 160 likes</div></div>
+<div class="grok-item"><div class="grok-text">Very cool James Ring!👏 James worked on this black hole study in Houdini using custom gravity POP forces based on Newtonian physics. James is a 3D Technical Artist specializing in data visualization us</div><div class="grok-meta">@HoudiniSchool &middot; 49 likes</div></div>
+<div class="grok-item"><div class="grok-text">Tableau Simplified: From Basics to Advanced; Master Tableau from Scratch: Data Visualization, Dashboards, Analytics, Business Intelligence &amp; Data Scientist / Analyst @omoalhajaabiola https://www.udemy</div><div class="grok-meta">@Adekunmi_Shehu &middot; 16 likes</div></div>
+<div class="grok-item"><div class="grok-text">Ready for a challenge? This Data Visualization Best Practices course will push your boundaries. https://www.coursera.org/learn/data-visualization-best-practices?irclickid=&amp;irgwc=1&amp;afsrc=1&amp;utm_medium=p</div><div class="grok-meta">@machinelearnflx &middot; 2 likes</div></div>
+<div class="grok-item"><div class="grok-text">The AI bubble is upon us. There are a million new ways to make money while using it! Here are 3 of my favorites. Here are a couple more: 1. AI content for brands 2. Conversational AI for businesses 3.</div><div class="grok-meta">@sicknider_raw &middot; 2 likes</div></div>
+<div class="grok-more">+2 more results</div>
+            </div>
+            <div class="grok-section">
+                <h4>JP</h4>
+                <div class="grok-item"><div class="grok-text">Antigravityに25分で作ってもらったYoutubeデータ解析アプリがヤバすぎる🤯
+
+CSVをアップするとデータを解析して詳細レポートと戦略提言してくれるWEBアプリ
+
+実装した機能
+チャンネルサマリー - 視聴回数、再生時間、登録者増減、収益
+パフォーマンス分析 - CTR/維持率/CH登録率
+データ可視化 -Top10チャート、散布図
+ヒーロー動画＆改善候補 - 自動抽出
+診断レポート</div><div class="grok-meta">@boke_ai &middot; 31 likes</div></div>
+<div class="grok-item"><div class="grok-text">コミュニティノートがついてた。
+リプ欄にはツイ主によるアフィリエイト広告（転職支援）とインプレゾンビが勢揃い。お金の臭いしかしない。
+SNSは楽しい場所だけど、こうしてインプレッションを換金するための「道具」になってくると、ちょっと曲がり角かなぁ･･･とも思う。</div><div class="grok-meta">@ShinagawaJP &middot; 85 likes</div></div>
+<div class="grok-item"><div class="grok-text">Perplexityの会社財務データ可視化機能が強化されて、
+・リアルタイムの株価
+・過去の収益レポート
+・同業他社との比較
+・企業財務の詳細な分析
+が閲覧できるようになりました。
+
+これは他のリサーチ系には無い機能なので、差別化されています。
+
+同時に複数企業調査あればより便利ですね。</div><div class="grok-meta">@yugen_matuni &middot; 230 likes</div></div>
+<div class="grok-item"><div class="grok-text">【医療レセプトAI mutexがシード6,000万円調達】
+
+✅ エムティーアイからSaaS「Reze」開発資金
+✅ レセプト作成・確認の生成AI効率化
+✅ 請求漏れ防止で医療機関収益向上
+✅ データ可視化で経営改善支援
+✅ 医事課・医師負担軽減で働き方改革
+
+#医療DX #レセプトAI
+
+https://thebridge.jp/2025/12/mutex-raises-60-million-y</div><div class="grok-meta">@thebridge_jp &middot; 2 likes</div></div>
+<div class="grok-item"><div class="grok-text">要約+ヴィジュアライズに特化したhttp://VDraw.ai
+
+- 難しいプロンプトなしで流行りのインフォグラフィックも一発生成
+- マルチモーダル入力
+- データ可視化に必要なほぼ全てのチャートを自動生成可能
+
+とりあえず図が欲しいときはhttp://VDraw.ai</div><div class="grok-meta">@itose_yosuke &middot; 3 likes</div></div>
+<div class="grok-more">+7 more results</div>
+            </div>
+        </details>
+    </div>
+    <div class="detail-section" id="detail-faceless-youtube">
+        <div class="detail-header">
+            <div>
+                <h2>顔出しなし YouTube <span class="en-label">/ faceless YouTube channel</span></h2>
+                <div class="detail-sub">ID: faceless-youtube</div>
+            </div>
+            <div class="detail-score" style="color:#eab308">17/21</div>
+        </div>
+        <div class="warn-box"><span class="warn-badge">&#9888; Publisher data missing (Xpoz timeout)</span></div>
+        <div class="mini-grid"><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></div><div class="mini-comment">Moderate demand</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></div><div class="mini-comment">Moderate avg views (99,961)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Rich how-to demand</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Low competition (0)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">High gap (1999226)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">JP already mature (0.0x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong commercial signals (7/7 keywords)</div></div></div>
+
+        <div class="data-block">
+            <h3>Step 1: Demand Volume</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th></tr>
+                <tr><td>YouTube top20</td><td class="num">—</td><td class="num">1,999,226</td></tr>
+                <tr><td>Twitter (30d)</td><td class="num">514</td><td class="num">4</td></tr>
+                <tr><td>Reddit</td><td class="num">1,936</td><td class="num">1,432</td></tr>
+            </table>
+        </div>
+
+        <div class="data-block">
+            <h3>Step 2: Engagement</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th></tr>
+                <tr><td>Twitter posts</td><td class="num">115,943</td><td class="num">500,000</td></tr>
+                <tr><td>Avg likes</td><td class="num">27.3</td><td class="num">420.6</td></tr>
+                <tr><td>Instagram</td><td class="num">5,919</td><td class="num">—</td></tr>
+                <tr><td>YT avg views</td><td class="num">—</td><td class="num">99,961.3</td></tr>
+            </table>
+        </div>
+
+        <div class="data-block">
+            <h3>Step 4: Supply & Step 6: Localization</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th><th>EN/JP</th></tr>
+                <tr><td>YT channels</td><td class="num">—</td><td class="num">17</td><td class="num">—x</td></tr>
+                <tr><td>Twitter publishers</td><td class="num">—</td><td class="num">—</td><td class="num">—x</td></tr>
+                <tr><td>Gap score</td><td class="num">—</td><td class="num">1,999,226</td><td></td></tr>
+            </table>
+        </div>
+
+        <details class="grok-details">
+            <summary>Step 3: Knowledge Gap — Grok Raw Data</summary>
+            <div class="grok-section">
+                <h4>EN</h4>
+                <div class="grok-item"><div class="grok-text">I’m 2 weeks into running a faceless YouTube channel.
+
+https://www.youtube.com/@biblenodull?si=UA5JSsq_eZPyJtbi
+
+Be brutally honest:
+
+What would you improve first?
+
+Please i’m open to feedback.
+@derral</div><div class="grok-meta">@oluwadamil25233 &middot; 0 likes</div></div>
+<div class="grok-item"><div class="grok-text">Anybody up for Faceless YT Automation?</div><div class="grok-meta">@Hasan9So &middot; 0 likes</div></div>
+<div class="grok-item"><div class="grok-text">How to create a Faceless YouTube channel from scratch and earn $5000 monthly. 
+Watch the process here: 
+https://www.youtube.com/watch?si=2lSNF2oaMclNLLgv&amp;v=S9YBHGqS3iM&amp;feature=youtu.be</div><div class="grok-meta">@OnyebuchiK90434 &middot; 1 likes</div></div>
+<div class="grok-item"><div class="grok-text">𝗕𝗮𝗱 𝗣𝗿𝗼𝗺𝗽𝘁 𝘃𝘀 𝗚𝗼𝗼𝗱 𝗣𝗿𝗼𝗺𝗽𝘁
+
+Bad Prompt: ❌ 
+&quot;Help me start a faceless YouTube channel.&quot;
+
+Good Prompt: ✅
+&quot;You're a YouTube strategist with 10 years of experience growing faceless channels. Help me design</div><div class="grok-meta">@ankitsuthar01 &middot; 1 likes</div></div>
+<div class="grok-item"><div class="grok-text">Learn how to start a faceless YouTube channel the right way.
+
+In this video, we explain how to start a faceless YouTube channel from scratch, including niche selection, channel branding, tools and You</div><div class="grok-meta">@NtrepreneursNG &middot; 0 likes</div></div>
+<div class="grok-more">+6 more results</div>
+            </div>
+            <div class="grok-section">
+                <h4>JP</h4>
+                <div class="grok-text">[
+  {
+    &quot;text&quot;: &quot;「顔出しなし」だから信頼されない？\n\n大きな勘違いです。\n\nむしろ、顔が見えないからこそ\n「信頼」は作れます。\n\n非属人チャンネルで\n熱狂的なファンを作る3つの方法。\n\n1. \&quot;期待\&quot;を絶対に裏切らない\n\n視聴者は何を見に来てるか理解する。\n「面白い解説？」\n「癒やし系？」\n\nこの期待値を\n1ミリもブレさせないこと。\n\n「このチャンネルに来れば、必ず面白い」\nこの安心感が、最強の信頼になる。\n\n2. \&quot;運営者の人格\&quot;をチラ見せする\n\n非属人だからといって\n人格を隠す必要はない。\n\n・動画の端々で主観を入れる\n・コメントに「人間味」のある返信をする\n\n「顔は見えないけど、確かにそこに人がいる」\nこの一工夫が、親近感を生みます。\n\n3. \&quot;約束\&quot;を守り続ける\n\n「投稿頻度」\n「動画のクオリティ」\n\nこれを守り続けるだけで\n視聴者の習慣の一部になれる。\n\n「あ、今日も動画上がってる」\n「見たい！」\n\nこの習慣の積み重ねが、\nいつしか「信頼」に変わります。</div>
+            </div>
+        </details>
+
+        <details class="grok-details">
+            <summary>Step 7: Commercial Signals — Grok Raw Data</summary>
+            <div class="grok-section">
+                <h4>EN</h4>
+                <div class="grok-item"><div class="grok-text">What is Faceless YouTube and How I make $100k-160k a month with it:
+
+Comment &quot;guide&quot; and I'll dm you a full training on exactly how to start and make money (must be following)</div><div class="grok-meta">@WhopYTBusiness &middot; 639 likes</div></div>
+<div class="grok-item"><div class="grok-text">How much can you earn from a faceless YouTube channel? 
+
+A lot more than people think. Many top niches—like education, motivation, tech, and storytelling—don’t require you to show your face at all. 
+
+</div><div class="grok-meta">@SHIVANIGERA5 &middot; 553 likes</div></div>
+<div class="grok-item"><div class="grok-text">What is Faceless YouTube and How I make $30k-60k a month with it:
+
+To get full training : 
+
+1.) Follow me @premkumar1125 ( so I can dm )
+
+2.) Comment &quot;guide&quot; and I'll dm you a full training on exactly</div><div class="grok-meta">@premtechAI &middot; 400 likes</div></div>
+<div class="grok-item"><div class="grok-text">Officially confirmed: faceless YouTube money is REAL - 1st paycheck just landed in my bank 🥹
+
+The countless 12 hour work days finally paid off
+No more guessing or thinking it was a fantasy
+
+I told mys</div><div class="grok-meta">@ytajourney &middot; 363 likes</div></div>
+<div class="grok-item"><div class="grok-text">What is Faceless YouTube and How I make $30k-60k a month with it:
+
+Comment &quot;guide&quot; and I'll dm you a full training on exactly how to start and make money (must be following) 🖇️</div><div class="grok-meta">@premtechAI &middot; 223 likes</div></div>
+<div class="grok-more">+10 more results</div>
+            </div>
+            <div class="grok-section">
+                <h4>JP</h4>
+                <div class="grok-item"><div class="grok-text">【速報】国内初！
+YouTube×楽天アフィリが解禁されてヤバいw
+
+昨日から始まった新制度で
+初日から収益発生。
+
+しかもこれ
+・顔出しなし
+・商品レビュー不要
+・スマホだけでOK
+
+やることは
+①Runway×ChatGPTでAI動画生成
+②YouTube Shorts投稿
+③楽天アフィリンク貼る
+これだけ
+
+先行者利益取れる今が最大のチャンス。
+24時間で完全攻略法を無料配布。
+
+いいね+リ</div><div class="grok-meta">おしゃぶりくん (@AshleyE5697) &middot; 3762 likes</div></div>
+<div class="grok-item"><div class="grok-text">【緊急】国内初！
+YouTube×楽天アフィリが解禁してヤバいww
+
+先日から始まった新制度で
+初日から収益発生しちゃう。
+
+しかもこれ
+・顔出しなし
+・商品レビューは不要
+・スマホだけで完結
+
+やることは
+❶Runway×ChatGPTでAI動画の生成
+❷YouTube Shortsに投稿
+❸楽天アフィリンク貼り付け
+たったこれだけ
+
+先行者利益取れる今が絶好のチャンス。
+48時間限定で攻略法を</div><div class="grok-meta">ゆっくりくん@ゼロから稼ぐAI×副業術 (@yuxtukuri12092) &middot; 151 likes</div></div>
+<div class="grok-item"><div class="grok-text">YouTube副業って「若い人がやるもの」って思ってませんか。実はそんなことない。30代40代50代の方がむしろ有利。なぜなら人生経験が豊富だから。仕事の知識。生活の知恵。失敗から学んだこと。全部動画のネタになる。しかも顔出しなしなら年齢関係なく勝負できる。遅すぎるなんてことは絶対にないです。</div><div class="grok-meta">たまこ＠忙しい人専門のYouTube副業 (@tamako0720) &middot; 4 likes</div></div>
+<div class="grok-item"><div class="grok-text">副業初心者でもできる！
+顔出しなし、AI美女×YouTubeチャンネルで3ヶ月で月5万円を作った手順をまとめました👇
+
+✅ 初心者でも再現できる
+✅ ツール・作業時間・収益化の全手順
+✅ 失敗しないポイント付き
+
+「副業やってみたいけど、何から始めればいいかわからない」
+→ そんなあなた向けです
+
+記事はこちら👇
+
+https://t.co/ntbIvGrpJA</div><div class="grok-meta">AI×YouTubeで月5万｜リク (@yuki16653) &middot; 2 likes</div></div>
+<div class="grok-item"><div class="grok-text">これ、知らない人多すぎる。
+
+YouTube Shortsに楽天リンク貼るだけで収益化できる。
+
+顔出しなし
+動画はAI生成
+スマホだけ
+
+完全初心者でも再現可能。
+
+手順まとめました。
+https://note.com/kozo_log/n/n635600cefcf0</div><div class="grok-meta">Yuzu (@vkook0115) &middot; 0 likes</div></div>
+<div class="grok-more">+2 more results</div>
+            </div>
+        </details>
+    </div>
+    <div class="detail-section" id="detail-personal-finance-beginner">
+        <div class="detail-header">
+            <div>
+                <h2>お金の基礎知識 初心者 <span class="en-label">/ personal finance beginners</span></h2>
+                <div class="detail-sub">ID: personal-finance-beginner</div>
+            </div>
+            <div class="detail-score" style="color:#eab308">17/21</div>
+        </div>
+        <div class="warn-box"><span class="warn-badge">&#9888; Publisher data missing (Xpoz timeout)</span><span class="warn-badge">&#9888; Commercial Signals (EN) — Grok API failed</span><span class="warn-badge">&#9888; Commercial Signals (JP) — Grok API failed</span><span class="warn-badge">&#9888; Twitter count data missing</span></div>
+        <div class="mini-grid"><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong YouTube demand</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">High avg views (1,330,283)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Rich how-to demand</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Low competition (0)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">High gap (26605653)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">JP already mature (0.9x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Grok failed</div></div></div>
+
+        <div class="data-block">
+            <h3>Step 1: Demand Volume</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th></tr>
+                <tr><td>YouTube top20</td><td class="num">24,558,952</td><td class="num">26,605,653</td></tr>
+                <tr><td>Twitter (30d)</td><td class="num">—</td><td class="num">—</td></tr>
+                <tr><td>Reddit</td><td class="num">—</td><td class="num">—</td></tr>
+            </table>
+        </div>
+
+        <div class="data-block">
+            <h3>Step 2: Engagement</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th></tr>
+                <tr><td>Twitter posts</td><td class="num">—</td><td class="num">—</td></tr>
+                <tr><td>Avg likes</td><td class="num">—</td><td class="num">—</td></tr>
+                <tr><td>Instagram</td><td class="num">—</td><td class="num">—</td></tr>
+                <tr><td>YT avg views</td><td class="num">1,227,947.6</td><td class="num">1,330,282.6</td></tr>
+            </table>
+        </div>
+
+        <div class="data-block">
+            <h3>Step 4: Supply & Step 6: Localization</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th><th>EN/JP</th></tr>
+                <tr><td>YT channels</td><td class="num">17</td><td class="num">12</td><td class="num">0.9x</td></tr>
+                <tr><td>Twitter publishers</td><td class="num">—</td><td class="num">—</td><td class="num">—x</td></tr>
+                <tr><td>Gap score</td><td class="num">24,558,952</td><td class="num">26,605,653</td><td></td></tr>
+            </table>
+        </div>
+
+        <details class="grok-details">
+            <summary>Step 3: Knowledge Gap — Grok Raw Data</summary>
+            <div class="grok-section">
+                <h4>EN</h4>
+                <div class="grok-text">[
+  {
+    &quot;text&quot;: &quot;For those asking for financial tips, here are a couple if you are starting out investing and dont have credit\n\n1.  Open a money market acct at your bank.  This is your \&quot;receivable acct\&quot; all money comes here 1st\n\n2. Checking acct is your \&quot;payable acct\&quot; there is only enough money here to pay monthly bills &amp; personal spend\n\n3. If you dont have a credit card , open a SECURED CREDIT CARD at your bank. All purchases will be made with this card, DO NOT USE A DEBIT CARD TO P</div>
+            </div>
+            <div class="grok-section">
+                <h4>JP</h4>
+                <div class="grok-item"><div class="grok-text">＼鹿児島女子必見／
+アクサ生命presents
+これからの生活を考えるお金の基礎知識！
+～初心者でも安心！ゼロから分かる！マネーセミナー～
+開催✨
+
+✅参加無料
+🎁参加者全員にフェスティバロの
+『焼きラブリー』をプレゼント！
+
+※定員になり次第締め切り
+
+詳細・申込はこちら👇
+https://blogs.mbc.co.jp/article/new_info/141211/</div><div class="grok-meta">@MBC_kagoshima &middot; 0 likes</div></div>
+<div class="grok-item"><div class="grok-text">プロからお金の基礎知識などを
+学べる
+「知って安心！マネーデザイン
+　～物価高騰に負けない
+　　資産の守り方～」
+3月14日（土）、
+RCC文化センターで開催。
+私は司会です。参加無料。
+おひとりで、ご夫婦で、親子で、
+友達同士でどうぞ。初心者OK。
+詳しくはRCCのHPで。 https://rcc.jp/event/m-design/</div><div class="grok-meta">@barbarakuwabara &middot; 89 likes</div></div>
+<div class="grok-item"><div class="grok-text">【ライターさん募集📘】
+若者向け金融教育メディアの
+記事制作にご協力いただける
+ライターの方を募集中です！📝
+
+【テーマ】
+Z世代向け「お金の基礎知識をやさしく解説する記事」
+
+【対象読者】
+高校生〜20代前半の金融初心者
+
+【お願いしたい内容・形式】
+・文字数：1,200〜1,800字程度
+・Googleドキュメント or Word
+・つまずきやすいポイントの整理
+・今日からできる簡単なアクショ</div><div class="grok-meta">@junki_create &middot; 3 likes</div></div>
+<div class="grok-item"><div class="grok-text">メルカリで投資初心者向けの本1200円で出てて、状態も綺麗だし即ポチした…私みたいにNISA始めたての人絶対読むべきやん！笑
+
+お金をもっと上手に使う節約術/お金の基礎知識からお金の増やし方までわかる実用書
+https://jp.mercari.com/item/m80012288703?afid=7908875457</div><div class="grok-meta">@afTsf1OnUMTA &middot; 0 likes</div></div>
+<div class="grok-item"><div class="grok-text">ブログ更新しました📜
+現在書いている記事は初心者向けの
+「お金の基礎知識」になりますが、
+もう少しだけ追加で書いて行こうと思います！
+https://chokin2.com/1-9/</div><div class="grok-meta">@tameru3ch &middot; 2 likes</div></div>
+<div class="grok-more">+11 more results</div>
+            </div>
+        </details>
+
+        <details class="grok-details">
+            <summary>Step 7: Commercial Signals — Grok Raw Data</summary>
+            <div class="grok-section">
+                <h4>EN</h4>
+                <span class="dimmed">Data unavailable</span>
+            </div>
+            <div class="grok-section">
+                <h4>JP</h4>
+                <span class="dimmed">Data unavailable</span>
+            </div>
+        </details>
+    </div>
+    <div class="detail-section" id="detail-sleep-optimization">
+        <div class="detail-header">
+            <div>
+                <h2>睡眠改善 科学 <span class="en-label">/ sleep optimization science</span></h2>
+                <div class="detail-sub">ID: sleep-optimization</div>
+            </div>
+            <div class="detail-score" style="color:#eab308">15/21</div>
+        </div>
+        <div class="warn-box"><span class="warn-badge">&#9888; Commercial Signals (JP) — Grok API failed</span><span class="warn-badge">&#9888; Twitter count data missing</span></div>
+        <div class="mini-grid"><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong YouTube demand</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">High avg views (6,434,845)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Rich how-to demand</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Red ocean (31,523 publishers)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">High gap (4083)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">JP already mature (0.2x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Grok failed</div></div></div>
+
+        <div class="data-block">
+            <h3>Step 1: Demand Volume</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th></tr>
+                <tr><td>YouTube top20</td><td class="num">20,398,126</td><td class="num">128,696,905</td></tr>
+                <tr><td>Twitter (30d)</td><td class="num">—</td><td class="num">—</td></tr>
+                <tr><td>Reddit</td><td class="num">2,063</td><td class="num">15</td></tr>
+            </table>
+        </div>
+
+        <div class="data-block">
+            <h3>Step 2: Engagement</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th></tr>
+                <tr><td>Twitter posts</td><td class="num">78,932</td><td class="num">77,884</td></tr>
+                <tr><td>Avg likes</td><td class="num">144.6</td><td class="num">24.9</td></tr>
+                <tr><td>Instagram</td><td class="num">5,687</td><td class="num">—</td></tr>
+                <tr><td>YT avg views</td><td class="num">1,019,906.3</td><td class="num">6,434,845.2</td></tr>
+            </table>
+        </div>
+
+        <div class="data-block">
+            <h3>Step 4: Supply & Step 6: Localization</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th><th>EN/JP</th></tr>
+                <tr><td>YT channels</td><td class="num">13</td><td class="num">16</td><td class="num">0.2x</td></tr>
+                <tr><td>Twitter publishers</td><td class="num">—</td><td class="num">31,523</td><td class="num">—x</td></tr>
+                <tr><td>Gap score</td><td class="num">20,398,126</td><td class="num">4,082.6</td><td></td></tr>
+            </table>
+        </div>
+
+        <details class="grok-details">
+            <summary>Step 3: Knowledge Gap — Grok Raw Data</summary>
+            <div class="grok-section">
+                <h4>EN</h4>
+                <div class="grok-item"><div class="grok-text">Sleep has been my ultimate biohack—8 hours nightly sharpened my cognition and boosted recovery metrics. In my routine, blackout curtains and a strict 8 PM wind-down are game-changers. What's your top </div><div class="grok-meta">@Crosschampion7 &middot; 0 likes</div></div>
+<div class="grok-item"><div class="grok-text">What’s sleep optimization look like for you?</div><div class="grok-meta">@OfficialWSDavis &middot; 0 likes</div></div>
+<div class="grok-item"><div class="grok-text">No code yet! I’m sharing this architectural concept to inspire developers to build this &quot;digital metabolism.&quot; The goal is using SEI as a biological trigger for World Model simulation (dreaming). @grok</div><div class="grok-meta">@EricTHOMAS70633 &middot; 0 likes</div></div>
+<div class="grok-item"><div class="grok-text">Do you (or someone you love) rely on sleep meds every night? ... What's your biggest sleep struggle right now? Drop it below — curious what others are dealing with.</div><div class="grok-meta">@newstart_2024 &middot; 859 likes</div></div>
+<div class="grok-item"><div class="grok-text">.@eightsleep and I are thinking of starting a podcast. What would you want to hear from us? 1.Products &amp; Behaviors from Top Performers 2.Deep Dive into Sleep Optimization &amp; Science 3.Variety of Deep D</div><div class="grok-meta">@m_franceschetti &middot; 75 likes</div></div>
+            </div>
+            <div class="grok-section">
+                <h4>JP</h4>
+                <div class="grok-item"><div class="grok-text">睡眠の質を高めたいなら「脳の性質」に逆らわないこと。
+
+・寝る90分前に入浴
+（深部体温を下げる）
+
+・ブルーライトを避ける
+（メラトニン分泌を促進）
+
+・軽いポジティブな振り返り
+（日記など）
+
+などで安心感を
+睡眠は「脳を眠らせる準備」を整えられるかがカギ。努力より環境設計だよ。</div><div class="grok-meta">@takuyasensei &middot; 300 likes</div></div>
+<div class="grok-item"><div class="grok-text">本によるとまずは朝起きる方優先みたいだよ。6〜7時にとりあえず起こして朝日を浴びさせると体内時計が整うので、それを続けていれば夜も自然と眠くなるはず。
+可哀想に思うかもしれないけど、眠かったら再入眠するだろうし…</div><div class="grok-meta">@ayano_190101 &middot; 0 likes</div></div>
+<div class="grok-item"><div class="grok-text">アリゾナ大学の統合医療専門家、アンドリューワイル博士 が考案した新しい睡眠法
+＝＝＝＝＝
+478睡眠法
+＝＝＝＝＝
+寝る前や、夜中に目覚めてふたたび眠ろうとするとき
+かんたんなファイブ ステップをおこないます
+
+１．ラクな姿勢をとり、体の力を抜く。
+２．4秒かけて、鼻から静かに息を吸う。
+３．そのまま息を止めて、7秒かぞえる。
+４．8秒かけて、口からフーッと音を立てて息を吐く。
+５．このサイクルを</div><div class="grok-meta">@yano_mktg &middot; 546 likes</div></div>
+<div class="grok-item"><div class="grok-text">不眠の患者さんに必ず伝えている 寝る前1時間のルーティン。
+
+✅ 照明を暖色に切り替える
+白いLED照明はメラトニンの分泌を抑制する。 
+夜10時以降は間接照明か暖色ライトに変える。
+スマホも「ナイトモード」に。 画面のブルーライトより 明るさそのものを下げるほうが効果的。
+
+✅ スマホをリビングに置いて寝室に持ち込まない
+「目覚ましに使ってる」 は言い訳。
+寝室にスマホがあるだけで眠りが浅くなり</div><div class="grok-meta">@drmosari &middot; 52 likes</div></div>
+<div class="grok-item"><div class="grok-text">睡眠の質に不安があるときは、
+まず「実態を知る」ことから始めると
+改善が進みやすいです。
+
+何時間眠れているのかは主観だけでは分かりにくく、
+浅い睡眠中は周囲の音や出来事を認識できるため
+「起きていた」と勘違いしがちです。
+
+最初の1週間ほどは睡眠アプリで客観的に計測し、
+さらに
+就床時刻・起床時刻・途中覚醒の回数や
+合計睡眠時間を把握・分析するとよいです。
+
+途中で目が覚めることは誰にでもありま</div><div class="grok-meta">@kabasawa &middot; 255 likes</div></div>
+<div class="grok-more">+5 more results</div>
+            </div>
+        </details>
+
+        <details class="grok-details">
+            <summary>Step 7: Commercial Signals — Grok Raw Data</summary>
+            <div class="grok-section">
+                <h4>EN</h4>
+                <div class="grok-item"><div class="grok-text">Most people with a damaged vagus nerve need help relaxing. And struggle to get uninterrupted sleep. I use this supplement to target the three pillars of sleep optimization: Relaxation, stress reductio</div><div class="grok-meta">@jakeglmn &middot; 4 likes</div></div>
+<div class="grok-item"><div class="grok-text">Quick survey: Which topic interests you most? Sleep optimization ∙Making time for projects/side- hustles ∙Learning hard things quickly Drop one word below. 2-5 comments = I’ll build a course on it. Fi</div><div class="grok-meta">@drdemetriou &middot; 0 likes</div></div>
+<div class="grok-item"><div class="grok-text">A Course in Lucid Dreaming by Lynne Levitan and Stephen LaBerg ... 📖 https://t.co/rt3XchKG4Y Amazon https://t.co/R10jgOxN2D #ad (rare, oop, used only)</div><div class="grok-meta">@covertress &middot; 48 likes</div></div>
+<div class="grok-item"><div class="grok-text">You don't need a &quot;unique&quot; idea to make money online. You need a PROVEN one. Here are 3 niches crying for a $97 digital product: 1. AI Tools for Content Creators 2. Sleep Optimization 3. Notion for Pro</div><div class="grok-meta">@AiFutureAssist &middot; 0 likes</div></div>
+<div class="grok-item"><div class="grok-text">33 profitable niches for afiliate marketing: ... Sleep optimization ...</div><div class="grok-meta">@zeyonws &middot; 3 likes</div></div>
+<div class="grok-more">+7 more results</div>
+            </div>
+            <div class="grok-section">
+                <h4>JP</h4>
+                <span class="dimmed">Data unavailable</span>
+            </div>
+        </details>
+    </div>
+    <div class="detail-section" id="detail-ai-newsletter">
+        <div class="detail-header">
+            <div>
+                <h2>AIニュースレター <span class="en-label">/ AI newsletter</span></h2>
+                <div class="detail-sub">ID: ai-newsletter</div>
+            </div>
+            <div class="detail-score" style="color:#ef4444">11/21</div>
+        </div>
+        <div class="warn-box"><span class="warn-badge">&#9888; Knowledge Gap (JP) — Grok API failed</span><span class="warn-badge">&#9888; Commercial Signals (JP) — Grok API failed</span></div>
+        <div class="mini-grid"><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></div><div class="mini-comment">Moderate demand</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></div><div class="mini-comment">Moderate avg views (56,122)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Grok failed</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Red ocean (300,675 publishers)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low gap (1)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong EN→JP opportunity (5.5x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Grok failed</div></div></div>
+
+        <div class="data-block">
+            <h3>Step 1: Demand Volume</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th></tr>
+                <tr><td>YouTube top20</td><td class="num">1,122,443</td><td class="num">203,904</td></tr>
+                <tr><td>Twitter (30d)</td><td class="num">77</td><td class="num">1</td></tr>
+                <tr><td>Reddit</td><td class="num">7,640</td><td class="num">7,570</td></tr>
+            </table>
+        </div>
+
+        <div class="data-block">
+            <h3>Step 2: Engagement</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th></tr>
+                <tr><td>Twitter posts</td><td class="num">500,000</td><td class="num">500,000</td></tr>
+                <tr><td>Avg likes</td><td class="num">27.2</td><td class="num">114.7</td></tr>
+                <tr><td>Instagram</td><td class="num">13,636</td><td class="num">—</td></tr>
+                <tr><td>YT avg views</td><td class="num">56,122.2</td><td class="num">10,195.2</td></tr>
+            </table>
+        </div>
+
+        <div class="data-block">
+            <h3>Step 4: Supply & Step 6: Localization</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th><th>EN/JP</th></tr>
+                <tr><td>YT channels</td><td class="num">17</td><td class="num">18</td><td class="num">5.5x</td></tr>
+                <tr><td>Twitter publishers</td><td class="num">302,093</td><td class="num">300,675</td><td class="num">1x</td></tr>
+                <tr><td>Gap score</td><td class="num">3.7</td><td class="num">0.7</td><td></td></tr>
+            </table>
+        </div>
+
+        <details class="grok-details">
+            <summary>Step 3: Knowledge Gap — Grok Raw Data</summary>
+            <div class="grok-section">
+                <h4>EN</h4>
+                <div class="grok-item"><div class="grok-text">I am creating my newsletter for the average person. 
+
+My AI newsletter isn’t the biggest brand + I’m sure plenty of others will create in the same niche. 
+
+I’m building for people to understand AI and</div><div class="grok-meta">@cogitoautomate &middot; 2 likes</div></div>
+<div class="grok-item"><div class="grok-text">im launching an AI daily newsletter that aggregates all the best AI newsletters each day</div><div class="grok-meta">@mikethree &middot; 14 likes</div></div>
+<div class="grok-item"><div class="grok-text">This is how I use @AnthropicAI Claude Cowork to build my AI newsletter from X.
+
+I use agent to track 30+ AI accounts on X — founders, researchers, product leaders：</div><div class="grok-meta">@HuXilun22448 &middot; 3 likes</div></div>
+<div class="grok-item"><div class="grok-text">Free course on How to Start an Email Newsletter Business with AI.
+
+I'll show you how to:
+- create content with ChatGPT
+- build audience
+- monetize
+
+Without needing an existing audience.
+
+To get a copy</div><div class="grok-meta">@iamkylebalmer &middot; 306 likes</div></div>
+<div class="grok-item"><div class="grok-text">I have a client who is tired of doing manual outreach.
+
+There is only one way to break free from this trap:
+
+Start a newsletter.
+
+Your newsletter is like having a one-on-one conversation with potentia</div><div class="grok-meta">@ItsKieranDrew &middot; 47 likes</div></div>
+<div class="grok-more">+4 more results</div>
+            </div>
+            <div class="grok-section">
+                <h4>JP</h4>
+                <span class="dimmed">Data unavailable</span>
+            </div>
+        </details>
+
+        <details class="grok-details">
+            <summary>Step 7: Commercial Signals — Grok Raw Data</summary>
+            <div class="grok-section">
+                <h4>EN</h4>
+                <div class="grok-item"><div class="grok-text">The Rundown AI is the first AI newsletter to hit $10M/year (in 2.8 years!). There are 3 things they’re INCREDIBLE at that you need to steal: Quick numbers: • 1.4M subscribers • $10M run-rate • ~$7 rev</div><div class="grok-meta">@_May_Ham &middot; 3 likes</div></div>
+<div class="grok-item"><div class="grok-text">I generate $400,000/year with a paid newsletter on Substack:  • I don't run ads • It took 578 days • It has 65,000+ subscribers This is the most scalable (and profitable) business I've ever seen.  Her</div><div class="grok-meta">@Nicolascole77 &middot; 548 likes</div></div>
+<div class="grok-item"><div class="grok-text">My paid newsletter Write with AI just crossed $300k/year in revenue. • It took 578 days • I ran zero ads • It takes less than 4 hrs/week Here’s my 6-Figure Paid Newsletter Blueprint:🧵</div><div class="grok-meta">@Nicolascole77 &middot; 752 likes</div></div>
+<div class="grok-item"><div class="grok-text">AI newsletter for people. MRR: $100,000 / m in revenue. 💸 📛 Name: Every 💹 Marketing: SEO and Referrals 💰 Monetization: Subscription 👨 Founder: Dan Shipper 📆 Launched: N/A View more from SaaS Gallery..</div><div class="grok-meta">@saas_gallery &middot; 18 likes</div></div>
+<div class="grok-item"><div class="grok-text">Pretty happy with these Ruby AI Newsletter 2025 numbers from @beehiiv, but going to make them even better in 2026 🥳</div><div class="grok-meta">@mattsolt &middot; 15 likes</div></div>
+<div class="grok-more">+8 more results</div>
+            </div>
+            <div class="grok-section">
+                <h4>JP</h4>
+                <span class="dimmed">Data unavailable</span>
+            </div>
+        </details>
+    </div>
+    <div class="detail-section" id="detail-trivia-shorts">
+        <div class="detail-header">
+            <div>
+                <h2>雑学 ショート <span class="en-label">/ trivia shorts</span></h2>
+                <div class="detail-sub">ID: trivia-shorts</div>
+            </div>
+            <div class="detail-score" style="color:#ef4444">9/21</div>
+        </div>
+        <div class="warn-box"><span class="warn-badge">&#9888; YouTube data missing (yt-dlp timeout)</span><span class="warn-badge">&#9888; Publisher data missing (Xpoz timeout)</span><span class="warn-badge">&#9888; Twitter count data missing</span></div>
+        <div class="mini-grid"><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low demand</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low avg views (0)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Minimal questions</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Low competition (0)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low gap (0)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">JP already mature (1.0x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Weak signals (0/7)</div></div></div>
+
+        <div class="data-block">
+            <h3>Step 1: Demand Volume</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th></tr>
+                <tr><td>YouTube top20</td><td class="num">—</td><td class="num">—</td></tr>
+                <tr><td>Twitter (30d)</td><td class="num">—</td><td class="num">—</td></tr>
+                <tr><td>Reddit</td><td class="num">—</td><td class="num">—</td></tr>
+            </table>
+        </div>
+
+        <div class="data-block">
+            <h3>Step 2: Engagement</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th></tr>
+                <tr><td>Twitter posts</td><td class="num">—</td><td class="num">—</td></tr>
+                <tr><td>Avg likes</td><td class="num">—</td><td class="num">—</td></tr>
+                <tr><td>Instagram</td><td class="num">—</td><td class="num">—</td></tr>
+                <tr><td>YT avg views</td><td class="num">—</td><td class="num">—</td></tr>
+            </table>
+        </div>
+
+        <div class="data-block">
+            <h3>Step 4: Supply & Step 6: Localization</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th><th>EN/JP</th></tr>
+                <tr><td>YT channels</td><td class="num">—</td><td class="num">—</td><td class="num">—x</td></tr>
+                <tr><td>Twitter publishers</td><td class="num">—</td><td class="num">—</td><td class="num">—x</td></tr>
+                <tr><td>Gap score</td><td class="num">—</td><td class="num">—</td><td></td></tr>
+            </table>
+        </div>
+
+        <details class="grok-details">
+            <summary>Step 3: Knowledge Gap — Grok Raw Data</summary>
+            <div class="grok-section">
+                <h4>EN</h4>
+                <span class="dimmed">Data unavailable</span>
+            </div>
+            <div class="grok-section">
+                <h4>JP</h4>
+                <span class="dimmed">Data unavailable</span>
+            </div>
+        </details>
+
+        <details class="grok-details">
+            <summary>Step 7: Commercial Signals — Grok Raw Data</summary>
+            <div class="grok-section">
+                <h4>EN</h4>
+                <span class="dimmed">Data unavailable</span>
+            </div>
+            <div class="grok-section">
+                <h4>JP</h4>
+                <span class="dimmed">Data unavailable</span>
+            </div>
+        </details>
+    </div>
+
+    <div class="report-footer">
+        AI Agency HQ — Niche Demand Analyzer v0.1<br>
+        Framework: 7-Step Evaluation (Demand / Engagement / Knowledge Gap / Supply / Gap / Localization / Commercial)<br>
+        Data sources: Grok API (x_search) + Xpoz MCP (Twitter/Reddit/Instagram) + yt-dlp (YouTube)
+    </div>
+</div>
+
+<script>
+// Click ranking row to scroll to detail
+document.querySelectorAll('.rank-row').forEach(row => {
+    row.addEventListener('click', () => {
+        const niche = row.dataset.niche;
+        const el = document.getElementById('detail-' + niche);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+});
+</script>
+</body>
+</html>

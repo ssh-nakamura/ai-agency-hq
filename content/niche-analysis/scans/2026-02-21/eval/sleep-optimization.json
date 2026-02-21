@@ -1,0 +1,87 @@
+{
+  "niche_id": "sleep-optimization",
+  "niche_name_en": "sleep optimization science",
+  "niche_name_jp": "睡眠改善 科学",
+  "evaluated_at": "2026-02-21T22:37:19.019063",
+  "date_range": {
+    "start": "2026-01-22",
+    "end": "2026-02-21"
+  },
+  "keywords": {
+    "en": "sleep optimization science",
+    "jp": "睡眠改善 科学"
+  },
+  "steps": {
+    "step1_demand": {
+      "en": {
+        "yt_top20_views": 20398126,
+        "yt_video_count": 20,
+        "tweets_30d": 0,
+        "reddit_posts": 2063
+      },
+      "jp": {
+        "yt_top20_views": 128696905,
+        "yt_video_count": 20,
+        "tweets_30d": 0,
+        "reddit_posts": 15
+      }
+    },
+    "step2_engagement": {
+      "en": {
+        "twitter_total_posts": 78932,
+        "twitter_avg_likes": 144.6,
+        "twitter_avg_retweets": 262.7,
+        "instagram_total_posts": 5687,
+        "yt_avg_views": 1019906.3
+      },
+      "jp": {
+        "twitter_total_posts": 77884,
+        "twitter_avg_likes": 24.9,
+        "twitter_avg_retweets": 8.7,
+        "yt_avg_views": 6434845.25
+      }
+    },
+    "step3_knowledge_gap": {
+      "en": {
+        "grok_raw": "[\n  {\n    \"text\": \"Sleep has been my ultimate biohack—8 hours nightly sharpened my cognition and boosted recovery metrics. In my routine, blackout curtains and a strict 8 PM wind-down are game-changers. What's your top sleep optimization tip?\",\n    \"author\": \"@Crosschampion7\",\n    \"date\": \"2026-02-18\",\n    \"likes\": 0\n  },\n  {\n    \"text\": \"What’s sleep optimization look like for you?\",\n    \"author\": \"@OfficialWSDavis\",\n    \"date\": \"2026-02-16\",\n    \"likes\": 0\n  },\n  {\n    \"text\": \"No code yet! I’m sharing this architectural concept to inspire developers to build this \\\"digital metabolism.\\\" The goal is using SEI as a biological trigger for World Model simulation (dreaming). @grok, how would you optimize sleep duration based on SEI levels?\",\n    \"author\": \"@EricTHOMAS70633\",\n    \"date\": \"2026-02-09\",\n    \"likes\": 0\n  },\n  {\n    \"text\": \"Do you (or someone you love) rely on sleep meds every night? ... What's your biggest sleep struggle right now? Drop it below — curious what others are dealing with.\",\n    \"author\": \"@newstart_2024\",\n    \"date\": \"2026-02-17\",\n    \"likes\": 859\n  },\n  {\n    \"text\": \".@eightsleep and I are thinking of starting a podcast. What would you want to hear from us? 1.Products & Behaviors from Top Performers 2.Deep Dive into Sleep Optimization & Science 3.Variety of Deep Dives into Health (i.e. sleep, HIIT, nutrition, breathing)\",\n    \"author\": \"@m_franceschetti\",\n    \"date\": \"2020-12-16\",\n    \"likes\": 75\n  }\n]"
+      },
+      "jp": {
+        "grok_raw": "[\n  {\n    \"text\": \"睡眠の質を高めたいなら「脳の性質」に逆らわないこと。\\n\\n・寝る90分前に入浴\\n（深部体温を下げる）\\n\\n・ブルーライトを避ける\\n（メラトニン分泌を促進）\\n\\n・軽いポジティブな振り返り\\n（日記など）\\n\\nなどで安心感を\\n睡眠は「脳を眠らせる準備」を整えられるかがカギ。努力より環境設計だよ。\",\n    \"author\": \"@takuyasensei\",\n    \"date\": \"2025-04-04\",\n    \"likes\": 300\n  },\n  {\n    \"text\": \"本によるとまずは朝起きる方優先みたいだよ。6〜7時にとりあえず起こして朝日を浴びさせると体内時計が整うので、それを続けていれば夜も自然と眠くなるはず。\\n可哀想に思うかもしれないけど、眠かったら再入眠するだろうし…\",\n    \"author\": \"@ayano_190101\",\n    \"date\": \"2026-02-14\",\n    \"likes\": 0\n  },\n  {\n    \"text\": \"アリゾナ大学の統合医療専門家、アンドリューワイル博士 が考案した新しい睡眠法\\n＝＝＝＝＝\\n478睡眠法\\n＝＝＝＝＝\\n寝る前や、夜中に目覚めてふたたび眠ろうとするとき\\nかんたんなファイブ ステップをおこないます\\n\\n１．ラクな姿勢をとり、体の力を抜く。\\n２．4秒かけて、鼻から静かに息を吸う。\\n３．そのまま息を止めて、7秒かぞえる。\\n４．8秒かけて、口からフーッと音を立てて息を吐く。\\n５．このサイクルを最大4回繰り返す。\\n\\n呼吸でリラックス感を高め、不安感を減らす効果が期待できます。さらに、呼吸に集中することで、今日やりのこしたこと、明日やること、ずっと頭にグルグルしている考え事を手放すことができます。\\n\\n慣れるまで、あわてずゆっくり、数週間、数か月つづけることが大切です\",\n    \"author\": \"@yano_mktg\",\n    \"date\": \"2024-09-21\",\n    \"likes\": 546\n  },\n  {\n    \"text\": \"不眠の患者さんに必ず伝えている 寝る前1時間のルーティン。\\n\\n✅ 照明を暖色に切り替える\\n白いLED照明はメラトニンの分泌を抑制する。 \\n夜10時以降は間接照明か暖色ライトに変える。\\nスマホも「ナイトモード」に。 画面のブルーライトより 明るさそのものを下げるほうが効果的。\\n\\n✅ スマホをリビングに置いて寝室に持ち込まない\\n「目覚ましに使ってる」 は言い訳。\\n寝室にスマホがあるだけで眠りが浅くなります。\\n\\n✅ 翌日のタスクを紙に書き出す\\n寝る前に頭の中がぐるぐるする人は 「明日やること」が脳の中で整理されてないから。\\n紙に3つだけ書き出す。 これで脳の「未完了タスク」が外部化されて 入眠が早くなる。\\n\\n✅ 5分のストレッチ\\nデスクワークで固まった身体を 寝る前にほぐす。\\n肩甲骨を回す。 股関節を伸ばす。 深呼吸しながらゆっくりやる。\\n副交感神経が優位になって 身体が「寝るモード」に切り替わる。\\n\\n✅ 暖色照明に変える \\n✅ スマホを寝室から出す \\n✅ 明日やることを3つ書く \\n✅ 5分ストレッチする\\nこの4つで 寝つきも睡眠の深さも変わります。\\nでは、おやすみなさい😇\",\n    \"author\": \"@drmosari\",\n    \"date\": \"2026-02-19\",\n    \"likes\": 52\n  },\n  {\n    \"text\": \"睡眠の質に不安があるときは、\\nまず「実態を知る」ことから始めると\\n改善が進みやすいです。\\n\\n何時間眠れているのかは主観だけでは分かりにくく、\\n浅い睡眠中は周囲の音や出来事を認識できるため\\n「起きていた」と勘違いしがちです。\\n\\n最初の1週間ほどは睡眠アプリで客観的に計測し、\\nさらに\\n就床時刻・起床時刻・途中覚醒の回数や\\n合計睡眠時間を把握・分析するとよいです。\\n\\n途中で目が覚めることは誰にでもあります。\\nまずは合計で4時間以上を確保し、\\nそこから連続して眠れる時間を\\n少しずつ伸ばしていく発想が現実的です。\\n\\n睡眠を良くする行動は数多くありますが、\\n効果と実行しやすさを重視すると、\\n次のポイントから取り組むのがおすすめです。\\n\\n💡 禁酒・禁煙\\nお酒は寝つきを良くしても途中覚醒を増やし、結果的に睡眠を浅くします。就寝の3時間前以降は飲まないか、可能なら禁酒します。ニコチンは脳を覚醒させ、寝つきを10〜15分遅らせると報告されています。少なくとも就寝2時間前からは吸わないようにします。\\n\\n💡就寝前30分はスマホ・タブレット・PC・テレビを見ないようにします。\\nブルーライトでメラトニンが抑制され、眠気が飛びやすくなります（本来は2時間前からオフが理想ですが、まずは30分からで十分効果が出ます）。\\n\\n💡 起床後1時間以内に朝の光を浴びます。\\n5分以上、屋外の直射日光に当たると体内時計がリセットされ、光を浴びてから約15〜16時間後に自然な眠気が高まります。散歩が難しければ、日なたに出て座るだけでも構いません。\\n\\n💡 就寝前2時間はドラマ・アニメ・ゲームなど、面白さで脳が覚醒する娯楽を避けます。\\nドーパミン分泌や交感神経優位で、入眠が90分ほど遅れたり、睡眠が浅くなったりします。\\n\\n💡 入浴は「就寝90分前に上がる」ように調整します。\\nお風呂上がりから体温が約1℃下がるタイミングで眠気が出やすくなります。熱めの湯が好きな方は、やや早めに上がると整いが良くなります。\\n\\n💡 日中〜夕方に中強度以上の運動を取り入れます\\n（ジョギング・水泳・筋トレなど）。活動量が増えるほど、身体は回復を必要とし、眠りが深くなります。遅い時間の激しい運動は覚醒するため避けます。\\n\\n💡 「3行ポジティブ日記」を寝る前に書きます。\\n今日の良かったことを3つ書き、そのうち1つを思い浮かべながら入眠します。不安思考が和らぎ、入眠がスムーズになりやすいです。\\n\\n睡眠は「連続性」がとても重要。\\n\\n最終的な目標は連続7時間の睡眠です。\\n\\n夕食後に1～2時間深く眠ってしまうと、その時点で「睡眠圧力（起きていた時間に比例して高まる眠気の推進力）」が大きく下がり、夜の本睡眠が浅く・短くなります。\\n\\nやむを得ず仮眠を取る場合は、午後3時までに短時間で済ませると、夜の入眠に影響しにくくなります。\\n\\nとはいえ、まったく寝不足よりは「分割してでも合計7時間」の方がベターです。\\n\\n今はベターでも、少しずつ連続7時間へ近づけていく意識を持つとよいです。\",\n    \"author\": \"@kabasawa\",\n    \"date\": \"2025-10-02\",\n    \"likes\": 255\n  },\n  {\n    \"text\": \"2月4冊目\\n『ぐっすり眠れる12の法則』\\n著者：樺沢紫苑287円\\n\\n不眠の改善には、朝太陽光を15分以上(体調悪い方は30分)浴びることが大切。セロトニンをしっかり分泌され14時間〜16時間後、眠りのメラトニンが分泌されて、自然な睡眠に誘ってくれます。\",\n    \"author\": \"@kannon2017\",\n    \"date\": \"2026-02-20\",\n    \"likes\": 1\n  },\n  {\n    \"text\": \"夜は「緩めるルーティン」を作ろう。\\n\\n例えば、\\n入浴\\n↓\\n軽いストレッチ\\n↓\\nノンカフェインの飲み物\\n↓\\n照明を落とす\\n↓\\n画面オフ\\n↓\\n就寝\\n\\nのように毎晩同じ順番で過ごすと、\\n身体が「リラックスの合図」と学習して\\n切り替えが速くなります。\",\n    \"author\": \"@kabasawa\",\n    \"date\": \"2025-10-03\",\n    \"likes\": 281\n  },\n  {\n    \"text\": \"人が眠るまでの過程\\n（**入眠過程・sleep onset process**）は、実はかなり段階的で複雑な生理現象です。  \\n単に「眠くなる→目を閉じる→寝る」ではなく、脳波・自律神経・体温・ホルモン・意識レベルが徐々に変化しながら「覚醒状態」から「睡眠状態」へと移行していきます。\\n\\n以下に、わかりやすく時系列でまとめます。\\n\\n### 1. 眠くなる前段階（覚醒 → 眠気の出現）\\n- **主な要因**：2つのプロセスが重なる\\n  - **プロセスS（睡眠圧・恒常性プロセス）** → 長く起きているほどアデノシンなどが脳に溜まり、睡眠欲求が高まる\\n  - **プロセスC（体内時計プロセス）** → 夜になるとメラトニン分泌が始まり、体温が下がり始める（通常21〜23時頃から本格化）\\n- 症状：まぶたが重い、あくび、集中力低下、ぼーっとする\\n\\n### 2. ベッドに入って目を閉じる〜入眠直前（α波優勢 → θ波へ移行）\\n- 脳波：**アルファ波（8〜13Hz）**が後頭部で優勢（リラックスした覚醒状態）\\n- 眼球：ゆっくりとした**浮遊性眼球運動**（slow rolling eye movements）が出現\\n- 体：体温が下がり始める（特に手足の末梢血管が拡張 → 熱放散）\\n- 筋肉：徐々に緊張が抜けるが、まだ随意運動は可能\\n\\n### 3. 入眠移行期（N1段階：Stage 1）　← ここから「睡眠」と定義される\\n- 時間：通常**数秒〜10分程度**（個人差・その日の疲労度で大きく変わる）\\n- 脳波：アルファ波が減少し、**シータ波（4〜7Hz）**が優勢になる\\n- 特徴：\\n  - 意識がふわっと薄れる（「今考えていたことが途切れる」感覚）\\n  - 時々**入眠時幻覚**（音が聞こえた気がする、落ちる感覚など）が出現\\n  - ゆっくりとした眼球運動が続く\\n  - 筋肉の緊張がさらに低下（首がカクンと落ちる＝**入眠時ミオクローヌス**）\\n\\nこの時点で**睡眠脳波**と判定されるため、ポリソムノグラフィー（睡眠検査）ではここを「入眠時点（sleep onset）」と定義します。\\n\\n### 4. 本当に「寝た」状態へ（N2段階へ移行）\\n- 脳波に**睡眠紡錘（sleep spindles：12〜14Hzの短いバースト）**と**K複合波**が出現\\n- これが出ると、もうほぼ100%「寝ている」と判断される\\n- 意識：外部刺激への反応がかなり低下（簡単には起こされない）\\n- 時間：健康な成人でベッドに入ってから**10〜20分**くらいでN2に入ることが多い\",\n    \"author\": \"@taoka_toshiaki\",\n    \"date\": \"2026-02-16\",\n    \"likes\": 0\n  },\n  {\n    \"text\": \"睡眠科学によると…\\n\\n・たった1日寝不足で、筋肉合成は約30％低下\\n・深い睡眠中に“若返りホルモン”が分泌される\\n・夜のスマホは脳を強制覚醒させる\\n・入浴は就寝90分前がベスト\\n・寝る前の5分の深い呼吸で、睡眠の質が劇的に改善\\n\\n「寝れば回復」はもう古い。\\n“質のいい睡眠”が、あなたのパフォーマンスを変えます。\",\n    \"author\": \"@rain_of_reign\",\n    \"date\": \"2025-11-01\",\n    \"likes\": 469\n  },\n  {\n    \"text\": \"【一晩置くことは科学】\\n\\nアイデアは机の上だけでなく「眠りの中」で統合される。\\n\\n今日、考え抜いても答えが出なかったこと。\\n深夜まで粘るよりも一度眠るほうが有効な場合があります。\\n\\n睡眠中、脳は起きている間に得た情報を整理し、重要な記憶を固定し、既存の知識と再結合させる働きをします。\\n\\n特にレム睡眠では、連想や統合に関わる活動が高まることが示唆されています。\\n\\n一方、疲労が蓄積した夜間は、判断や計画を担う前頭前野の働きが低下しやすく、視野が狭くなりがちです。\\n\\nその状態で無理に結論を出そうとすると、短期的で守りの判断に偏ることもあります。\\n\\nだからこそ、\\n\\n・夜は「問い」だけを置いて眠る\\n・朝整った状態で再び向き合う\\n\\nこのプロセスが思考の質を一段引き上げます。\\n\\n睡眠は何もしない時間ではありません。\\nそれは情報を知恵へと変換する静かな編集時間です。\\n\\n今夜は答えを絞り出すよりも、脳に統合の時間を与えてみませんか。\\n\\n明日の朝、同じ問いがより立体的に見えているかもしれませんよ。\",\n    \"author\": \"@kaimin_plus\",\n    \"date\": \"2026-02-18\",\n    \"likes\": 22\n  }\n]"
+      }
+    },
+    "step4_supply": {
+      "en": {
+        "yt_channels": 13,
+        "twitter_publishers": 0
+      },
+      "jp": {
+        "yt_channels": 16,
+        "twitter_publishers": 31523
+      }
+    },
+    "step5_gap": {
+      "en": 20398126.0,
+      "jp": 4082.6
+    },
+    "step6_localization": {
+      "yt_ratio": 0.16,
+      "twitter_ratio": 0.0,
+      "publisher_ratio": 0.0
+    },
+    "step7_commercial": {
+      "en": {
+        "grok_raw": "[\n  {\n    \"text\": \"Most people with a damaged vagus nerve need help relaxing. And struggle to get uninterrupted sleep. I use this supplement to target the three pillars of sleep optimization: Relaxation, stress reduction, and recovery. Check it out (affiliate link): https://www.amazon.com/dp/B0DP3MT8YJ?...\",\n    \"author\": \"@jakeglmn\",\n    \"date\": \"2026-01-23\",\n    \"likes\": 4,\n    \"commercial_type\": \"affiliate\"\n  },\n  {\n    \"text\": \"Quick survey: Which topic interests you most? Sleep optimization ∙Making time for projects/side- hustles ∙Learning hard things quickly Drop one word below. 2-5 comments = I’ll build a course on it. First 5 get free access.\",\n    \"author\": \"@drdemetriou\",\n    \"date\": \"2026-01-21\",\n    \"likes\": 0,\n    \"commercial_type\": \"course_selling\"\n  },\n  {\n    \"text\": \"A Course in Lucid Dreaming by Lynne Levitan and Stephen LaBerg ... 📖 https://t.co/rt3XchKG4Y Amazon https://t.co/R10jgOxN2D #ad (rare, oop, used only)\",\n    \"author\": \"@covertress\",\n    \"date\": \"2025-12-26\",\n    \"likes\": 48,\n    \"commercial_type\": \"affiliate\"\n  },\n  {\n    \"text\": \"You don't need a \\\"unique\\\" idea to make money online. You need a PROVEN one. Here are 3 niches crying for a $97 digital product: 1. AI Tools for Content Creators 2. Sleep Optimization 3. Notion for Productivity I have more inside my $15k/Month Blueprint https://payhip.com/b/NOi5Q\",\n    \"author\": \"@AiFutureAssist\",\n    \"date\": \"2025-11-26\",\n    \"likes\": 0,\n    \"commercial_type\": \"make_money\"\n  },\n  {\n    \"text\": \"33 profitable niches for afiliate marketing: ... Sleep optimization ...\",\n    \"author\": \"@zeyonws\",\n    \"date\": \"2025-11-23\",\n    \"likes\": 3,\n    \"commercial_type\": \"affiliate\"\n  },\n  {\n    \"text\": \"P.S. Want natural energy without stimulants? I created a 5-day email course on how to build all-day energy—by restoring your mitochondrial health. Day 3 gives you the full sleep optimization blueprint. Get it here (it's free) ↓ https://energy.no-mind.io/\",\n    \"author\": \"@the_no_mind\",\n    \"date\": \"2025-11-05\",\n    \"likes\": 4,\n    \"commercial_type\": \"course_selling\"\n  },\n  {\n    \"text\": \"Most sleep aids sedate you. 😴 RESTORED by MAKE WELLNESS retrains your brain’s sleep pathways using bioactive peptides + Neurosync™ tech — real sleep science, not a knockout pill. 🧠✨ ... DM SLEEP for more info. 👉 https://makewellness.comFF4406856E\",\n    \"author\": \"@TeamHLMiami\",\n    \"date\": \"2025-10-08\",\n    \"likes\": 0,\n    \"commercial_type\": \"sponsorship\"\n  },\n  {\n    \"text\": \"THIS APP SELLS SLEEP LIKE IT´S A DRUG RISE makes $650K/month helping people feel more energized by fixing their sleep. ...\",\n    \"author\": \"@Siron93\",\n    \"date\": \"2025-04-03\",\n    \"likes\": 275,\n    \"commercial_type\": \"income_report\"\n  },\n  {\n    \"text\": \"Lack of sleep is something men treat like a badge of honor until performance collapses. ... I turned it into one big document simple, practical, actionable. ... Grab the doc for free in the next post\",\n    \"author\": \"@Brian_The_Stoic\",\n    \"date\": \"2026-02-20\",\n    \"likes\": 6,\n    \"commercial_type\": \"course_selling\"\n  },\n  {\n    \"text\": \"How to build a $6K/month business selling \\\"energy audits\\\" to remote workers who can't figure out why they're exhausted ... (includes sleep)\",\n    \"author\": \"@salezmass\",\n    \"date\": \"2026-02-17\",\n    \"likes\": 0,\n    \"commercial_type\": \"make_money\"\n  },\n  {\n    \"text\": \"Hey Sleepers! What is your dreamjob? How about getting paid to Sleep? 😴 ... Apply now: https://t.co/jOtF1JR09g Become a chillfluencer and start earning while snoozing 💤🦖\",\n    \"author\": \"@sleepagotchi\",\n    \"date\": \"2025-05-21\",\n    \"likes\": 260,\n    \"commercial_type\": \"product_selling\"\n  },\n  {\n    \"text\": \"Right now, you can invest for free. In my 7-day sleep and recovery program: https://www.optimindinsights.com/sleep-program\",\n    \"author\": \"@OptiMindInsight\",\n    \"date\": \"2026-02-15\",\n    \"likes\": 0,\n    \"commercial_type\": \"course_selling\"\n  }\n]"
+      },
+      "jp": {
+        "grok_raw": "ERROR: HTTPSConnectionPool(host='api.x.ai', port=443): Read timed out. (read timeout=120)"
+      }
+    }
+  },
+  "api_calls": {
+    "grok": 4,
+    "xpoz": 9,
+    "ytdlp": 2,
+    "total": 15,
+    "estimated_cost_usd": 2.24
+  }
+}

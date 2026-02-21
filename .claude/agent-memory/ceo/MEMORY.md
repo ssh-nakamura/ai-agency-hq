@@ -38,6 +38,7 @@
 - ドキュメント6ファイル体制は重すぎた → 3ファイルに統合（plan.md, status.md, decisions.md）
 - ccusageのAPI換算コストをMaxプランの消化率として報告 → 株主に指摘。Maxプランはレートリミット方式でAPI課金と別物。ダッシュボード実測が正
 - CEOツールリストにTeamCreate系7ツールが欠落 → テストは通るがCEOがTeams使えない状態。ツール定義とルールの整合性を確認しろ
+- **Teams機能が動かなかった根本原因**: `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` の環境変数が未設定だった。2026-02-21に `~/.claude/settings.json` で有効化。起動時にTeamCreateが手元にあるか確認しろ
 - **既存ツールを確認せず新規作成を指示** — tools/dashboard/が既にあるのにtools/live-logs/を新規作成。MEMORY.mdに自分で書いてあるのに見てなかった。**新しいものを作る前に、既存の資産で解決できないか必ず確認しろ**
 
 ## CEO自戒（毎回読め）

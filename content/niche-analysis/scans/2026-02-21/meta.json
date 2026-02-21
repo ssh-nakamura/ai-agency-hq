@@ -1,0 +1,23 @@
+{
+  "scan_date": "2026-02-21",
+  "scan_type": "stage3_manual_verification",
+  "purpose": "Validate data shapes and API outputs before scripting tools/niche-analyzer/",
+  "niches_evaluated": ["trivia-shorts"],
+  "total_api_calls": 19,
+  "estimated_cost_usd": 3.50,
+  "data_sources_used": [
+    "grok_responses_api",
+    "xpoz_twitter",
+    "xpoz_reddit",
+    "xpoz_instagram",
+    "ytdlp"
+  ],
+  "key_findings": [
+    "YouTube (yt-dlp) is the most reliable demand signal",
+    "Twitter countTweets exact phrase matching is useless for niche detection",
+    "Reddit JP has Chinese content leakage (kanji overlap)",
+    "Instagram is heavily polluted with AI tool promotion spam",
+    "Grok API is best for qualitative analysis (knowledge gap, commercial signals)",
+    "雑学ショート動画 is a JP-native trend, NOT an EN→JP arbitrage opportunity"
+  ]
+}

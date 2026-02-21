@@ -1,6 +1,8 @@
 // ── State ──
 let chatData = {};
 let hideTools = true;
+let researchData = null;
+let overviewPollTimer = null;
 
 // ── Utilities ──
 function esc(s) {
@@ -16,6 +18,14 @@ function fmtT(n) {
 function fmtNum(n) { return n.toLocaleString(); }
 
 // ── Tab Switching ──
+function startOverviewPoll() {
+    stopOverviewPoll();
+    overviewPollTimer = setInterval(() => { loadOverview(); }, 30000);
+}
+function stopOverviewPoll() {
+    if (overviewPollTimer) { clearInterval(overviewPollTimer); overviewPollTimer = null; }
+}
+
 document.querySelectorAll(".tab-btn").forEach(btn => {
     btn.addEventListener("click", () => {
         document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
@@ -25,6 +35,11 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
         if (btn.dataset.tab === "agents" && !chatData.dms) loadAgents();
         if (btn.dataset.tab === "roadmap") loadRoadmap();
         if (btn.dataset.tab === "usage") loadUsage();
+        if (btn.dataset.tab === "research" && !researchData) loadResearch();
+        if (btn.dataset.tab === "niche") loadNiche();
+        // Auto-polling for overview
+        if (btn.dataset.tab === "overview") { startOverviewPoll(); }
+        else { stopOverviewPoll(); }
     });
 });
 
@@ -467,6 +482,388 @@ function renderUsage(d) {
 
 
 // ══════════════════════════════════════════════════════════
+// RESEARCH TAB
+// ══════════════════════════════════════════════════════════
+
+async function loadResearch() {
+    const sidebar = document.getElementById("researchSidebar");
+    try {
+        const r = await fetch("/api/research");
+        researchData = await r.json();
+        renderResearchSidebar();
+    } catch (e) {
+        sidebar.innerHTML = '<div class="sidebar-header">Research Files</div><div style="padding:16px;color:#f87171;font-size:13px">Failed to load: ' + esc(e.message) + '</div>';
+    }
+}
+
+function renderResearchSidebar() {
+    const sidebar = document.getElementById("researchSidebar");
+    const files = researchData.files || [];
+    let html = '<div class="sidebar-header">Research Files <span style="color:#555;font-weight:400">(' + files.length + ')</span></div>';
+    if (files.length === 0) {
+        html += '<div style="padding:16px;color:#555;font-size:13px">No research files found</div>';
+    }
+    files.forEach((f, i) => {
+        html += '<div class="sidebar-item research-file-item" data-idx="' + i + '" onclick="selectResearchFile(' + i + ')">'
+            + '<div class="research-file-icon"></div>'
+            + '<div class="si-info">'
+            + '<div class="si-name">' + esc(f.title) + '</div>'
+            + '<div class="si-sub">' + f.lines + ' lines</div>'
+            + '</div></div>';
+    });
+    sidebar.innerHTML = html;
+}
+
+function selectResearchFile(idx) {
+    document.querySelectorAll(".research-file-item").forEach(el => el.classList.remove("active"));
+    const el = document.querySelector('.research-file-item[data-idx="' + idx + '"]');
+    if (el) el.classList.add("active");
+    const f = researchData.files[idx];
+    if (!f) return;
+    const main = document.getElementById("researchMain");
+    main.innerHTML = '<div class="research-reader"><h1 class="research-title">' + esc(f.title) + '</h1>'
+        + '<div class="research-meta">' + esc(f.name) + ' &middot; ' + f.lines + ' lines &middot; ' + (f.size / 1024).toFixed(1) + ' KB</div>'
+        + '<div class="research-body">' + renderMarkdown(f.content) + '</div></div>';
+}
+
+function renderMarkdown(md) {
+    const lines = md.split("\n");
+    let html = "";
+    let inCode = false;
+    let codeLang = "";
+    let codeLines = [];
+    let inList = false;
+    let listItems = [];
+    let inTable = false;
+    let tableRows = [];
+    let paragraph = [];
+
+    function flushParagraph() {
+        if (paragraph.length > 0) {
+            html += "<p>" + paragraph.join(" ") + "</p>";
+            paragraph = [];
+        }
+    }
+    function flushList() {
+        if (inList && listItems.length > 0) {
+            html += "<ul>" + listItems.map(li => "<li>" + li + "</li>").join("") + "</ul>";
+            listItems = [];
+            inList = false;
+        }
+    }
+    function flushTable() {
+        if (inTable && tableRows.length > 0) {
+            let t = "<table><thead><tr>";
+            const header = tableRows[0];
+            for (const cell of header) { t += "<th>" + cell + "</th>"; }
+            t += "</tr></thead><tbody>";
+            for (let i = 1; i < tableRows.length; i++) {
+                t += "<tr>";
+                for (const cell of tableRows[i]) { t += "<td>" + cell + "</td>"; }
+                t += "</tr>";
+            }
+            t += "</tbody></table>";
+            html += t;
+            tableRows = [];
+            inTable = false;
+        }
+    }
+
+    function inlineFormat(text) {
+        // Bold
+        text = text.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+        // Inline code
+        text = text.replace(/`([^`]+)`/g, "<code>$1</code>");
+        // Links
+        text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+        return text;
+    }
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+
+        // Code block toggle
+        if (line.trimStart().startsWith("```")) {
+            if (!inCode) {
+                flushParagraph(); flushList(); flushTable();
+                inCode = true;
+                codeLang = line.trimStart().slice(3).trim();
+                codeLines = [];
+            } else {
+                html += '<pre><code' + (codeLang ? ' class="lang-' + esc(codeLang) + '"' : '') + '>' + esc(codeLines.join("\n")) + '</code></pre>';
+                inCode = false;
+                codeLang = "";
+                codeLines = [];
+            }
+            continue;
+        }
+        if (inCode) { codeLines.push(line); continue; }
+
+        // Headings
+        if (line.startsWith("### ")) {
+            flushParagraph(); flushList(); flushTable();
+            html += "<h3>" + inlineFormat(esc(line.slice(4))) + "</h3>";
+            continue;
+        }
+        if (line.startsWith("## ")) {
+            flushParagraph(); flushList(); flushTable();
+            html += "<h2>" + inlineFormat(esc(line.slice(3))) + "</h2>";
+            continue;
+        }
+        if (line.startsWith("# ")) {
+            flushParagraph(); flushList(); flushTable();
+            html += "<h1>" + inlineFormat(esc(line.slice(2))) + "</h1>";
+            continue;
+        }
+
+        // Table row
+        if (line.startsWith("|")) {
+            flushParagraph(); flushList();
+            const cells = line.split("|").slice(1, -1).map(c => inlineFormat(esc(c.trim())));
+            // Skip separator rows
+            if (cells.every(c => /^[-:]+$/.test(c.replace(/<[^>]+>/g, "")))) { continue; }
+            if (!inTable) { inTable = true; tableRows = []; }
+            tableRows.push(cells);
+            continue;
+        }
+        if (inTable) { flushTable(); }
+
+        // List item
+        if (/^[-*] /.test(line.trimStart())) {
+            flushParagraph(); if (!inTable) flushTable();
+            inList = true;
+            listItems.push(inlineFormat(esc(line.trimStart().slice(2))));
+            continue;
+        }
+        if (inList) { flushList(); }
+
+        // Blockquote
+        if (line.startsWith("> ")) {
+            flushParagraph(); flushList(); flushTable();
+            html += "<blockquote>" + inlineFormat(esc(line.slice(2))) + "</blockquote>";
+            continue;
+        }
+
+        // Horizontal rule
+        if (/^---+$/.test(line.trim())) {
+            flushParagraph(); flushList(); flushTable();
+            html += "<hr>";
+            continue;
+        }
+
+        // Empty line = paragraph break
+        if (line.trim() === "") {
+            flushParagraph(); flushList(); flushTable();
+            continue;
+        }
+
+        // Regular text
+        paragraph.push(inlineFormat(esc(line)));
+    }
+    flushParagraph(); flushList(); flushTable();
+    if (inCode && codeLines.length > 0) {
+        html += '<pre><code>' + esc(codeLines.join("\n")) + '</code></pre>';
+    }
+    return html;
+}
+
+
+// ══════════════════════════════════════════════════════════
+// NICHE TAB
+// ══════════════════════════════════════════════════════════
+
+let nicheData = null;
+
+async function loadNiche() {
+    const sidebar = document.getElementById("nicheSidebar");
+    try {
+        const r = await fetch("/api/niche-scans");
+        nicheData = await r.json();
+        renderNicheSidebar();
+    } catch (e) {
+        sidebar.innerHTML = '<div class="sidebar-header">Niche Scans</div><div style="padding:16px;color:#f87171;font-size:13px">Failed: ' + esc(e.message) + '</div>';
+    }
+}
+
+function renderNicheSidebar() {
+    const sidebar = document.getElementById("nicheSidebar");
+    const scans = nicheData.scans || [];
+    let html = '<div class="sidebar-header">Niche Scans <span style="color:#555;font-weight:400">(' + scans.length + ')</span></div>';
+    if (scans.length === 0) {
+        html += '<div style="padding:16px;color:#555;font-size:13px">No scans found.<br><code style="font-size:11px">python3 tools/niche-analyzer/cli.py evaluate --help</code></div>';
+        sidebar.innerHTML = html;
+        return;
+    }
+    scans.forEach((scan, si) => {
+        html += '<div class="sidebar-subheader" style="display:flex;align-items:center;justify-content:space-between">'
+            + esc(scan.date)
+            + '<button class="report-btn" onclick="event.stopPropagation();openNicheReport(\'' + esc(scan.date) + '\')" title="Full Report">&#128202; Report</button>'
+            + '</div>';
+        scan.niches.forEach((n, ni) => {
+            const views = n.yt_views_en + n.yt_views_jp;
+            html += '<div class="sidebar-item niche-item" data-scan="' + si + '" data-niche="' + ni + '" onclick="selectNiche(' + si + ',' + ni + ')">'
+                + '<div class="niche-icon">' + (n.yt_ratio > 3 ? '&#127775;' : n.yt_ratio > 1 ? '&#9733;' : '&#9898;') + '</div>'
+                + '<div class="si-info">'
+                + '<div class="si-name">' + esc(n.keyword_jp || n.id) + '</div>'
+                + '<div class="si-sub">YT ' + fmtNum(views) + ' views</div>'
+                + '</div></div>';
+        });
+    });
+    sidebar.innerHTML = html;
+}
+
+function openNicheReport(scanDate) {
+    const main = document.getElementById("nicheMain");
+    document.querySelectorAll(".niche-item").forEach(el => el.classList.remove("active"));
+    main.innerHTML = '<iframe src="/api/niche-report?date=' + encodeURIComponent(scanDate)
+        + '" style="width:100%;height:100%;border:none;background:#0a0a0a"></iframe>';
+}
+
+function selectNiche(scanIdx, nicheIdx) {
+    document.querySelectorAll(".niche-item").forEach(el => el.classList.remove("active"));
+    const el = document.querySelector('.niche-item[data-scan="' + scanIdx + '"][data-niche="' + nicheIdx + '"]');
+    if (el) el.classList.add("active");
+    const scan = nicheData.scans[scanIdx];
+    const niche = scan.niches[nicheIdx];
+    renderNicheDetail(niche, scan.date);
+}
+
+function renderNicheDetail(niche, scanDate) {
+    const main = document.getElementById("nicheMain");
+    const d = niche.eval_data || {};
+    const steps = d.steps || {};
+    const s1 = steps.step1_demand || {};
+    const s2 = steps.step2_engagement || {};
+    const s4 = steps.step4_supply || {};
+    const s5 = steps.step5_gap || {};
+    const s6 = steps.step6_localization || {};
+    const api = d.api_calls || {};
+
+    // Score each step
+    const stepScores = [
+        scoreStep1(s1), scoreStep2(s2), scoreStep3(steps.step3_knowledge_gap || {}),
+        scoreStep4(s4), scoreStep5(s5), scoreStep6(s6), scoreStep7(steps.step7_commercial || {}),
+    ];
+    const stepLabels = ["需要ボリューム", "エンゲージメント", "ナレッジギャップ", "競合供給量", "需給ギャップ", "ローカライズ倍率", "商業シグナル"];
+    const total = stepScores.reduce((a, s) => a + s[0], 0);
+    const maxTotal = stepScores.length * 3;
+    const pct = (total / maxTotal * 100).toFixed(0);
+    const colors = {3: "#22c55e", 2: "#eab308", 1: "#ef4444"};
+    const stars = {3: "&#9733;&#9733;&#9733;", 2: "&#9733;&#9733;&#9734;", 1: "&#9733;&#9734;&#9734;"};
+    const avgScore = Math.round(total / stepScores.length);
+    const overallColor = colors[avgScore] || "#eab308";
+
+    let html = '<div class="niche-detail">';
+
+    // Header
+    html += '<div class="niche-header"><h2>' + esc(d.niche_name_jp || niche.keyword_jp || niche.id) + ' / ' + esc(d.niche_name_en || niche.keyword_en || "") + '</h2>'
+        + '<div class="niche-meta">Scan: ' + esc(scanDate) + ' | API: ' + (api.total || 0) + ' calls | Cost: $' + (api.estimated_cost_usd || 0).toFixed(2) + '</div></div>';
+
+    // Overall score
+    html += '<div class="niche-overall" style="border-color:' + overallColor + '40">'
+        + '<div class="niche-score" style="color:' + overallColor + '">' + total + '/' + maxTotal + '</div>'
+        + '<div class="niche-bar-wrap"><div class="niche-bar" style="width:' + pct + '%;background:' + overallColor + '"></div></div>'
+        + '</div>';
+
+    // Step cards grid
+    html += '<div class="niche-steps-grid">';
+    stepScores.forEach((s, i) => {
+        const [score, comment] = s;
+        html += '<div class="niche-step-card">'
+            + '<div class="niche-step-head"><span>' + stepLabels[i] + '</span><span class="niche-step-stars" style="color:' + colors[score] + '">' + stars[score] + '</span></div>'
+            + '<div class="niche-step-comment">' + esc(comment) + '</div>'
+            + '</div>';
+    });
+    html += '</div>';
+
+    // Data tables
+    html += '<div class="niche-data-grid">';
+
+    // Demand table
+    html += '<div class="niche-data-card"><h3>Demand Volume</h3><table>'
+        + '<tr><th>Source</th><th class="r">EN</th><th class="r">JP</th></tr>'
+        + '<tr><td>YouTube Top 20</td><td class="r">' + fmtNum(s1.en?.yt_top20_views || 0) + '</td><td class="r">' + fmtNum(s1.jp?.yt_top20_views || 0) + '</td></tr>'
+        + '<tr><td>Twitter 30d</td><td class="r">' + fmtNum(s1.en?.tweets_30d || 0) + '</td><td class="r">' + fmtNum(s1.jp?.tweets_30d || 0) + '</td></tr>'
+        + '<tr><td>Reddit</td><td class="r">' + fmtNum(s1.en?.reddit_posts || 0) + '</td><td class="r">' + fmtNum(s1.jp?.reddit_posts || 0) + '</td></tr>'
+        + '</table></div>';
+
+    // Localization table
+    html += '<div class="niche-data-card"><h3>Localization Ratio</h3><table>'
+        + '<tr><th>Source</th><th class="r">EN/JP</th></tr>'
+        + '<tr><td>YouTube</td><td class="r">' + (s6.yt_ratio || 0).toFixed(2) + 'x</td></tr>'
+        + '<tr><td>Twitter</td><td class="r">' + (s6.twitter_ratio || 0).toFixed(2) + 'x</td></tr>'
+        + '<tr><td>Publisher</td><td class="r">' + (s6.publisher_ratio || 0).toFixed(2) + 'x</td></tr>'
+        + '</table></div>';
+
+    html += '</div>';
+
+    // Knowledge Gap raw (if available)
+    const s3_jp = (steps.step3_knowledge_gap || {}).jp || {};
+    if (s3_jp.grok_raw && s3_jp.grok_raw.length > 50) {
+        html += '<div class="niche-data-card" style="margin-top:12px"><h3>Knowledge Gap (JP)</h3>'
+            + '<div class="niche-raw">' + esc(s3_jp.grok_raw.substring(0, 1000)) + '</div></div>';
+    }
+
+    // Commercial raw (if available)
+    const s7_jp = (steps.step7_commercial || {}).jp || {};
+    if (s7_jp.grok_raw && s7_jp.grok_raw.length > 50) {
+        html += '<div class="niche-data-card" style="margin-top:12px"><h3>Commercial Signals (JP)</h3>'
+            + '<div class="niche-raw">' + esc(s7_jp.grok_raw.substring(0, 1000)) + '</div></div>';
+    }
+
+    html += '</div>';
+    main.innerHTML = html;
+}
+
+function scoreStep1(s) {
+    const yt = (s.en?.yt_top20_views || 0) + (s.jp?.yt_top20_views || 0);
+    if (yt > 5e6) return [3, "Strong (" + fmtNum(yt) + " views)"];
+    if (yt > 1e6) return [2, "Moderate (" + fmtNum(yt) + " views)"];
+    return [1, "Low (" + fmtNum(yt) + " views)"];
+}
+function scoreStep2(s) {
+    const avg = Math.max(s.en?.yt_avg_views || 0, s.jp?.yt_avg_views || 0);
+    if (avg > 200000) return [3, "High avg " + fmtNum(Math.round(avg))];
+    if (avg > 50000) return [2, "Moderate avg " + fmtNum(Math.round(avg))];
+    return [1, "Low avg " + fmtNum(Math.round(avg))];
+}
+function scoreStep3(s) {
+    const raw = s.jp?.grok_raw || "";
+    if (raw.includes("ERROR")) return [1, "Grok failed"];
+    if (raw.length > 500) return [3, "Rich how-to demand"];
+    if (raw.length > 100) return [2, "Some questions"];
+    return [1, "Minimal"];
+}
+function scoreStep4(s) {
+    const pub = s.jp?.twitter_publishers || 0;
+    if (pub > 30000) return [1, "Red ocean (" + fmtNum(pub) + ")"];
+    if (pub > 10000) return [2, "Moderate (" + fmtNum(pub) + ")"];
+    return [3, "Low competition (" + fmtNum(pub) + ")"];
+}
+function scoreStep5(s) {
+    const gap = s.jp || 0;
+    if (gap > 200) return [3, "High gap (" + Math.round(gap) + ")"];
+    if (gap > 50) return [2, "Moderate (" + Math.round(gap) + ")"];
+    return [1, "Low (" + Math.round(gap) + ")"];
+}
+function scoreStep6(s) {
+    const r = s.yt_ratio || 1;
+    if (r > 5) return [3, "Strong EN>JP (" + r.toFixed(1) + "x)"];
+    if (r > 2) return [2, "Moderate (" + r.toFixed(1) + "x)"];
+    return [1, "JP mature (" + r.toFixed(1) + "x)"];
+}
+function scoreStep7(s) {
+    const raw = s.jp?.grok_raw || "";
+    if (raw.includes("ERROR")) return [1, "Grok failed"];
+    const kw = ["収益","アフィ","副業","稼","Brain","note","販売"];
+    const hits = kw.filter(k => raw.includes(k)).length;
+    if (hits >= 4) return [3, "Strong (" + hits + "/7)"];
+    if (hits >= 2) return [2, "Some (" + hits + "/7)"];
+    return [1, "Weak (" + hits + "/7)"];
+}
+
+// ══════════════════════════════════════════════════════════
 // Init
 // ══════════════════════════════════════════════════════════
 loadOverview();
+startOverviewPoll();

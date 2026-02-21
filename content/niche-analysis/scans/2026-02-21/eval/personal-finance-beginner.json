@@ -1,0 +1,87 @@
+{
+  "niche_id": "personal-finance-beginner",
+  "niche_name_en": "personal finance beginners",
+  "niche_name_jp": "お金の基礎知識 初心者",
+  "evaluated_at": "2026-02-21T22:47:21.957745",
+  "date_range": {
+    "start": "2026-01-22",
+    "end": "2026-02-21"
+  },
+  "keywords": {
+    "en": "personal finance beginners",
+    "jp": "お金の基礎知識 初心者"
+  },
+  "steps": {
+    "step1_demand": {
+      "en": {
+        "yt_top20_views": 24558952,
+        "yt_video_count": 20,
+        "tweets_30d": 0,
+        "reddit_posts": 0
+      },
+      "jp": {
+        "yt_top20_views": 26605653,
+        "yt_video_count": 20,
+        "tweets_30d": 0,
+        "reddit_posts": 0
+      }
+    },
+    "step2_engagement": {
+      "en": {
+        "twitter_total_posts": 0,
+        "twitter_avg_likes": 0.0,
+        "twitter_avg_retweets": 0.0,
+        "instagram_total_posts": 0,
+        "yt_avg_views": 1227947.6
+      },
+      "jp": {
+        "twitter_total_posts": 0,
+        "twitter_avg_likes": 0.0,
+        "twitter_avg_retweets": 0.0,
+        "yt_avg_views": 1330282.65
+      }
+    },
+    "step3_knowledge_gap": {
+      "en": {
+        "grok_raw": "[\n  {\n    \"text\": \"For those asking for financial tips, here are a couple if you are starting out investing and dont have credit\\n\\n1.  Open a money market acct at your bank.  This is your \\\"receivable acct\\\" all money comes here 1st\\n\\n2. Checking acct is your \\\"payable acct\\\" there is only enough money here to pay monthly bills & personal spend\\n\\n3. If you dont have a credit card , open a SECURED CREDIT CARD at your bank. All purchases will be made with this card, DO NOT USE A DEBIT CARD TO PAY \\n\\n4. Pay off the ENTIRE BALANCE on the Secured card every month (30 days) for 6-12 months. THIS IS IMPORTANT \\n\\n5. Once your credit score increases, get a better CC and continue the process.\\n\\nThis is just basic banking, if you want more info check out CD ladders.  This ISNT investing advice\",\n    \"author\": \"Pescatore - @JoshPescatore\",\n    \"date\": \"2025-12-19\",\n    \"likes\": 262\n  },\n  {\n    \"text\": \"Personal Finance Education is a crime in India.\\n\\nOne of my known earns 3 lakh per month but is living under distress because of his poor money management.\\n\\nOwns a BMW and recently bought a home way above his budget just to fit in society.\\n\\nFrom outside everything looks perfect.\\nBut inside, he is in distress. Reeling under credit card debts. Taking anxiety pills. No emergency funds. no investments. No health insurance. Nothing.\\n\\nAll of the money is going into maintaining a luxury lifestyle.\\n\\nPersonal Finance is simple but no one has taught us.\\n\\nI'm giving you 7 simple baby steps for your life of financial freedom.\\n\\nStep 1:\\n- Save your first 1 lakh rupees before buying anything.\\n\\nStep 2:\\n- get out of any small debts you have.\\n\\nStep 3:\\n- Save 6 months of expenses for a fully funded emergency fund.\\n\\nStep 4: \\n- Get yourself health insurance.\\n- Invest 10% of your household income into a retirement plan.\\n\\nStep 5:\\n- Start your investment journey.\\n- 20% of your income into investments – Stocks, MFs, Schemes etc.\\n\\nStep 6:\\n- 30% of your income should go to your CAR and Home Loans EMis.\\n\\nStep 7:\\n- Start upskilling and increase your income and become wealthy.\\n\\nYou need to bookmark this and repost this so that it reaches the majority of Indians.\\n\\nFollow @nehanagarr if you're looking for a 1-stop solution for all your personal finance education.<grok:render type=\\\"render_inline_citation\\\"><argument name=\\\"citation_id\\\">1</argument></grok:render>\",\n    \"author\": \"Neha Nagar - @nehanagarr\",\n    \"date\": \"2026-02-16\",\n    \"likes\": 177\n  },\n  {\n    \"text\": \"Educate yourself about personal finances. Start with the basics:\\n-Debt\\n-Budget\\n-Savings\\n‐Expenses\\n-Cash flow\\n-Cost of living\\n-Interest rates for savings and investments\\n\\nAnd most importantly, delayed gratification and opportunity cost.\",\n    \"author\": \"cheruiyotkb - @cheruiyotkb\",\n    \"date\": \"2024-03-02\",\n    \"likes\": 355\n  },\n  {\n    \"text\": \"Personal Finance is the groundstone to Investing.\\n\\nHere are 7 Essential Personal Finance Rules/Tips:\\n\\n1. Delay Buying Decisions - When you've decided to buy something expensive, only act upon that decision the day after.\\n\\n2. Avoid the Debt Spiral - Avoid all high-interest debt like credit card debt.\\n\\n3. Get Out of the Debt Spiral - If you're already in debt, use techniques like the Snowball method to get out.\\n\\nPay off the smallest debt first, that way, you see progress and keep going.\\n\\n4. Emergency Fund - Create an emergency fund with ~3-4 times your monthly salary.\\n\\n5. Use Budget Techniques - Example: 70:20:10 \\n\\n70% for all regular monthly expenses\\n20% for savings\\n10% for repaying debt ("
+      },
+      "jp": {
+        "grok_raw": "[\n  {\n    \"text\": \"＼鹿児島女子必見／\\nアクサ生命presents\\nこれからの生活を考えるお金の基礎知識！\\n～初心者でも安心！ゼロから分かる！マネーセミナー～\\n開催✨\\n\\n✅参加無料\\n🎁参加者全員にフェスティバロの\\n『焼きラブリー』をプレゼント！\\n\\n※定員になり次第締め切り\\n\\n詳細・申込はこちら👇\\nhttps://blogs.mbc.co.jp/article/new_info/141211/\",\n    \"author\": \"@MBC_kagoshima\",\n    \"date\": \"2026-02-18\",\n    \"likes\": 0\n  },\n  {\n    \"text\": \"プロからお金の基礎知識などを\\n学べる\\n「知って安心！マネーデザイン\\n　～物価高騰に負けない\\n　　資産の守り方～」\\n3月14日（土）、\\nRCC文化センターで開催。\\n私は司会です。参加無料。\\nおひとりで、ご夫婦で、親子で、\\n友達同士でどうぞ。初心者OK。\\n詳しくはRCCのHPで。 https://rcc.jp/event/m-design/\",\n    \"author\": \"@barbarakuwabara\",\n    \"date\": \"2026-02-08\",\n    \"likes\": 89\n  },\n  {\n    \"text\": \"【ライターさん募集📘】\\n若者向け金融教育メディアの\\n記事制作にご協力いただける\\nライターの方を募集中です！📝\\n\\n【テーマ】\\nZ世代向け「お金の基礎知識をやさしく解説する記事」\\n\\n【対象読者】\\n高校生〜20代前半の金融初心者\\n\\n【お願いしたい内容・形式】\\n・文字数：1,200〜1,800字程度\\n・Googleドキュメント or Word\\n・つまずきやすいポイントの整理\\n・今日からできる簡単なアクション提案\\n\\n【求める方】\\n・納期を守れる方\\n・長期的に信頼関係を大切にできる方\\n・指示書を読んで自己判断・自己解決できる方\\n・金融分野のリテラシーを高めたい方\\n※専門的な資格や高度な知識は不要です\\n\\n【採用後報酬】\\n・テスト案件：1,000円\\n・採用後：文字単価6円〜\\n※リソースがある方には継続依頼の\\n　ご相談もさせていただきます。\\n\\n📩 応募方法\\n1.フォロー\\n2.この投稿を「いいね＆リポスト」\\n3.プロフィールリンクからご連絡ください\\n→詳細をご案内いたします！\\n\\n明るく前向きな金融コンテンツを一緒に作れる方、\\nご応募をお待ちしています！✨\",\n    \"author\": \"@junki_create\",\n    \"date\": \"2025-12-08\",\n    \"likes\": 3\n  },\n  {\n    \"text\": \"メルカリで投資初心者向けの本1200円で出てて、状態も綺麗だし即ポチした…私みたいにNISA始めたての人絶対読むべきやん！笑\\n\\nお金をもっと上手に使う節約術/お金の基礎知識からお金の増やし方までわかる実用書\\nhttps://jp.mercari.com/item/m80012288703?afid=7908875457\",\n    \"author\": \"@afTsf1OnUMTA\",\n    \"date\": \"2025-11-21\",\n    \"likes\": 0\n  },\n  {\n    \"text\": \"ブログ更新しました📜\\n現在書いている記事は初心者向けの\\n「お金の基礎知識」になりますが、\\nもう少しだけ追加で書いて行こうと思います！\\nhttps://chokin2.com/1-9/\",\n    \"author\": \"@tameru3ch\",\n    \"date\": \"2025-10-25\",\n    \"likes\": 2\n  },\n  {\n    \"text\": \"自己紹介です。\\n\\n2010年生まれ、現在中学生のはぶおです。\\n中2でFP3級、中3でFP2級に合格しました。ちょっとお金に詳しい中学生です。\\n\\n2025年7月にブログ運営開始。\\nFPはぶおのblogでは、中学生の僕が「お金の基礎知識」や「FP合格への知識」を初心者向けに分かりやすく解説しています。\\n#自己紹介\",\n    \"author\": \"@habuo_fp\",\n    \"date\": \"2025-10-20\",\n    \"likes\": 93\n  },\n  {\n    \"text\": \"初心者向け：お金の勉強を始めよう【初心者向け】お金の勉強は何から始める？おすすめ本3選と基礎知識を徹底解説初心者向け：お金の勉強を始めよう \\nhttps://baguio2.com/money-study-beginner/\",\n    \"author\": \"@yutogestalt\",\n    \"date\": \"2026-02-17\",\n    \"likes\": 0\n  },\n  {\n    \"text\": \"【投資初心者が押さえるべき基礎知識】\\n投資初心者のあなたへ。\\n\\n📉景気変動で「お金の価値」が変わるって知っていますか？\\n\\n景気の波は、企業の利益や給与、そしてあなたの資産形成に直結します。\\n物価が上がればお金の価値は下がる（インフレ）、下がれば価値は上がる（デフレ）。\\n知らないままだと、ただ預金しているだけで資産が目減りするリスクも…。\\n\\n✅ 景気変動で1000円の価値は変わる\\n✅ インフレ・デフレが資産に与える影響\\n✅ どの資産が強く、どの資産が弱いか\\n\\n例えば…\\n💡 平均の年：1000円で魚2尾\\n💡 大漁の年（供給過多）：1000円で魚4尾 → お金の価値が上がる\\n💡 不漁の年（供給不足）：1000円で魚1尾 → お金の価値が下がる\\n\\nこのように「お金の価値」は日々動いています。\\n知識を持っていれば、インフレやデフレに応じた賢い資産運用が可能です。\\n\\n無料記事では、投資初心者でも分かるように「景気変動とお金の価値」の仕組みを整理しています👇\\n\\n読む数分が、将来の資産形成に大きな差を生むかもしれません。無料なのでぜひ。\\n\\n全文はこちら⬇️\\n\\nhttps://t.co/gYHi8Y2P4P\",\n    \"author\": \"@money_VOYAGER\",\n    \"date\": \"2026-02-17\",\n    \"likes\": 1\n  },\n  {\n    \"text\": \"【財務・基礎知識編】\\n売上が伸びても現金が残らないのは「資金繰りの基本」がないから。\\n\\n〜創業期に必要な3ステップ〜\\n\\n☑︎入金サイクルの把握\\n☑︎支払い計画の見える化\\n☑︎余剰資金の確保ルール\\n\\n経営初心者こそ保存してほしい基礎知識です。\\n\\n📩無料：個別相談＋財務チェックシート配布（公式LINE）はこちら↓\",\n    \"author\": \"@Beyond_kurofune\",\n    \"date\": \"2026-02-13\",\n    \"likes\": 3\n  },\n  {\n    \"text\": \"🔰初心者の方へ4️⃣🔰\\n(3️⃣は引用元へ)\\n\\n【資金管理について✨】\\n\\n今から小学生に言うようなことを書きます。書かなくても普通に考えてトレードしてると思うから、あまり役に立たない方のが多いかも。ただ、お金貸してくださいのDMが絶えないので念のために書いときます😊\\n\\n生活が立ち行かなくなるほど、投資にお金回してすり減らしている人いるけど、心配だよ❔投資とはお金借りてまでやるものじゃない。「余剰資金でやるもの」だよ！\\n(余裕資金とも言う)\\n\\n「余剰資金=なくなってもよいお金」\\n\\n余裕がないなら投資する資格はまだないということ。お金借りてまでやってたら依存症。\\n\\n初心者の方で、トレードの目的を「月○○万円稼ぐ！」とか「ランチ代稼ぐ！」にしてる人、いる❔そういう前向きな目標しか思い付かない人はとても危険だよ？なんでそもそも自分が「稼げる」設定なのかな？設定をまずは損するもの、として始めて下さい。\\n\\nさて資金管理！！\\n\\n①月にいくら入金するか決める。(余剰資金より)\\n\\n②月(週)にいくらまでなら資金を減らしてよいか決める(例えばトレード収支が-5万までなら許容できる、など)\\n\\n③その月(週)は-5万になった時点でトレード終了。翌月(週)まで勉強のみ。\\n\\n④トレード休むなんて機会損失！なんて思わない。資産を守ることのが大事。\\n　\\n⑤出した損を取り替えそうとしない。それはうぬぼれ。自分は取り返せるほどの実力者か？！を自身に問う。\\n\\n⑥ロットを張らない。いくらまで損切り許容できるかをまずは逆算。資金もスキルもない段階で、レーザーだのディスコだの値嵩株を選定するのは危険。まずはプライム銘柄で出来高多めの1株5000円以内を選ぶといいかも。または以前かいたような上場投資信託(1～10株など少額で買える)ね！\\n\\n⑥デイトレやスイングの損切りは-2%など、絶対ルールを決めておく。-2%のルールの人が、銘柄やローソクによって例外的に-4%までみたいなら、ロットはいつもの半分、またはいつもの半額の株を選ぶ、などで対処、毎回だいたいの損切りの計算をして身構えとく。算数ができないと株はできないことになる。(現物長期投資家はこれは当てはまりません)サポを決める損切りの仕方もあるけれど、それはまたおいおい。初心者はまずパーセントのが簡単そう。\\n\\n⑦毎日毎日マイナスの収支をポストしてはどんちゃん騒ぎしている人を見て、慰められ共感してたらダメだよ。その人、本業で稼いでると思うから。\\n\\n⑧自分の仲良い人5人の平均が自分になるんだって。強そうなトレーダーさんだと勘違いしてポストで騙されたらダメだよ。その人の仲良さそうな人5人みて、胡散臭い人や人間性疑う人がいたら、信じるのはやめたほうがいいよ。信じられる人なんて、ほっんとにわずかしかいないから。\\n\\n⑨損を許容範囲で毎月終えられて、いよいよプラスになるのならば、そこからやっと、効率よく上がる銘柄の選び方、とか、値幅がとれる銘柄を探す旅とか、始まると思う。\\n\\n損を徹底して出さないことを最初のうちに「絶対的ルール」として落とし込まないうちに、たまたま爆ロットで大当たりなどしてしまうと、退場と追証が隣り合わせの爆益爆損トレーダーになっちゃう。そういう人が、2024年の4月とか8月にたくさん消えていったよ。エンタメでそれやりたい人はやればいいけど。\\n\\n以上、みんな最低限普通にやってる内容だったかも。読んでくださりありがとぉ。手堅くいこうね😊😊\",\n    \"author\": \"@mamanekoinvest\",\n    \"date\": \"2025-01-06\",\n    \"likes\": 556\n  },\n  {\n    \"text\": \"【お金の勉強、何から始める？】\\n\\n×難しい本を読む\\n×セミナーに行く\\n×全部理解しようとする\\n\\n︎︎︎︎︎︎☑︎自分に関係あることだけ調べる\\n︎︎︎︎︎︎☑︎困った時に詳しい人に聞く\\n︎︎︎︎︎︎☑︎SNSで実体験を見る\\n\\n「全部勉強」じゃなくて、\\n「必要な情報だけ拾う」。\\n\\n例えば:\\n・家を買いたい → 住宅ローン控除\\n・副業始めた → 確定申告\\n・親が高齢 → 年金・介護\\n\\n自分に必要なタイミングで、\\n必要な知識だけ入れる。\\n\\nそれだけで、\\nスタバ10杯分より価値ある。\",\n    \"author\": \"@asanon_crown\",\n    \"date\": \"2026-02-14\",\n    \"likes\": 5\n  },\n  {\n    \"text\": \"メガバンクで11年働いてわかった。お客様の声「何から始めたら良い？」をヒントに、高校1年生から学びたい\\\"お金の話\\\"をスライドにまとめました。投資、税金、保険、NISA、iDeCo、ふるさと納税。国公立大学ですら教わらないけど、今から学べば遅くない。金融庁の無料で勉強できる最新版資料もリプ欄です\",\n    \"author\": \"@Hattori_bkk\",\n    \"date\": \"2022-04-06\",\n    \"likes\": 1070\n  },\n  {\n    \"text\": \"新卒から始めた方が良いお金関連のこと\\n\\n①給与天引き積立\\n②自社株積立\\n③確定申告\\n④二次会辞退\\n⑤ふるさと納税\\n⑥ゴールドカード発行\\n⑦ネット銀行&証券開設\\n⑧高級時計と高級車の知識\\n\\n僕が今のキャリアを歩めた一因です。みんな知ってることが多いけど、やらない人が多いから徐々に差がつきます。\",\n    \"author\": \"@Hiro_AssetSun\",\n    \"date\": \"2020-10-28\",\n    \"likes\": 167\n  },\n  {\n    \"text\": \"メガバンクで11年働いたけど、ゴールデンウィークにお金の勉強をしないと100%損する。投資、節約、税金、保険、NISA、iDeCo、ふるさと納税。有名大学ですら誰1人教えてくれない。でも、いま学べばお金の悩みは必ず解消する。一番多い質問「何から始めたら良い？」の答えをこのツイートの下に並べました\",\n    \"author\": \"@Hattori_bkk\",\n    \"date\": \"2022-04-30\",\n    \"likes\": 926\n  },\n  {\n    \"text\": \"ズバリいいますが、『お金がない』が口癖の人は情報不足。①コンビニに行かない ②格安SIMに変える ③電気会社を乗り換える ④保険を見直す ⑤ネットバンキングを使う ⑥生活防衛資金をためる ❼お金の余裕ができたら投資する。順番にこなしてみてください。初心者におすすめの❼は 今だけ固ツイです。\",\n    \"author\": \"@tamerunnn\",\n    \"date\": \"2022-08-16\",\n    \"likes\": 302\n  },\n  {\n    \"text\": \"投資が怖いと思う方。\\nやり方が分からない方。\\n\\n知らないと怖い話をします。\\n\\n今あなたの銀行口座にあるお金、毎年”価値が減ってる”って知ってますか？\\n\\n物価は上がる。\\nでも預金の金利はほぼゼロ。\\n\\nつまり「何もしない」が一番お金を失う選択肢になってる時代です。\\n\\n10年前に100万円で買えたものが、今は120万、130万出さないと買えない。\\n\\nお金を増やす話じゃなくて、お金を”守る”ために投資が必要な時代なんです。\\n\\nでも安心してください。\\n\\n「何から始めればいいか分からない」\\n\\nそれが普通です。\\n最初から分かる人なんていません。\\n\\n極ラク投資@gokuraku_coin_ では、\\n\\n・超初心者でも分かる投資の基本\\n・知らないと損する「お金の守り方」\\n・個人的な分析や注目銘柄\\n\\nこれを出し惜しみなくお届けしていきます。\\n\\n「投資を始める」のが怖いんじゃない。「何もしないまま10年経つ」方がよっぽど怖い。\\n\\n一緒に、最初の一歩を踏み出しましょう‼️\",\n    \"author\": \"@gokuraku_keiba\",\n    \"date\": \"2026-02-17\",\n    \"likes\": 44\n  }\n]"
+      }
+    },
+    "step4_supply": {
+      "en": {
+        "yt_channels": 17,
+        "twitter_publishers": 0
+      },
+      "jp": {
+        "yt_channels": 12,
+        "twitter_publishers": 0
+      }
+    },
+    "step5_gap": {
+      "en": 24558952.0,
+      "jp": 26605653.0
+    },
+    "step6_localization": {
+      "yt_ratio": 0.92,
+      "twitter_ratio": 0.0,
+      "publisher_ratio": 0.0
+    },
+    "step7_commercial": {
+      "en": {
+        "grok_raw": "ERROR: HTTPSConnectionPool(host='api.x.ai', port=443): Read timed out. (read timeout=120)"
+      },
+      "jp": {
+        "grok_raw": "ERROR: HTTPSConnectionPool(host='api.x.ai', port=443): Read timed out. (read timeout=120)"
+      }
+    }
+  },
+  "api_calls": {
+    "grok": 4,
+    "xpoz": 9,
+    "ytdlp": 2,
+    "total": 15,
+    "estimated_cost_usd": 2.24
+  }
+}

@@ -14,6 +14,8 @@
         <button class="tab-btn active" data-tab="overview">Overview</button>
         <button class="tab-btn" data-tab="agents">Agents</button>
         <button class="tab-btn" data-tab="roadmap">Roadmap</button>
+        <button class="tab-btn" data-tab="research">Research</button>
+        <button class="tab-btn" data-tab="niche">Niche</button>
         <button class="tab-btn" data-tab="usage">Usage</button>
     </div>
     <div class="topnav-right">
@@ -40,6 +42,32 @@
 <!-- ROADMAP TAB -->
 <div class="tab-panel" id="panel-roadmap">
     <div class="roadmap-scroll" id="roadmapContent">Loading...</div>
+</div>
+
+<!-- RESEARCH TAB -->
+<div class="tab-panel" id="panel-research">
+    <div class="research-layout">
+        <div class="sidebar" id="researchSidebar">
+            <div class="sidebar-header">Research Files</div>
+            <div class="research-empty" style="padding:16px;color:#555;font-size:13px">Loading...</div>
+        </div>
+        <div class="research-main" id="researchMain">
+            <div class="chat-empty">&#8592; Select a file</div>
+        </div>
+    </div>
+</div>
+
+<!-- NICHE TAB -->
+<div class="tab-panel" id="panel-niche">
+    <div class="niche-layout">
+        <div class="sidebar" id="nicheSidebar">
+            <div class="sidebar-header">Niche Scans</div>
+            <div style="padding:16px;color:#555;font-size:13px">Loading...</div>
+        </div>
+        <div class="niche-main" id="nicheMain">
+            <div class="chat-empty">&#8592; Select a scorecard</div>
+        </div>
+    </div>
 </div>
 
 <!-- USAGE TAB -->

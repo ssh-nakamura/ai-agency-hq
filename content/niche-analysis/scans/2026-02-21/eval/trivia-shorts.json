@@ -1,0 +1,160 @@
+{
+  "niche_id": "trivia-shorts",
+  "niche_name_en": "Trivia Short Videos",
+  "niche_name_jp": "雑学ショート動画",
+  "evaluated_at": "2026-02-21T12:00:00+09:00",
+  "keywords": {
+    "en": ["trivia shorts", "trivia", "trivia video", "fun facts shorts"],
+    "jp": ["雑学 ショート", "雑学動画", "雑学 ショート動画", "トリビア動画"]
+  },
+
+  "step1_demand_volume": {
+    "youtube_top20_views": {
+      "en": 3447608,
+      "jp": 5734630,
+      "note": "yt-dlp ytsearch20, view_count sum"
+    },
+    "twitter_count_exact_30d": {
+      "en": 0,
+      "jp": 4,
+      "query_en": "trivia shorts",
+      "query_jp": "雑学 ショート",
+      "note": "Xpoz countTweets. Exact phrase too specific — near-useless"
+    },
+    "twitter_count_broad_30d": {
+      "en": 1156,
+      "jp": 75,
+      "query_en": "trivia",
+      "query_jp": "雑学"
+    },
+    "reddit_posts": {
+      "en": 871,
+      "jp": 46,
+      "note_jp": "JP results mostly Chinese content (kanji overlap). Unreliable for JP niche detection"
+    }
+  },
+
+  "step2_engagement_density": {
+    "twitter_posts_broad": {
+      "en": 500000,
+      "jp": 123539,
+      "note": "Xpoz getTwitterPostsByKeywords totalCount. Very noisy — OR matching across keywords"
+    },
+    "instagram_posts": {
+      "en": 65192,
+      "jp": null,
+      "note": "EN results heavily polluted with AI tool promotion spam"
+    },
+    "youtube_avg_views_per_video": {
+      "en": 172380,
+      "jp": 286731,
+      "note": "top20 total / 20"
+    }
+  },
+
+  "step3_knowledge_gap": {
+    "en": {
+      "question_quality": "low",
+      "detail": "Twitter search for 'how to make trivia shorts' returned off-topic results (crypto trivia, African earn-money sites). No visible 'how to start' demand on EN Twitter.",
+      "top_questions": []
+    },
+    "jp": {
+      "question_quality": "high",
+      "detail": "Active how-to ecosystem. Brain marketplace products, step-by-step guides on Twitter, free GPT tools being distributed.",
+      "top_questions": [
+        "雑学ショートの始め方（3ステップ解説が複数出回っている）",
+        "AI×雑学ショートの台本作り方",
+        "収益化までのロードマップ（月1-3万円が初期目標）",
+        "ショート動画の編集方法（スマホでOK）",
+        "非属人チャンネルの運営方法"
+      ],
+      "key_signals": [
+        {"author": "@kkk_cun", "content": "雑学博士くんGPTツール無料配布", "likes": 369},
+        {"author": "@kaneki_ai888", "content": "3ステップ始め方解説", "likes": 47},
+        {"author": "@Kirara_A1", "content": "3ステップ始め方解説（同内容）", "likes": 20},
+        {"author": "@moneypension9", "content": "非属人YouTuberコミュニティ運営", "likes": 4}
+      ]
+    }
+  },
+
+  "step4_competitive_supply": {
+    "twitter_unique_publishers": {
+      "en": 38264,
+      "jp": 50351,
+      "note": "Xpoz getTwitterUsersByKeywords. JP includes @Kirara_A1, @kaneki_ai888 (Stage 1 discovery accounts)"
+    }
+  },
+
+  "step5_supply_demand_gap": {
+    "views_per_publisher": {
+      "en": 90.1,
+      "jp": 113.9,
+      "formula": "youtube_top20_views / twitter_unique_publishers"
+    },
+    "note": "JP has higher views per publisher = slightly less saturated on YouTube relative to Twitter activity"
+  },
+
+  "step6_localization_ratio": {
+    "youtube_views": {
+      "en_jp_ratio": 0.60,
+      "interpretation": "JP is 1.66x LARGER than EN on YouTube. Already mature JP market."
+    },
+    "twitter_broad": {
+      "en_jp_ratio": 15.4,
+      "interpretation": "EN discussion 15x larger on Twitter. JP concentrated on YouTube, not Twitter."
+    },
+    "reddit": {
+      "en_jp_ratio": 18.9,
+      "interpretation": "Reddit JP data unreliable (Chinese content leakage)"
+    },
+    "overall_assessment": "NOT a typical localization opportunity. JP YouTube market is BIGGER than EN. This is a JP-native trend, not EN→JP arbitrage."
+  },
+
+  "step7_commercial_signals": {
+    "en": {
+      "strength": "weak",
+      "info_products": false,
+      "affiliate_activity": false,
+      "ad_revenue_reports": false,
+      "tool_selling": false,
+      "detail": "No trivia-shorts-specific commercial ecosystem found in EN Twitter"
+    },
+    "jp": {
+      "strength": "strong",
+      "info_products": true,
+      "affiliate_activity": true,
+      "ad_revenue_reports": true,
+      "tool_selling": true,
+      "detail": "Mature commercial ecosystem in JP",
+      "evidence": [
+        {"type": "info_product", "name": "AI×雑学ショート完全攻略ガイド", "platform": "Brain", "price": "不明（有料）"},
+        {"type": "info_product", "name": "ショート動画運用法note", "platform": "note", "price": "¥4,980"},
+        {"type": "ad_revenue", "claim": "¥938,157 in 90 days", "author": "@tassy_youtube", "likes": 644},
+        {"type": "affiliate", "detail": "ショート動画×アフィリエイト ecosystem active", "multiple_accounts": true},
+        {"type": "tool", "name": "雑学博士くん", "platform": "GPT/ChatGPT", "price": "free", "likes": 369},
+        {"type": "ad_revenue", "claim": "400万再生のショートでアドセンス●万超え", "author": "@youtube_shota"}
+      ]
+    }
+  },
+
+  "data_quality_notes": [
+    "Twitter countTweets exact phrase matching is nearly useless for niche detection (0-4 results)",
+    "Twitter broad keyword search is extremely noisy (OR matching gives 100K+ false positives)",
+    "Reddit JP returns Chinese content due to kanji overlap — unreliable for JP",
+    "Instagram results heavily polluted with AI tools promotion spam",
+    "YouTube (yt-dlp) provides the cleanest, most reliable demand signal",
+    "Grok API qualitative search is best for knowledge gap and commercial signal detection"
+  ],
+
+  "api_calls": {
+    "grok_responses_api": 6,
+    "xpoz_count_tweets": 4,
+    "xpoz_twitter_posts": 2,
+    "xpoz_reddit_posts": 2,
+    "xpoz_instagram_posts": 1,
+    "xpoz_twitter_users": 2,
+    "ytdlp_search": 2,
+    "total": 19,
+    "estimated_cost_usd": 3.50
+  }
+}
