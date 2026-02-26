@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <radialGradient id="doumeki-iris-main" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#1e40af"/>
+      <stop offset="60%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </radialGradient>
+    <radialGradient id="doumeki-iris-sub" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </radialGradient>
+    <linearGradient id="doumeki-body" x1="40" y1="10" x2="40" y2="78" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f1f5f9"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- === YOKAI BODY — brushstroke style, rounded and wide === -->
+  <!-- Main body: fat, round yokai silhouette (like a tanuki or oni) -->
+  <!-- Head: large and round, slightly separate from body -->
+  <circle cx="40" cy="18" r="13" fill="url(#doumeki-body)" stroke="#1e293b" stroke-width="2.5"/>
+
+  <!-- Yokai body — wide, round, low center of gravity -->
+  <path d="M18 36 Q14 44 16 58 Q18 68 28 72 Q34 76 40 76 Q46 76 52 72 Q62 68 64 58 Q66 44 62 36 Q58 28 40 28 Q22 28 18 36 Z" fill="url(#doumeki-body)" stroke="#1e293b" stroke-width="2.5" stroke-linejoin="round"/>
+
+  <!-- Short stubby arms (yokai style) -->
+  <path d="M18 40 Q10 38 8 44 Q8 50 14 50" stroke="#1e293b" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M62 40 Q70 38 72 44 Q72 50 66 50" stroke="#1e293b" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+  <!-- Short stubby legs -->
+  <path d="M30 72 Q28 76 26 78" stroke="#1e293b" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M50 72 Q52 76 54 78" stroke="#1e293b" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+  <!-- Small horns on head (oni-like) -->
+  <path d="M34 8 Q33 3 31 5" stroke="#1e293b" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <path d="M46 8 Q47 3 49 5" stroke="#1e293b" stroke-width="2" stroke-linecap="round" fill="none"/>
+
+  <!-- === EYES scattered all over body — brushstroke outlines === -->
+  <!-- Main large eye on face -->
+  <path d="M28 18 Q34 12 40 12 Q46 12 52 18 Q46 24 40 24 Q34 24 28 18 Z" fill="#ffffff" stroke="#1e293b" stroke-width="2.5" stroke-linejoin="round"/>
+  <circle cx="40" cy="18" r="4.5" fill="url(#doumeki-iris-main)"/>
+  <circle cx="40" cy="18" r="2" fill="#0f172a"/>
+  <circle cx="38" cy="16.5" r="1" fill="#ffffff" opacity="0.9"/>
+
+  <!-- Eye upper-left body -->
+  <path d="M22 37 Q27 33 32 37 Q27 41 22 37 Z" fill="#ffffff" stroke="#1e293b" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="27" cy="37" r="2.2" fill="url(#doumeki-iris-sub)"/>
+  <circle cx="27" cy="37" r="1" fill="#1e293b"/>
+  <circle cx="26" cy="36" r="0.6" fill="#ffffff" opacity="0.9"/>
+
+  <!-- Eye upper-right body -->
+  <path d="M48 37 Q53 33 58 37 Q53 41 48 37 Z" fill="#ffffff" stroke="#1e293b" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="53" cy="37" r="2.2" fill="url(#doumeki-iris-sub)"/>
+  <circle cx="53" cy="37" r="1" fill="#1e293b"/>
+  <circle cx="52" cy="36" r="0.6" fill="#ffffff" opacity="0.9"/>
+
+  <!-- Eye center of belly -->
+  <path d="M31 52 Q37 47 43 52 Q37 57 31 52 Z" fill="#ffffff" stroke="#1e293b" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="37" cy="52" r="2.5" fill="url(#doumeki-iris-sub)"/>
+  <circle cx="37" cy="52" r="1.1" fill="#1e293b"/>
+  <circle cx="36" cy="51" r="0.6" fill="#ffffff" opacity="0.9"/>
+
+  <!-- Eye lower-right belly -->
+  <path d="M46 55 Q50 51 54 55 Q50 59 46 55 Z" fill="#ffffff" stroke="#1e293b" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="50" cy="55" r="1.8" fill="url(#doumeki-iris-sub)"/>
+  <circle cx="50" cy="55" r="0.8" fill="#1e293b"/>
+
+  <!-- Eye on left arm -->
+  <path d="M8 44 Q11 41 14 44 Q11 47 8 44 Z" fill="#ffffff" stroke="#1e293b" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="11" cy="44" r="1.5" fill="url(#doumeki-iris-sub)"/>
+  <circle cx="11" cy="44" r="0.7" fill="#1e293b"/>
+
+  <!-- Eye on right arm -->
+  <path d="M66 44 Q69 41 72 44 Q69 47 66 44 Z" fill="#ffffff" stroke="#1e293b" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="69" cy="44" r="1.5" fill="url(#doumeki-iris-sub)"/>
+  <circle cx="69" cy="44" r="0.7" fill="#1e293b"/>
+
+  <!-- Eye lower-left body -->
+  <path d="M20 57 Q24 53 28 57 Q24 61 20 57 Z" fill="#ffffff" stroke="#1e293b" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="24" cy="57" r="1.8" fill="url(#doumeki-iris-sub)"/>
+  <circle cx="24" cy="57" r="0.8" fill="#1e293b"/>
+
+  <!-- Brushstroke detail: thick brow-like marks above main eye (Japanese ink feel) -->
+  <path d="M30 13 Q34 10 38 11" stroke="#1e293b" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <path d="M42 11 Q46 10 50 13" stroke="#1e293b" stroke-width="2" stroke-linecap="round" fill="none"/>
+
+</svg>

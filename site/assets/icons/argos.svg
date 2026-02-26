@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <radialGradient id="a-iris" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Giant profile silhouette — facing left, Greek vase style -->
+  <!-- Single continuous shape: head + neck + torso + legs -->
+  <path d="
+    M52 12
+    Q58 12 60 18
+    Q62 24 58 30
+    L56 34
+    L56 38
+    Q58 40 56 44
+    L54 48
+    L50 50
+    L50 56
+    Q52 60 52 66
+    L50 72
+    Q50 76 46 76
+    L42 76
+    L44 66
+    L38 66
+    L36 76
+    L32 76
+    Q28 76 28 72
+    L30 66
+    Q28 60 28 56
+    L28 50
+    L24 48
+    Q18 46 14 42
+    Q12 40 14 38
+    L22 40
+    L28 44
+    L28 38
+    Q30 32 34 30
+    L40 28
+    Q44 24 48 18
+    Q50 14 52 12
+    Z"
+    fill="#1e293b" stroke="#334155" stroke-width="1.5" stroke-linejoin="round"/>
+
+  <!-- Face eye (profile, almond shape) -->
+  <path d="M54 22 Q58 19 62 22 Q58 25 54 22 Z" fill="#ffffff" stroke="#334155" stroke-width="1"/>
+  <circle cx="58" cy="22" r="2" fill="url(#a-iris)"/>
+  <circle cx="58" cy="22" r="0.8" fill="#0f172a"/>
+  <circle cx="57" cy="21" r="0.5" fill="#ffffff" opacity="0.8"/>
+
+  <!-- Chest eye (largest, central) -->
+  <ellipse cx="40" cy="52" rx="6" ry="3.8" fill="#ffffff" stroke="#334155" stroke-width="1.2"/>
+  <circle cx="40" cy="52" r="2.8" fill="url(#a-iris)"/>
+  <circle cx="40" cy="52" r="1.2" fill="#0f172a"/>
+  <circle cx="39" cy="51" r="0.7" fill="#ffffff" opacity="0.8"/>
+
+  <!-- Shoulder eye -->
+  <ellipse cx="36" cy="38" rx="4.5" ry="2.8" fill="#ffffff" stroke="#334155" stroke-width="1"/>
+  <circle cx="36" cy="38" r="1.8" fill="url(#a-iris)"/>
+  <circle cx="36" cy="38" r="0.8" fill="#0f172a"/>
+
+  <!-- Upper back eye -->
+  <ellipse cx="50" cy="42" rx="3.5" ry="2.2" fill="#ffffff" stroke="#334155" stroke-width="1"/>
+  <circle cx="50" cy="42" r="1.4" fill="url(#a-iris)"/>
+  <circle cx="50" cy="42" r="0.6" fill="#0f172a"/>
+
+  <!-- Belly eye -->
+  <ellipse cx="38" cy="62" rx="3.5" ry="2.2" fill="#ffffff" stroke="#334155" stroke-width="1"/>
+  <circle cx="38" cy="62" r="1.4" fill="url(#a-iris)"/>
+  <circle cx="38" cy="62" r="0.6" fill="#0f172a"/>
+
+  <!-- Head back eye (small) -->
+  <ellipse cx="48" cy="16" rx="2.5" ry="1.8" fill="#ffffff" stroke="#334155" stroke-width="0.8"/>
+  <circle cx="48" cy="16" r="1" fill="url(#a-iris)"/>
+  <circle cx="48" cy="16" r="0.5" fill="#0f172a"/>
+</svg>

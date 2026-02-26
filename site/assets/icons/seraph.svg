@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <radialGradient id="seraph-iris" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </radialGradient>
+    <linearGradient id="seraph-wing-top" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#dbeafe"/>
+    </linearGradient>
+    <linearGradient id="seraph-wing-mid" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#dbeafe"/>
+      <stop offset="100%" stop-color="#eff6ff"/>
+    </linearGradient>
+    <linearGradient id="seraph-wing-low" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eff6ff"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Top wings (covering face - folded upward) -->
+  <path d="M40 26 Q28 16 18 10 Q26 18 28 28Z" fill="url(#seraph-wing-top)" stroke="#1e293b" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M40 26 Q52 16 62 10 Q54 18 52 28Z" fill="url(#seraph-wing-top)" stroke="#1e293b" stroke-width="1.5" stroke-linejoin="round"/>
+
+  <!-- Wing feather lines top -->
+  <path d="M28 28 Q24 22 20 14" stroke="#1e293b" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
+  <path d="M28 28 Q22 20 22 12" stroke="#1e293b" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
+  <path d="M52 28 Q56 22 60 14" stroke="#1e293b" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
+  <path d="M52 28 Q58 20 58 12" stroke="#1e293b" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
+
+  <!-- Middle wings (for flying - spread wide) -->
+  <path d="M28 40 Q14 34 6 36 Q14 40 28 44Z" fill="url(#seraph-wing-mid)" stroke="#1e293b" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M52 40 Q66 34 74 36 Q66 40 52 44Z" fill="url(#seraph-wing-mid)" stroke="#1e293b" stroke-width="1.5" stroke-linejoin="round"/>
+
+  <!-- Wing feather lines mid -->
+  <path d="M28 40 Q16 38 8 38" stroke="#1e293b" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
+  <path d="M28 42 Q16 42 8 44" stroke="#1e293b" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
+  <path d="M52 40 Q64 38 72 38" stroke="#1e293b" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
+  <path d="M52 42 Q64 42 72 44" stroke="#1e293b" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
+
+  <!-- Lower wings (covering feet - folded downward) -->
+  <path d="M40 54 Q28 64 18 70 Q26 62 28 52Z" fill="url(#seraph-wing-low)" stroke="#1e293b" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M40 54 Q52 64 62 70 Q54 62 52 52Z" fill="url(#seraph-wing-low)" stroke="#1e293b" stroke-width="1.5" stroke-linejoin="round"/>
+
+  <!-- Wing feather lines lower -->
+  <path d="M28 52 Q24 58 20 66" stroke="#1e293b" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
+  <path d="M52 52 Q56 58 60 66" stroke="#1e293b" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
+
+  <!-- Central eye -->
+  <ellipse cx="40" cy="40" rx="11" ry="8" fill="#ffffff" stroke="#1e293b" stroke-width="1.5"/>
+  <circle cx="40" cy="40" r="5" fill="url(#seraph-iris)"/>
+  <circle cx="40" cy="40" r="2.5" fill="#1e293b"/>
+  <circle cx="38" cy="38" r="1.2" fill="#ffffff" opacity="0.9"/>
+
+</svg>

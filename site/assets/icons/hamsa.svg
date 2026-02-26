@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <radialGradient id="hamsa-iris" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </radialGradient>
+    <linearGradient id="hamsa-hand" x1="40" y1="8" x2="40" y2="76" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Hand shape (Hamsa) - symmetrical -->
+  <!-- Palm -->
+  <path d="M24 48 L24 72 Q24 76 28 76 L52 76 Q56 76 56 72 L56 48 Q60 44 60 36 L60 24 Q60 20 56 20 Q52 20 52 24 L52 36 L52 24 Q52 20 48 20 Q44 20 44 24 L44 36 L44 20 Q44 16 40 16 Q36 16 36 20 L36 36 L36 24 Q36 20 32 20 Q28 20 28 24 L28 36 Q24 40 24 48Z" fill="url(#hamsa-hand)" stroke="#1e293b" stroke-width="1.5" stroke-linejoin="round"/>
+
+  <!-- Decorative pattern on palm - small arches -->
+  <path d="M30 62 Q34 58 40 58 Q46 58 50 62" stroke="#1e293b" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <path d="M30 68 Q34 64 40 64 Q46 64 50 68" stroke="#1e293b" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.5"/>
+
+  <!-- Eye in center of palm -->
+  <ellipse cx="40" cy="44" rx="9" ry="6" fill="#ffffff" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Iris -->
+  <circle cx="40" cy="44" r="4" fill="url(#hamsa-iris)"/>
+
+  <!-- Pupil -->
+  <circle cx="40" cy="44" r="2" fill="#1e293b"/>
+
+  <!-- Highlight -->
+  <circle cx="38.5" cy="42.5" r="1" fill="#ffffff" opacity="0.9"/>
+
+</svg>

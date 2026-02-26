@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <radialGradient id="themis-iris" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </radialGradient>
+    <linearGradient id="themis-cloth" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Face oval (upper half) — compact to leave room for scales -->
+  <ellipse cx="40" cy="26" rx="20" ry="18" fill="#f8fafc" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Left eye (covered by cloth) - barely visible hint -->
+  <ellipse cx="31" cy="24" rx="6" ry="3.5" fill="#e2e8f0" stroke="#1e293b" stroke-width="1" opacity="0.6"/>
+
+  <!-- Right eye - fully visible, piercing (blindfold slipped) -->
+  <ellipse cx="50" cy="24" rx="7" ry="4.5" fill="#ffffff" stroke="#1e293b" stroke-width="1.5"/>
+  <circle cx="50" cy="24" r="3.5" fill="url(#themis-iris)"/>
+  <circle cx="50" cy="24" r="1.5" fill="#1e293b"/>
+  <circle cx="48.5" cy="22.5" r="1" fill="#ffffff" opacity="0.9"/>
+
+  <!-- Blindfold cloth - main band (slightly offset/tilted, slipping) -->
+  <path d="M20 22 Q28 18 34 21 Q40 24 46 21 Q52 18 60 22 L60 29 Q52 27 46 30 Q40 33 34 30 Q28 28 20 31 Z" fill="url(#themis-cloth)" stroke="#1e293b" stroke-width="1.5" stroke-linejoin="round"/>
+
+  <!-- Cloth folds/wrinkles -->
+  <path d="M22 24 Q28 22 34 24 Q38 26 42 24" stroke="#1e293b" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.3"/>
+
+  <!-- Cloth tail hanging on right -->
+  <path d="M60 22 Q64 20 66 24 Q68 28 66 32 Q64 34 60 33" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" fill="url(#themis-cloth)"/>
+
+  <!-- Cloth tail hanging on left -->
+  <path d="M20 22 Q16 20 14 24 Q12 28 14 32 Q16 34 20 33" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" fill="url(#themis-cloth)"/>
+
+  <!-- ===== SCALES (天秤) ===== -->
+  <!-- Central rod / staff -->
+  <line x1="40" y1="36" x2="40" y2="58" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Horizontal arm of balance -->
+  <line x1="18" y1="44" x2="62" y2="44" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Pivot point at center of arm -->
+  <circle cx="40" cy="44" r="2.5" fill="#1e293b"/>
+
+  <!-- Left chain -->
+  <line x1="22" y1="44" x2="20" y2="54" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2 1.5"/>
+
+  <!-- Right chain -->
+  <line x1="58" y1="44" x2="60" y2="54" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2 1.5"/>
+
+  <!-- Left pan (略下がり気味) -->
+  <path d="M14 54 Q20 57 26 54" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+
+  <!-- Right pan (略上がり気味) -->
+  <path d="M54 52 Q60 55 66 52" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+
+  <!-- Base / stand foot -->
+  <line x1="34" y1="58" x2="46" y2="58" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+
+</svg>

@@ -5,23 +5,36 @@
 
 ---
 
-## 1. セットアップ
+## 1. デザイン方針
+
+**「神話と技術が交差する、知的で怪しい組織」の佇まい。**
+ダークトーンを基調に、神話・宗教・民俗の「目」モチーフを纏う。
+安っぽいサイバー感ではなく、秘密結社のような品と重みを出す。
+
+---
+
+## 2. セットアップ
 
 全HTMLの `<head>` に以下を含める：
 
 ```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <style type="text/tailwindcss">
   @theme {
-    --color-brand: #6c5ce7;
-    --color-brand-dim: #5a4bd1;
-    --color-brand-glow: rgba(108, 92, 231, 0.15);
-    --color-surface: #12121a;
-    --color-surface-hover: #1a1a26;
-    --color-edge: #1e1e2e;
-    --color-success: #00b894;
-    --color-danger: #ff6b6b;
-    --font-mono: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+    --color-base: #0f172a;
+    --color-brand: #2563eb;
+    --color-brand-dim: #1d4ed8;
+    --color-brand-light: rgba(37, 99, 235, 0.15);
+    --color-surface: #1e293b;
+    --color-surface-alt: #111827;
+    --color-edge: #334155;
+    --color-success: #16a34a;
+    --color-danger: #dc2626;
+    --font-sans: "Noto Sans JP", sans-serif;
   }
 </style>
 ```
@@ -30,50 +43,51 @@
 
 ---
 
-## 2. カラー
+## 3. カラー
 
 | 用途 | クラス | 補足 |
 |------|--------|------|
-| ページ背景 | `bg-[#0a0a0f]` | 最深層。これだけ任意値OK |
-| カード背景 | `bg-surface` | 浮き要素 |
-| ホバー背景 | `hover:bg-surface-hover` | カード・行のホバー |
-| ボーダー | `border-edge` | 全ボーダーはこれ |
-| 本文テキスト | `text-gray-200` | メインのテキスト |
-| 補助テキスト | `text-gray-500` | 日付、注釈など |
-| 見出しテキスト | `text-white` | h1, h2のみ |
+| ページ背景 | `bg-base` | 濃紺 #0f172a |
+| セクション背景（交互） | `bg-surface-alt` | やや明るい暗色 #111827 |
+| カード背景 | `bg-surface` | #1e293b |
+| ホバー背景 | `hover:bg-surface-alt` | カード・行のホバー |
+| ボーダー | `border-edge` | #334155 |
+| 本文テキスト | `text-gray-300` | メインのテキスト |
+| 補助テキスト | `text-gray-400` | 日付、注釈など |
+| 見出しテキスト | `text-white` | h1, h2, h3 |
 | アクセント | `text-brand` / `bg-brand` | 要所だけ。多用禁止 |
+| アクセント背景（薄） | `bg-brand-light` | バッジ背景（半透明青） |
 | 成功 | `text-success` | ステータス表示 |
 | エラー | `text-danger` | エラー表示 |
 
 ### カラールール
-- `text-white` は見出し（h1, h2）とナビロゴのみ。本文には使わない
-- `text-brand` はラベル、バッジ、ホバー、リンクに限定
-- 背景の階層: ページ → カード(`surface`) → ホバー(`surface-hover`)
-- **任意値 `[#xxx]` はページ背景 `bg-[#0a0a0f]` のみ許可。他は全てトークンを使う**
+- `text-white` は見出し（h1, h2, h3）のみ
+- `text-brand` はラベル、バッジ、リンク、CTAに限定
+- 背景の交互: 濃紺(`bg-base`) → 暗色(`bg-surface-alt`) → 濃紺 → ...
+- **任意値 `[#xxx]` は原則禁止。すべてトークンを使う**
 
 ---
 
-## 3. タイポグラフィ
+## 4. タイポグラフィ
 
 | 要素 | クラス |
 |------|--------|
-| Hero見出し (h1) | `text-4xl md:text-6xl font-extrabold tracking-tight text-white` |
+| Hero見出し (h1) | `text-4xl md:text-5xl font-bold tracking-tight text-white` |
 | セクション見出し (h2) | `text-2xl font-bold text-white` |
 | 小見出し (h3) | `text-lg font-semibold text-white` |
-| 本文 | `text-base text-gray-200 leading-relaxed` |
-| リード文 | `text-lg text-gray-500 leading-loose` |
-| セクションラベル | `font-mono text-xs text-brand uppercase tracking-widest` |
-| バッジ・タグ | `font-mono text-xs` |
-| コード・ターミナル | `font-mono text-sm` |
+| 本文 | `text-base text-gray-300 leading-relaxed` |
+| リード文 | `text-lg text-gray-400 leading-relaxed` |
+| 補助テキスト | `text-sm text-gray-400` |
 
 ### タイポルール
-- フォントファミリーは2つだけ: デフォルト(sans) と `font-mono`
-- フォントサイズは上記テーブルの組み合わせのみ使用
-- `text-xl` は使わない（h2の`text-2xl` か h3の`text-lg` を使う）
+- フォントは `Noto Sans JP` 1本。`font-sans` で適用
+- フォントウェイトは 400(regular), 500(medium), 700(bold) の3種のみ
+- `font-mono` は使わない
+- `font-extrabold` は使わない。`font-bold` で統一
 
 ---
 
-## 4. スペーシング
+## 5. スペーシング
 
 ### 使っていい値（これ以外は使わない）
 
@@ -96,7 +110,7 @@
 
 ---
 
-## 5. レイアウト
+## 6. レイアウト
 
 ### コンテナ
 ```html
@@ -120,20 +134,19 @@
 |---------|-----|
 | ナビゲーション | `z-50` |
 | モーダル（将来用） | `z-40` |
-| ドロップダウン（将来用） | `z-30` |
 | デフォルト | なし（指定しない） |
 
 ---
 
-## 6. コンポーネント
+## 7. コンポーネント
 
 ### ナビゲーション
 ```html
-<nav class="fixed top-0 inset-x-0 z-50 bg-[#0a0a0f]/85 backdrop-blur-md border-b border-edge">
-  <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
-    <a href="/" class="font-mono text-sm font-bold text-white">ロゴ</a>
+<nav class="fixed top-0 inset-x-0 z-50 bg-base/90 backdrop-blur-md border-b border-edge">
+  <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="/" class="text-lg font-bold text-white">仮想機関AI計画</a>
     <div class="hidden md:flex items-center gap-6">
-      <a href="#section" class="text-sm text-gray-400 hover:text-white transition-colors">リンク</a>
+      <a href="#section" class="text-sm text-gray-400 hover:text-brand transition-colors">リンク</a>
     </div>
   </div>
 </nav>
@@ -143,8 +156,7 @@
 ```html
 <section id="name" class="py-24">
   <div class="max-w-5xl mx-auto px-6">
-    <p class="font-mono text-xs text-brand uppercase tracking-widest mb-3">// Label</p>
-    <h2 class="text-2xl font-bold text-white mb-6">見出し</h2>
+    <h2 class="text-2xl font-bold text-white mb-8">見出し</h2>
     <!-- content -->
   </div>
 </section>
@@ -152,42 +164,35 @@
 
 ### カード
 ```html
-<div class="bg-surface border border-edge rounded-lg p-6 hover:bg-surface-hover transition-colors">
+<div class="bg-surface border border-edge rounded-lg p-6 hover:border-brand/50 transition-colors">
   <h3 class="text-lg font-semibold text-white mb-3">タイトル</h3>
-  <p class="text-gray-200 leading-relaxed">内容</p>
+  <p class="text-gray-300 leading-relaxed">内容</p>
 </div>
 ```
 
 ### ボタン
 ```html
 <!-- Primary -->
-<a href="#" class="inline-block bg-brand hover:bg-brand-dim text-white font-semibold rounded-lg px-6 py-3 transition-colors">
+<a href="#" class="inline-block bg-brand hover:bg-brand-dim text-white font-medium rounded-lg px-6 py-3 transition-colors">
   ラベル
 </a>
 
 <!-- Secondary -->
-<a href="#" class="inline-block border border-edge hover:bg-surface text-gray-200 font-semibold rounded-lg px-6 py-3 transition-colors">
+<a href="#" class="inline-block border border-edge hover:bg-surface text-gray-300 font-medium rounded-lg px-6 py-3 transition-colors">
   ラベル
 </a>
 
-<!-- Ghost（ナビ内など小さいボタン） -->
-<a href="#" class="text-sm text-brand hover:bg-brand-glow rounded-lg px-4 py-2 transition-colors">
-  ラベル
-</a>
+<!-- Disabled -->
+<span class="inline-block bg-surface text-gray-500 font-medium rounded-lg px-6 py-3 cursor-not-allowed">
+  ラベル（準備中）
+</span>
 ```
 
 ### バッジ / タグ
 ```html
-<span class="font-mono text-xs text-brand bg-brand-glow border border-brand/25 px-2.5 py-0.5 rounded">
+<span class="text-xs font-medium text-brand bg-brand-light px-2.5 py-0.5 rounded">
   ラベル
 </span>
-```
-
-### ターミナル風表示
-```html
-<div class="inline-block font-mono text-sm text-gray-500 bg-surface border border-edge px-6 py-3 rounded-lg">
-  <span class="text-success">$</span> コマンド
-</div>
 ```
 
 ### リンク
@@ -196,26 +201,26 @@
 <a href="#" class="text-brand hover:underline">テキスト</a>
 
 <!-- ナビリンク -->
-<a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">テキスト</a>
+<a href="#" class="text-sm text-gray-400 hover:text-brand transition-colors">テキスト</a>
 ```
 
 ---
 
-## 7. インタラクション
+## 8. インタラクション
 
 ### 許可するtransition
-- `transition-colors` — 背景色・テキスト色の変化
-- `transition-opacity` — 表示/非表示の変化
+- `transition-colors` — 背景色・テキスト色・ボーダー色の変化
+- `transition-shadow` — カードのホバーシャドウ
 
-これ以外のtransition（transform, scale, shadow等）は使わない。
+これ以外のtransition（transform, scale, opacity等）は使わない。
 
 ### duration
 - 指定しない（Tailwindデフォルトの150msを使う）
 
 ### ホバー
-- カード: `hover:bg-surface-hover`
+- カード: `hover:border-brand/50`
 - ボタン(primary): `hover:bg-brand-dim`
-- ナビリンク: `hover:text-white`
+- ナビリンク: `hover:text-brand`
 - テキストリンク: `hover:underline`
 
 ### フォーカス
@@ -223,7 +228,7 @@
 
 ---
 
-## 8. レスポンシブ
+## 9. レスポンシブ
 
 - モバイルファースト（Tailwindデフォルト）
 - 使うブレークポイント: `md:` (768px) と `lg:` (1024px) のみ
@@ -234,11 +239,11 @@
 | ナビリンク | `hidden md:flex` |
 | グリッド2列 | `grid-cols-1 md:grid-cols-2` |
 | グリッド3列 | `grid-cols-1 md:grid-cols-2 lg:grid-cols-3` |
-| Hero文字サイズ | `text-4xl md:text-6xl` |
+| Hero文字サイズ | `text-4xl md:text-5xl` |
 
 ---
 
-## 9. 角丸・ボーダー
+## 10. 角丸・ボーダー・シャドウ
 
 | 要素 | 角丸 |
 |------|------|
@@ -246,14 +251,14 @@
 | ボタン | `rounded-lg` |
 | バッジ | `rounded` |
 | 入力フォーム（将来用） | `rounded-lg` |
-| アバター（将来用） | `rounded-full` |
 
 - `rounded-md`, `rounded-xl`, `rounded-2xl` 等は使わない
 - ボーダーは `border border-edge` で統一
+- シャドウは原則使わない（ダーク背景ではボーダーで区切る）
 
 ---
 
-## 10. コーディング規約
+## 11. コーディング規約
 
 ### HTMLテンプレート
 全ページはこの構造で始める：
@@ -273,23 +278,29 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ai-unmanned.com/ページパス">
 
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
   <!-- Tailwind CSS v4 -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <style type="text/tailwindcss">
     @theme {
-      --color-brand: #6c5ce7;
-      --color-brand-dim: #5a4bd1;
-      --color-brand-glow: rgba(108, 92, 231, 0.15);
-      --color-surface: #12121a;
-      --color-surface-hover: #1a1a26;
-      --color-edge: #1e1e2e;
-      --color-success: #00b894;
-      --color-danger: #ff6b6b;
-      --font-mono: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+      --color-base: #0f172a;
+      --color-brand: #2563eb;
+      --color-brand-dim: #1d4ed8;
+      --color-brand-light: rgba(37, 99, 235, 0.15);
+      --color-surface: #1e293b;
+      --color-surface-alt: #111827;
+      --color-edge: #334155;
+      --color-success: #16a34a;
+      --color-danger: #dc2626;
+      --font-sans: "Noto Sans JP", sans-serif;
     }
   </style>
 </head>
-<body class="bg-[#0a0a0f] text-gray-200 font-sans antialiased">
+<body class="bg-base text-gray-300 font-sans antialiased">
 
   <!-- nav -->
   <!-- main content -->
@@ -310,7 +321,11 @@ site/
 ├── js/
 │   └── main.js             # JS（必要になった場合のみ）
 └── assets/
-    └── images/             # 画像
+    ├── icons/              # キャラクターSVGアイコン
+    │   ├── providence.svg  # CEO
+    │   ├── nazar.svg       # 経営企画部長
+    │   └── *.svg           # 各部門
+    └── images/
         ├── og-image.png    # OGP画像
         └── *.webp          # サイト内画像（WebP推奨）
 ```
@@ -318,6 +333,7 @@ site/
 ### ファイルルール
 - ファイル名は **ケバブケース** (`about-us.html`, `og-image.png`)
 - 画像は `assets/images/` に集約
+- SVGアイコンは `assets/icons/` に集約
 - 画像形式は **WebP推奨**、PNGはOGP画像のみ
 - CSSファイルは `css/theme.css` 1つだけ。増やさない
 - JSファイルは `js/main.js` 1つだけ。増やさない（必要になるまで作らない）
@@ -335,16 +351,18 @@ site/
 
 ---
 
-## 11. 禁止事項
+## 12. 禁止事項
 
 - `style` 属性でのインラインスタイル
 - Tailwindクラス以外のカスタムCSS（@theme定義を除く）
 - `!important`
-- 任意値 `[#xxx]` の多用（ページ背景のみ許可）
+- 任意値 `[#xxx]` の使用（すべてトークンを使う）
 - キーフレームアニメーション（`@keyframes`, `animate-*`）
-- 外部CDN追加（Tailwind以外）
+- 外部CDN追加（Tailwind・Google Fonts以外）
 - `sm:`, `xl:`, `2xl:` ブレークポイント
-- `text-xl`, `p-5`, `p-7`, `p-9`, `p-10` 等の未許可値
+- `p-5`, `p-7`, `p-9`, `p-10` 等の未許可値
 - `rounded-md`, `rounded-xl`, `rounded-2xl` 等の未許可角丸
-- `shadow-*`（影は使わない。暗い背景では不要）
+- `font-mono`
+- `font-extrabold`
+- `shadow-md` 以上のシャドウ
 - `transform`, `scale`, `rotate` 等のトランスフォーム

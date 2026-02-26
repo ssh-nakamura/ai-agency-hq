@@ -18,6 +18,9 @@ venv/
 # Node
 node_modules/
 
+# Cloudflare Wrangler
+.wrangler/
+
 # OS
 .DS_Store
 Thumbs.db
