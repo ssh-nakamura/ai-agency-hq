@@ -58,7 +58,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans',san
 .detail-score{font-size:32px;font-weight:800}
 
 /* Mini step cards */
-.mini-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:20px}
+.mini-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;margin-bottom:20px}
 .mini-card{background:#141414;border:1px solid #1e1e1e;border-radius:8px;padding:10px;text-align:center}
 .mini-label{font-size:10px;color:#666;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
 .mini-score{font-size:16px;margin:4px 0}
@@ -96,8 +96,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans',san
 @media(max-width:768px){
     .summary-row{grid-template-columns:repeat(2,1fr)}
     .mini-grid{grid-template-columns:repeat(4,1fr)}
-    .ranking-table th:nth-child(4),.ranking-table th:nth-child(5),
-    .ranking-table td:nth-child(4),.ranking-table td:nth-child(5){display:none}
+    .ranking-table th:nth-child(5),.ranking-table th:nth-child(6),
+    .ranking-table td:nth-child(5),.ranking-table td:nth-child(6){display:none}
 }
 </style>
 </head>
@@ -111,7 +111,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans',san
             <span>Niches: 8</span>
             <span>API Calls: 124</span>
             <span>Cost: $19.18</span>
-            <span>Generated: 2026-02-22 08:31</span>
+            <span>Generated: 2026-02-22 20:05</span>
         </div>
     </div>
 
@@ -121,8 +121,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans',san
             <div class="label">Niches Evaluated</div>
         </div>
         <div class="summary-card">
-            <div class="val" style="color:#22c55e">19/21</div>
-            <div class="label">Top Score — ストア哲学</div>
+            <div class="val" style="color:#22c55e">16/24</div>
+            <div class="label">Top Score — データ可視化</div>
         </div>
         <div class="summary-card">
             <div class="val" style="color:#eab308">5</div>
@@ -140,47 +140,51 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans',san
             <th>#</th>
             <th>Niche</th>
             <th>Score</th>
+            <th>Trend</th>
             <th>YT EN</th>
             <th>YT JP</th>
             <th>EN/JP Ratio</th>
             <th>JP Publishers</th>
         </tr>
         
-        <tr class="rank-row" data-niche="stoicism">
+        <tr class="rank-row" data-niche="data-visualization">
             <td class="rank-num">1</td>
+            <td>
+                <div class="niche-name">データ可視化</div>
+                <div class="niche-sub">data visualization</div>
+            </td>
+            <td class="num" style="color:#eab308;font-weight:700">16/24</td>
+            <td style="text-align:center"><span style="color:#555;font-size:18px">?</span></td>
+            <td class="num">5,838,290</td>
+            <td class="num">161,712</td>
+            <td><div class="ratio-bar"><div class="ratio-fill" style="width:90%;background:#22c55e"></div><span class="ratio-label">36.1x</span></div></td>
+            <td class="num">49,657</td>
+        </tr>
+        <tr class="rank-row" data-niche="stoicism">
+            <td class="rank-num">2</td>
             <td>
                 <div class="niche-name">ストア哲学</div>
                 <div class="niche-sub">stoicism philosophy</div>
             </td>
-            <td class="num" style="color:#22c55e;font-weight:700">19/21</td>
+            <td class="num" style="color:#eab308;font-weight:700">16/24</td>
+            <td style="text-align:center"><span style="color:#555;font-size:18px">?</span></td>
             <td class="num">21,625,915</td>
             <td class="num">3,333,376</td>
             <td><div class="ratio-bar"><div class="ratio-fill" style="width:16%;background:#22c55e"></div><span class="ratio-label">6.5x</span></div></td>
             <td class="num">20,527</td>
         </tr>
         <tr class="rank-row" data-niche="ai-prompts">
-            <td class="rank-num">2</td>
+            <td class="rank-num">3</td>
             <td>
                 <div class="niche-name">AIプロンプト テンプレート</div>
                 <div class="niche-sub">AI prompts templates</div>
             </td>
-            <td class="num" style="color:#eab308;font-weight:700">17/21</td>
+            <td class="num" style="color:#eab308;font-weight:700">15/24</td>
+            <td style="text-align:center"><span style="color:#555;font-size:18px">?</span></td>
             <td class="num">7,011,714</td>
             <td class="num">963,940</td>
             <td><div class="ratio-bar"><div class="ratio-fill" style="width:18%;background:#22c55e"></div><span class="ratio-label">7.3x</span></div></td>
             <td class="num">301,027</td>
-        </tr>
-        <tr class="rank-row" data-niche="data-visualization">
-            <td class="rank-num">3</td>
-            <td>
-                <div class="niche-name">データ可視化</div>
-                <div class="niche-sub">data visualization</div>
-            </td>
-            <td class="num" style="color:#eab308;font-weight:700">17/21</td>
-            <td class="num">5,838,290</td>
-            <td class="num">161,712</td>
-            <td><div class="ratio-bar"><div class="ratio-fill" style="width:90%;background:#22c55e"></div><span class="ratio-label">36.1x</span></div></td>
-            <td class="num">49,657</td>
         </tr>
         <tr class="rank-row" data-niche="faceless-youtube">
             <td class="rank-num">4</td>
@@ -188,7 +192,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans',san
                 <div class="niche-name">顔出しなし YouTube <span class="warn-dot" title="Data quality issues">&#9888;</span></div>
                 <div class="niche-sub">faceless YouTube channel</div>
             </td>
-            <td class="num" style="color:#eab308;font-weight:700">17/21</td>
+            <td class="num" style="color:#eab308;font-weight:700">15/24</td>
+            <td style="text-align:center"><span style="color:#555;font-size:18px">?</span></td>
             <td class="num">—</td>
             <td class="num">1,999,226</td>
             <td><span class="ratio-label">—</span></td>
@@ -200,7 +205,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans',san
                 <div class="niche-name">お金の基礎知識 初心者 <span class="warn-dot" title="Data quality issues">&#9888;</span></div>
                 <div class="niche-sub">personal finance beginners</div>
             </td>
-            <td class="num" style="color:#eab308;font-weight:700">17/21</td>
+            <td class="num" style="color:#ef4444;font-weight:700">13/24</td>
+            <td style="text-align:center"><span style="color:#555;font-size:18px">?</span></td>
             <td class="num">24,558,952</td>
             <td class="num">26,605,653</td>
             <td><div class="ratio-bar"><div class="ratio-fill" style="width:2%;background:#ef4444"></div><span class="ratio-label">0.9x</span></div></td>
@@ -212,7 +218,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans',san
                 <div class="niche-name">睡眠改善 科学 <span class="warn-dot" title="Data quality issues">&#9888;</span></div>
                 <div class="niche-sub">sleep optimization science</div>
             </td>
-            <td class="num" style="color:#eab308;font-weight:700">15/21</td>
+            <td class="num" style="color:#ef4444;font-weight:700">13/24</td>
+            <td style="text-align:center"><span style="color:#555;font-size:18px">?</span></td>
             <td class="num">20,398,126</td>
             <td class="num">128,696,905</td>
             <td><div class="ratio-bar"><div class="ratio-fill" style="width:0%;background:#ef4444"></div><span class="ratio-label">0.2x</span></div></td>
@@ -224,7 +231,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans',san
                 <div class="niche-name">AIニュースレター <span class="warn-dot" title="Data quality issues">&#9888;</span></div>
                 <div class="niche-sub">AI newsletter</div>
             </td>
-            <td class="num" style="color:#ef4444;font-weight:700">11/21</td>
+            <td class="num" style="color:#ef4444;font-weight:700">12/24</td>
+            <td style="text-align:center"><span style="color:#555;font-size:18px">?</span></td>
             <td class="num">1,122,443</td>
             <td class="num">203,904</td>
             <td><div class="ratio-bar"><div class="ratio-fill" style="width:14%;background:#22c55e"></div><span class="ratio-label">5.5x</span></div></td>
@@ -236,7 +244,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans',san
                 <div class="niche-name">雑学 ショート <span class="warn-dot" title="Data quality issues">&#9888;</span></div>
                 <div class="niche-sub">trivia shorts</div>
             </td>
-            <td class="num" style="color:#ef4444;font-weight:700">9/21</td>
+            <td class="num" style="color:#ef4444;font-weight:700">9/24</td>
+            <td style="text-align:center"><span style="color:#555;font-size:18px">?</span></td>
             <td class="num">—</td>
             <td class="num">—</td>
             <td><span class="ratio-label">—</span></td>
@@ -244,64 +253,204 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans',san
         </tr>
     </table>
 
-    <div class="section-title">Heatmap — 7 Steps</div>
+    <div class="section-title">Heatmap — 8 Steps</div>
     <table class="heatmap-table">
-        <tr><th></th><th>需要</th><th>反応</th><th>質問</th><th>競合</th><th>需給差</th><th>EN/JP</th><th>商業</th><th>Total</th></tr>
+        <tr><th></th><th>Trend</th><th>需要</th><th>反応</th><th>質問</th><th>競合</th><th>需給差</th><th>EN/JP</th><th>商業</th><th>Total</th></tr>
         
         <tr>
+            <td class="niche-name-sm">データ可視化</td>
+            <td style="background:rgba(234,179,8,0.15);text-align:center"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(234,179,8,0.15);text-align:center"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td>
+            <td class="num" style="font-weight:700">16</td>
+        </tr>
+        <tr>
             <td class="niche-name-sm">ストア哲学</td>
-            <td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(234,179,8,0.15);text-align:center"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></td><td style="background:rgba(234,179,8,0.15);text-align:center"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td>
-            <td class="num" style="font-weight:700">19</td>
+            <td style="background:rgba(234,179,8,0.15);text-align:center"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(234,179,8,0.15);text-align:center"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td>
+            <td class="num" style="font-weight:700">16</td>
         </tr>
         <tr>
             <td class="niche-name-sm">AIプロンプト テンプレート</td>
-            <td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td>
-            <td class="num" style="font-weight:700">17</td>
-        </tr>
-        <tr>
-            <td class="niche-name-sm">データ可視化</td>
-            <td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td>
-            <td class="num" style="font-weight:700">17</td>
-        </tr>
-        <tr>
-            <td class="niche-name-sm">顔出しなし YouTube</td>
-            <td style="background:rgba(234,179,8,0.15);text-align:center"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></td><td style="background:rgba(234,179,8,0.15);text-align:center"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td>
-            <td class="num" style="font-weight:700">17</td>
-        </tr>
-        <tr>
-            <td class="niche-name-sm">お金の基礎知識 初心者</td>
-            <td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td>
-            <td class="num" style="font-weight:700">17</td>
-        </tr>
-        <tr>
-            <td class="niche-name-sm">睡眠改善 科学</td>
-            <td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td>
+            <td style="background:rgba(234,179,8,0.15);text-align:center"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td>
             <td class="num" style="font-weight:700">15</td>
         </tr>
         <tr>
+            <td class="niche-name-sm">顔出しなし YouTube</td>
+            <td style="background:rgba(234,179,8,0.15);text-align:center"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td>
+            <td class="num" style="font-weight:700">15</td>
+        </tr>
+        <tr>
+            <td class="niche-name-sm">お金の基礎知識 初心者</td>
+            <td style="background:rgba(234,179,8,0.15);text-align:center"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td>
+            <td class="num" style="font-weight:700">13</td>
+        </tr>
+        <tr>
+            <td class="niche-name-sm">睡眠改善 科学</td>
+            <td style="background:rgba(234,179,8,0.15);text-align:center"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td>
+            <td class="num" style="font-weight:700">13</td>
+        </tr>
+        <tr>
             <td class="niche-name-sm">AIニュースレター</td>
-            <td style="background:rgba(234,179,8,0.15);text-align:center"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></td><td style="background:rgba(234,179,8,0.15);text-align:center"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td>
-            <td class="num" style="font-weight:700">11</td>
+            <td style="background:rgba(234,179,8,0.15);text-align:center"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(234,179,8,0.15);text-align:center"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td>
+            <td class="num" style="font-weight:700">12</td>
         </tr>
         <tr>
             <td class="niche-name-sm">雑学 ショート</td>
-            <td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(34,197,94,0.2);text-align:center"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td>
+            <td style="background:rgba(234,179,8,0.15);text-align:center"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td><td style="background:rgba(239,68,68,0.15);text-align:center"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></td>
             <td class="num" style="font-weight:700">9</td>
         </tr>
     </table>
 
     <div class="section-title">Detail by Niche</div>
     
+    <div class="detail-section" id="detail-data-visualization">
+        <div class="detail-header">
+            <div>
+                <h2>データ可視化 <span class="en-label">/ data visualization</span></h2>
+                <div class="detail-sub">ID: data-visualization</div>
+            </div>
+            <div class="detail-score" style="color:#eab308">16/24</div>
+        </div>
+        
+        <div class="mini-grid"><div class="mini-card"><div class="mini-label">Trend</div><div class="mini-score"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></div><div class="mini-comment">Stable (EN:UNKNOWN JP:UNKNOWN)</div></div><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low demand (median 0)</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Median 0 views (top1=0%)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Rich (15 questions)</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></div><div class="mini-comment">Moderate competition (90,391)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low gap (3)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong EN→JP opportunity (36.1x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong commercial signals (4/7 keywords)</div></div></div>
+
+        <div class="data-block">
+            <h3>Step 0: Trend Direction</h3>
+            <table>
+                <tr><th>Lang</th><th>Direction</th><th>Reason</th></tr>
+                <tr><td>EN</td><td style="color:#555">UNKNOWN</td><td>N/A</td></tr>
+                <tr><td>JP</td><td style="color:#555">UNKNOWN</td><td>N/A</td></tr>
+            </table>
+        </div>
+
+        <div class="data-block">
+            <h3>Step 1: Demand Volume</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th></tr>
+                <tr><td>YouTube top20</td><td class="num">5,838,290</td><td class="num">161,712</td></tr>
+                <tr><td>Twitter (30d)</td><td class="num">315</td><td class="num">45</td></tr>
+                <tr><td>Reddit</td><td class="num">4,146</td><td class="num">17</td></tr>
+            </table>
+        </div>
+
+        <div class="data-block">
+            <h3>Step 2: Engagement</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th></tr>
+                <tr><td>Twitter posts</td><td class="num">204,926</td><td class="num">151,312</td></tr>
+                <tr><td>Avg likes</td><td class="num">132.8</td><td class="num">53.9</td></tr>
+                <tr><td>Instagram</td><td class="num">5,559</td><td class="num">—</td></tr>
+                <tr><td>YT avg views</td><td class="num">291,914.5</td><td class="num">8,085.6</td></tr>
+            </table>
+        </div>
+
+        <div class="data-block">
+            <h3>Step 4: Supply & Step 6: Localization</h3>
+            <table>
+                <tr><th></th><th>EN</th><th>JP</th><th>EN/JP</th></tr>
+                <tr><td>YT channels</td><td class="num">18</td><td class="num">18</td><td class="num">36.1x</td></tr>
+                <tr><td>Twitter publishers</td><td class="num">90,391</td><td class="num">49,657</td><td class="num">1.8x</td></tr>
+                <tr><td>Gap score</td><td class="num">64.6</td><td class="num">3.3</td><td></td></tr>
+            </table>
+        </div>
+
+        <details class="grok-details">
+            <summary>Step 3: Knowledge Gap — Grok Raw Data</summary>
+            <div class="grok-section">
+                <h4>EN</h4>
+                <div class="grok-item"><div class="grok-text">@Datahaven_xyz, your project on predictive analytics is super cool! What tools are you using for data visualization, and do you have any recommendations for a beginner?</div><div class="grok-meta">Qaasim 🖤🫎 (@Qasim_00000) &middot; 0 likes</div></div>
+<div class="grok-item"><div class="grok-text">📊 - If you have skills in Tableau data visualization software And want to volunteer a bit of your time for human rights in Rojava or Syria We need help on a project ✌🏼 📩 My DMs are open 🙏🏼 RT apprecia</div><div class="grok-meta">Arya (@aryusj1) &middot; 13 likes</div></div>
+<div class="grok-item"><div class="grok-text">Hi sumit sir i am fresher with strong sql skills,and did projects on powerbi and basic python for data cleaning and data visualization, I am applying to so many companies but still even not getting re</div><div class="grok-meta">aditya (@adityaKoushik6) &middot; 0 likes</div></div>
+<div class="grok-item"><div class="grok-text">Solution Guide | #Tableau | #WOW2026 | Week 6 | Can you account for nulls in your averages? blog: https://donnacoles.home.blog/2026/02/15/can-you-account-for-nulls-in-your-averages/ cc: @YusukeNakanis</div><div class="grok-meta">Donna Coles (@donnacoles30) &middot; 8 likes</div></div>
+<div class="grok-item"><div class="grok-text">Thanks for your dataviz work on the Epstein files! If you have a moment, please let us know what would most help others preparing a dataset for presentation like that on future occasions. Did you cons</div><div class="grok-meta">HighlandGNU (@HighlandGNU) &middot; 1 likes</div></div>
+<div class="grok-more">+1 more results</div>
+            </div>
+            <div class="grok-section">
+                <h4>JP</h4>
+                <div class="grok-item"><div class="grok-text">難易度高そうだが、こんな風にデータ可視化してみたい。BIツールでは再現てきないかもしれないがTableauなら何とかなるのかな？</div><div class="grok-meta">@edogawa_aki &middot; 2 likes</div></div>
+<div class="grok-item"><div class="grok-text">これは…もしかして…サッカー⚽️？ 初心者OK！可視化コンペ日本一が教えるTableauを使ったデータ可視化講座（ハンズオン付き） https://west-sec.connpass.com/event/376054/</div><div class="grok-meta">@missa_iii_ &middot; 12 likes</div></div>
+<div class="grok-item"><div class="grok-text">Looker Studioって？ Googleの無料データ可視化ツール。</div><div class="grok-meta">@yuta_beginner &middot; 5 likes</div></div>
+<div class="grok-item"><div class="grok-text">データ可視化ツールTableauの &quot;本当の使い方&quot;,知っていますか？</div><div class="grok-meta">@bizboost_akiba &middot; 3 likes</div></div>
+<div class="grok-item"><div class="grok-text">初心者OK！Tableauを使ったデータ可視化術（ハンズオン付き）</div><div class="grok-meta">@missa_iii_ &middot; 3 likes</div></div>
+<div class="grok-more">+10 more results</div>
+            </div>
+        </details>
+
+        <details class="grok-details">
+            <summary>Step 7: Commercial Signals — Grok Raw Data</summary>
+            <div class="grok-section">
+                <h4>EN</h4>
+                <div class="grok-item"><div class="grok-text">Effective data visualization is essential for statistical analysis and informed decision-making. That’s why my online course, Data Visualization in R Using ggplot2 &amp; Friends, includes a dedicated sect</div><div class="grok-meta">@JoachimSchork &middot; 160 likes</div></div>
+<div class="grok-item"><div class="grok-text">Very cool James Ring!👏 James worked on this black hole study in Houdini using custom gravity POP forces based on Newtonian physics. James is a 3D Technical Artist specializing in data visualization us</div><div class="grok-meta">@HoudiniSchool &middot; 49 likes</div></div>
+<div class="grok-item"><div class="grok-text">Tableau Simplified: From Basics to Advanced; Master Tableau from Scratch: Data Visualization, Dashboards, Analytics, Business Intelligence &amp; Data Scientist / Analyst @omoalhajaabiola https://www.udemy</div><div class="grok-meta">@Adekunmi_Shehu &middot; 16 likes</div></div>
+<div class="grok-item"><div class="grok-text">Ready for a challenge? This Data Visualization Best Practices course will push your boundaries. https://www.coursera.org/learn/data-visualization-best-practices?irclickid=&amp;irgwc=1&amp;afsrc=1&amp;utm_medium=p</div><div class="grok-meta">@machinelearnflx &middot; 2 likes</div></div>
+<div class="grok-item"><div class="grok-text">The AI bubble is upon us. There are a million new ways to make money while using it! Here are 3 of my favorites. Here are a couple more: 1. AI content for brands 2. Conversational AI for businesses 3.</div><div class="grok-meta">@sicknider_raw &middot; 2 likes</div></div>
+<div class="grok-more">+2 more results</div>
+            </div>
+            <div class="grok-section">
+                <h4>JP</h4>
+                <div class="grok-item"><div class="grok-text">Antigravityに25分で作ってもらったYoutubeデータ解析アプリがヤバすぎる🤯
+
+CSVをアップするとデータを解析して詳細レポートと戦略提言してくれるWEBアプリ
+
+実装した機能
+チャンネルサマリー - 視聴回数、再生時間、登録者増減、収益
+パフォーマンス分析 - CTR/維持率/CH登録率
+データ可視化 -Top10チャート、散布図
+ヒーロー動画＆改善候補 - 自動抽出
+診断レポート</div><div class="grok-meta">@boke_ai &middot; 31 likes</div></div>
+<div class="grok-item"><div class="grok-text">コミュニティノートがついてた。
+リプ欄にはツイ主によるアフィリエイト広告（転職支援）とインプレゾンビが勢揃い。お金の臭いしかしない。
+SNSは楽しい場所だけど、こうしてインプレッションを換金するための「道具」になってくると、ちょっと曲がり角かなぁ･･･とも思う。</div><div class="grok-meta">@ShinagawaJP &middot; 85 likes</div></div>
+<div class="grok-item"><div class="grok-text">Perplexityの会社財務データ可視化機能が強化されて、
+・リアルタイムの株価
+・過去の収益レポート
+・同業他社との比較
+・企業財務の詳細な分析
+が閲覧できるようになりました。
+
+これは他のリサーチ系には無い機能なので、差別化されています。
+
+同時に複数企業調査あればより便利ですね。</div><div class="grok-meta">@yugen_matuni &middot; 230 likes</div></div>
+<div class="grok-item"><div class="grok-text">【医療レセプトAI mutexがシード6,000万円調達】
+
+✅ エムティーアイからSaaS「Reze」開発資金
+✅ レセプト作成・確認の生成AI効率化
+✅ 請求漏れ防止で医療機関収益向上
+✅ データ可視化で経営改善支援
+✅ 医事課・医師負担軽減で働き方改革
+
+#医療DX #レセプトAI
+
+https://thebridge.jp/2025/12/mutex-raises-60-million-y</div><div class="grok-meta">@thebridge_jp &middot; 2 likes</div></div>
+<div class="grok-item"><div class="grok-text">要約+ヴィジュアライズに特化したhttp://VDraw.ai
+
+- 難しいプロンプトなしで流行りのインフォグラフィックも一発生成
+- マルチモーダル入力
+- データ可視化に必要なほぼ全てのチャートを自動生成可能
+
+とりあえず図が欲しいときはhttp://VDraw.ai</div><div class="grok-meta">@itose_yosuke &middot; 3 likes</div></div>
+<div class="grok-more">+7 more results</div>
+            </div>
+        </details>
+    </div>
     <div class="detail-section" id="detail-stoicism">
         <div class="detail-header">
             <div>
                 <h2>ストア哲学 <span class="en-label">/ stoicism philosophy</span></h2>
                 <div class="detail-sub">ID: stoicism</div>
             </div>
-            <div class="detail-score" style="color:#22c55e">19/21</div>
+            <div class="detail-score" style="color:#eab308">16/24</div>
         </div>
         
-        <div class="mini-grid"><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong YouTube demand</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">High avg views (1,081,296)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Rich how-to demand</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></div><div class="mini-comment">Moderate competition (20,527)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></div><div class="mini-comment">Moderate gap (162)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong EN→JP opportunity (6.5x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong commercial signals (5/7 keywords)</div></div></div>
+        <div class="mini-grid"><div class="mini-card"><div class="mini-label">Trend</div><div class="mini-score"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></div><div class="mini-comment">Stable (EN:UNKNOWN JP:UNKNOWN)</div></div><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low demand (median 0)</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Median 0 views (top1=0%)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Rich (15 questions)</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Dead market (pub 20,527, median 0)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></div><div class="mini-comment">Moderate gap (162)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong EN→JP opportunity (6.5x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong commercial signals (5/7 keywords)</div></div></div>
+
+        <div class="data-block">
+            <h3>Step 0: Trend Direction</h3>
+            <table>
+                <tr><th>Lang</th><th>Direction</th><th>Reason</th></tr>
+                <tr><td>EN</td><td style="color:#555">UNKNOWN</td><td>N/A</td></tr>
+                <tr><td>JP</td><td style="color:#555">UNKNOWN</td><td>N/A</td></tr>
+            </table>
+        </div>
 
         <div class="data-block">
             <h3>Step 1: Demand Volume</h3>
@@ -446,10 +595,19 @@ JTC勤務×副業×インデックス投資。
                 <h2>AIプロンプト テンプレート <span class="en-label">/ AI prompts templates</span></h2>
                 <div class="detail-sub">ID: ai-prompts</div>
             </div>
-            <div class="detail-score" style="color:#eab308">17/21</div>
+            <div class="detail-score" style="color:#eab308">15/24</div>
         </div>
         
-        <div class="mini-grid"><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong YouTube demand</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">High avg views (350,586)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Rich how-to demand</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Red ocean (301,027 publishers)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low gap (3)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong EN→JP opportunity (7.3x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong commercial signals (6/7 keywords)</div></div></div>
+        <div class="mini-grid"><div class="mini-card"><div class="mini-label">Trend</div><div class="mini-score"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></div><div class="mini-comment">Stable (EN:UNKNOWN JP:UNKNOWN)</div></div><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low demand (median 0)</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Median 0 views (top1=0%)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Rich (10 questions)</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Red ocean (303,370 publishers)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low gap (3)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong EN→JP opportunity (7.3x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong commercial signals (6/7 keywords)</div></div></div>
+
+        <div class="data-block">
+            <h3>Step 0: Trend Direction</h3>
+            <table>
+                <tr><th>Lang</th><th>Direction</th><th>Reason</th></tr>
+                <tr><td>EN</td><td style="color:#555">UNKNOWN</td><td>N/A</td></tr>
+                <tr><td>JP</td><td style="color:#555">UNKNOWN</td><td>N/A</td></tr>
+            </table>
+        </div>
 
         <div class="data-block">
             <h3>Step 1: Demand Volume</h3>
@@ -589,138 +747,25 @@ Romantasy Empire From Alessandro Zamboni – shows you the steps to build incr</
             </div>
         </details>
     </div>
-    <div class="detail-section" id="detail-data-visualization">
-        <div class="detail-header">
-            <div>
-                <h2>データ可視化 <span class="en-label">/ data visualization</span></h2>
-                <div class="detail-sub">ID: data-visualization</div>
-            </div>
-            <div class="detail-score" style="color:#eab308">17/21</div>
-        </div>
-        
-        <div class="mini-grid"><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong YouTube demand</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">High avg views (291,914)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Rich how-to demand</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Red ocean (49,657 publishers)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low gap (3)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong EN→JP opportunity (36.1x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong commercial signals (4/7 keywords)</div></div></div>
-
-        <div class="data-block">
-            <h3>Step 1: Demand Volume</h3>
-            <table>
-                <tr><th></th><th>EN</th><th>JP</th></tr>
-                <tr><td>YouTube top20</td><td class="num">5,838,290</td><td class="num">161,712</td></tr>
-                <tr><td>Twitter (30d)</td><td class="num">315</td><td class="num">45</td></tr>
-                <tr><td>Reddit</td><td class="num">4,146</td><td class="num">17</td></tr>
-            </table>
-        </div>
-
-        <div class="data-block">
-            <h3>Step 2: Engagement</h3>
-            <table>
-                <tr><th></th><th>EN</th><th>JP</th></tr>
-                <tr><td>Twitter posts</td><td class="num">204,926</td><td class="num">151,312</td></tr>
-                <tr><td>Avg likes</td><td class="num">132.8</td><td class="num">53.9</td></tr>
-                <tr><td>Instagram</td><td class="num">5,559</td><td class="num">—</td></tr>
-                <tr><td>YT avg views</td><td class="num">291,914.5</td><td class="num">8,085.6</td></tr>
-            </table>
-        </div>
-
-        <div class="data-block">
-            <h3>Step 4: Supply & Step 6: Localization</h3>
-            <table>
-                <tr><th></th><th>EN</th><th>JP</th><th>EN/JP</th></tr>
-                <tr><td>YT channels</td><td class="num">18</td><td class="num">18</td><td class="num">36.1x</td></tr>
-                <tr><td>Twitter publishers</td><td class="num">90,391</td><td class="num">49,657</td><td class="num">1.8x</td></tr>
-                <tr><td>Gap score</td><td class="num">64.6</td><td class="num">3.3</td><td></td></tr>
-            </table>
-        </div>
-
-        <details class="grok-details">
-            <summary>Step 3: Knowledge Gap — Grok Raw Data</summary>
-            <div class="grok-section">
-                <h4>EN</h4>
-                <div class="grok-item"><div class="grok-text">@Datahaven_xyz, your project on predictive analytics is super cool! What tools are you using for data visualization, and do you have any recommendations for a beginner?</div><div class="grok-meta">Qaasim 🖤🫎 (@Qasim_00000) &middot; 0 likes</div></div>
-<div class="grok-item"><div class="grok-text">📊 - If you have skills in Tableau data visualization software And want to volunteer a bit of your time for human rights in Rojava or Syria We need help on a project ✌🏼 📩 My DMs are open 🙏🏼 RT apprecia</div><div class="grok-meta">Arya (@aryusj1) &middot; 13 likes</div></div>
-<div class="grok-item"><div class="grok-text">Hi sumit sir i am fresher with strong sql skills,and did projects on powerbi and basic python for data cleaning and data visualization, I am applying to so many companies but still even not getting re</div><div class="grok-meta">aditya (@adityaKoushik6) &middot; 0 likes</div></div>
-<div class="grok-item"><div class="grok-text">Solution Guide | #Tableau | #WOW2026 | Week 6 | Can you account for nulls in your averages? blog: https://donnacoles.home.blog/2026/02/15/can-you-account-for-nulls-in-your-averages/ cc: @YusukeNakanis</div><div class="grok-meta">Donna Coles (@donnacoles30) &middot; 8 likes</div></div>
-<div class="grok-item"><div class="grok-text">Thanks for your dataviz work on the Epstein files! If you have a moment, please let us know what would most help others preparing a dataset for presentation like that on future occasions. Did you cons</div><div class="grok-meta">HighlandGNU (@HighlandGNU) &middot; 1 likes</div></div>
-<div class="grok-more">+1 more results</div>
-            </div>
-            <div class="grok-section">
-                <h4>JP</h4>
-                <div class="grok-item"><div class="grok-text">難易度高そうだが、こんな風にデータ可視化してみたい。BIツールでは再現てきないかもしれないがTableauなら何とかなるのかな？</div><div class="grok-meta">@edogawa_aki &middot; 2 likes</div></div>
-<div class="grok-item"><div class="grok-text">これは…もしかして…サッカー⚽️？ 初心者OK！可視化コンペ日本一が教えるTableauを使ったデータ可視化講座（ハンズオン付き） https://west-sec.connpass.com/event/376054/</div><div class="grok-meta">@missa_iii_ &middot; 12 likes</div></div>
-<div class="grok-item"><div class="grok-text">Looker Studioって？ Googleの無料データ可視化ツール。</div><div class="grok-meta">@yuta_beginner &middot; 5 likes</div></div>
-<div class="grok-item"><div class="grok-text">データ可視化ツールTableauの &quot;本当の使い方&quot;,知っていますか？</div><div class="grok-meta">@bizboost_akiba &middot; 3 likes</div></div>
-<div class="grok-item"><div class="grok-text">初心者OK！Tableauを使ったデータ可視化術（ハンズオン付き）</div><div class="grok-meta">@missa_iii_ &middot; 3 likes</div></div>
-<div class="grok-more">+10 more results</div>
-            </div>
-        </details>
-
-        <details class="grok-details">
-            <summary>Step 7: Commercial Signals — Grok Raw Data</summary>
-            <div class="grok-section">
-                <h4>EN</h4>
-                <div class="grok-item"><div class="grok-text">Effective data visualization is essential for statistical analysis and informed decision-making. That’s why my online course, Data Visualization in R Using ggplot2 &amp; Friends, includes a dedicated sect</div><div class="grok-meta">@JoachimSchork &middot; 160 likes</div></div>
-<div class="grok-item"><div class="grok-text">Very cool James Ring!👏 James worked on this black hole study in Houdini using custom gravity POP forces based on Newtonian physics. James is a 3D Technical Artist specializing in data visualization us</div><div class="grok-meta">@HoudiniSchool &middot; 49 likes</div></div>
-<div class="grok-item"><div class="grok-text">Tableau Simplified: From Basics to Advanced; Master Tableau from Scratch: Data Visualization, Dashboards, Analytics, Business Intelligence &amp; Data Scientist / Analyst @omoalhajaabiola https://www.udemy</div><div class="grok-meta">@Adekunmi_Shehu &middot; 16 likes</div></div>
-<div class="grok-item"><div class="grok-text">Ready for a challenge? This Data Visualization Best Practices course will push your boundaries. https://www.coursera.org/learn/data-visualization-best-practices?irclickid=&amp;irgwc=1&amp;afsrc=1&amp;utm_medium=p</div><div class="grok-meta">@machinelearnflx &middot; 2 likes</div></div>
-<div class="grok-item"><div class="grok-text">The AI bubble is upon us. There are a million new ways to make money while using it! Here are 3 of my favorites. Here are a couple more: 1. AI content for brands 2. Conversational AI for businesses 3.</div><div class="grok-meta">@sicknider_raw &middot; 2 likes</div></div>
-<div class="grok-more">+2 more results</div>
-            </div>
-            <div class="grok-section">
-                <h4>JP</h4>
-                <div class="grok-item"><div class="grok-text">Antigravityに25分で作ってもらったYoutubeデータ解析アプリがヤバすぎる🤯
-
-CSVをアップするとデータを解析して詳細レポートと戦略提言してくれるWEBアプリ
-
-実装した機能
-チャンネルサマリー - 視聴回数、再生時間、登録者増減、収益
-パフォーマンス分析 - CTR/維持率/CH登録率
-データ可視化 -Top10チャート、散布図
-ヒーロー動画＆改善候補 - 自動抽出
-診断レポート</div><div class="grok-meta">@boke_ai &middot; 31 likes</div></div>
-<div class="grok-item"><div class="grok-text">コミュニティノートがついてた。
-リプ欄にはツイ主によるアフィリエイト広告（転職支援）とインプレゾンビが勢揃い。お金の臭いしかしない。
-SNSは楽しい場所だけど、こうしてインプレッションを換金するための「道具」になってくると、ちょっと曲がり角かなぁ･･･とも思う。</div><div class="grok-meta">@ShinagawaJP &middot; 85 likes</div></div>
-<div class="grok-item"><div class="grok-text">Perplexityの会社財務データ可視化機能が強化されて、
-・リアルタイムの株価
-・過去の収益レポート
-・同業他社との比較
-・企業財務の詳細な分析
-が閲覧できるようになりました。
-
-これは他のリサーチ系には無い機能なので、差別化されています。
-
-同時に複数企業調査あればより便利ですね。</div><div class="grok-meta">@yugen_matuni &middot; 230 likes</div></div>
-<div class="grok-item"><div class="grok-text">【医療レセプトAI mutexがシード6,000万円調達】
-
-✅ エムティーアイからSaaS「Reze」開発資金
-✅ レセプト作成・確認の生成AI効率化
-✅ 請求漏れ防止で医療機関収益向上
-✅ データ可視化で経営改善支援
-✅ 医事課・医師負担軽減で働き方改革
-
-#医療DX #レセプトAI
-
-https://thebridge.jp/2025/12/mutex-raises-60-million-y</div><div class="grok-meta">@thebridge_jp &middot; 2 likes</div></div>
-<div class="grok-item"><div class="grok-text">要約+ヴィジュアライズに特化したhttp://VDraw.ai
-
-- 難しいプロンプトなしで流行りのインフォグラフィックも一発生成
-- マルチモーダル入力
-- データ可視化に必要なほぼ全てのチャートを自動生成可能
-
-とりあえず図が欲しいときはhttp://VDraw.ai</div><div class="grok-meta">@itose_yosuke &middot; 3 likes</div></div>
-<div class="grok-more">+7 more results</div>
-            </div>
-        </details>
-    </div>
     <div class="detail-section" id="detail-faceless-youtube">
         <div class="detail-header">
             <div>
                 <h2>顔出しなし YouTube <span class="en-label">/ faceless YouTube channel</span></h2>
                 <div class="detail-sub">ID: faceless-youtube</div>
             </div>
-            <div class="detail-score" style="color:#eab308">17/21</div>
+            <div class="detail-score" style="color:#eab308">15/24</div>
         </div>
         <div class="warn-box"><span class="warn-badge">&#9888; Publisher data missing (Xpoz timeout)</span></div>
-        <div class="mini-grid"><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></div><div class="mini-comment">Moderate demand</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></div><div class="mini-comment">Moderate avg views (99,961)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Rich how-to demand</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Low competition (0)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">High gap (1999226)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">JP already mature (0.0x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong commercial signals (7/7 keywords)</div></div></div>
+        <div class="mini-grid"><div class="mini-card"><div class="mini-label">Trend</div><div class="mini-score"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></div><div class="mini-comment">Stable (EN:UNKNOWN JP:UNKNOWN)</div></div><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low demand (median 0)</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Median 0 views (top1=0%)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Rich (11 questions)</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Dead market (pub 0, median 0)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">High gap (1999226)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">JP already mature (0.0x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong commercial signals (7/7 keywords)</div></div></div>
+
+        <div class="data-block">
+            <h3>Step 0: Trend Direction</h3>
+            <table>
+                <tr><th>Lang</th><th>Direction</th><th>Reason</th></tr>
+                <tr><td>EN</td><td style="color:#555">UNKNOWN</td><td>N/A</td></tr>
+                <tr><td>JP</td><td style="color:#555">UNKNOWN</td><td>N/A</td></tr>
+            </table>
+        </div>
 
         <div class="data-block">
             <h3>Step 1: Demand Volume</h3>
@@ -899,10 +944,19 @@ https://note.com/kozo_log/n/n635600cefcf0</div><div class="grok-meta">Yuzu (@vko
                 <h2>お金の基礎知識 初心者 <span class="en-label">/ personal finance beginners</span></h2>
                 <div class="detail-sub">ID: personal-finance-beginner</div>
             </div>
-            <div class="detail-score" style="color:#eab308">17/21</div>
+            <div class="detail-score" style="color:#ef4444">13/24</div>
         </div>
         <div class="warn-box"><span class="warn-badge">&#9888; Publisher data missing (Xpoz timeout)</span><span class="warn-badge">&#9888; Commercial Signals (EN) — Grok API failed</span><span class="warn-badge">&#9888; Commercial Signals (JP) — Grok API failed</span><span class="warn-badge">&#9888; Twitter count data missing</span></div>
-        <div class="mini-grid"><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong YouTube demand</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">High avg views (1,330,283)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Rich how-to demand</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Low competition (0)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">High gap (26605653)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">JP already mature (0.9x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Grok failed</div></div></div>
+        <div class="mini-grid"><div class="mini-card"><div class="mini-label">Trend</div><div class="mini-score"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></div><div class="mini-comment">Stable (EN:UNKNOWN JP:UNKNOWN)</div></div><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low demand (median 0)</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Median 0 views (top1=0%)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Rich (16 questions)</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Dead market (pub 0, median 0)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">High gap (26605653)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">JP already mature (0.9x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Grok failed</div></div></div>
+
+        <div class="data-block">
+            <h3>Step 0: Trend Direction</h3>
+            <table>
+                <tr><th>Lang</th><th>Direction</th><th>Reason</th></tr>
+                <tr><td>EN</td><td style="color:#555">UNKNOWN</td><td>N/A</td></tr>
+                <tr><td>JP</td><td style="color:#555">UNKNOWN</td><td>N/A</td></tr>
+            </table>
+        </div>
 
         <div class="data-block">
             <h3>Step 1: Demand Volume</h3>
@@ -1017,10 +1071,19 @@ https://chokin2.com/1-9/</div><div class="grok-meta">@tameru3ch &middot; 2 likes
                 <h2>睡眠改善 科学 <span class="en-label">/ sleep optimization science</span></h2>
                 <div class="detail-sub">ID: sleep-optimization</div>
             </div>
-            <div class="detail-score" style="color:#eab308">15/21</div>
+            <div class="detail-score" style="color:#ef4444">13/24</div>
         </div>
         <div class="warn-box"><span class="warn-badge">&#9888; Commercial Signals (JP) — Grok API failed</span><span class="warn-badge">&#9888; Twitter count data missing</span></div>
-        <div class="mini-grid"><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong YouTube demand</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">High avg views (6,434,845)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Rich how-to demand</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Red ocean (31,523 publishers)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">High gap (4083)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">JP already mature (0.2x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Grok failed</div></div></div>
+        <div class="mini-grid"><div class="mini-card"><div class="mini-label">Trend</div><div class="mini-score"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></div><div class="mini-comment">Stable (EN:UNKNOWN JP:UNKNOWN)</div></div><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low demand (median 0)</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Median 0 views (top1=0%)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Rich (10 questions)</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Dead market (pub 31,523, median 0)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">High gap (4083)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">JP already mature (0.2x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Grok failed</div></div></div>
+
+        <div class="data-block">
+            <h3>Step 0: Trend Direction</h3>
+            <table>
+                <tr><th>Lang</th><th>Direction</th><th>Reason</th></tr>
+                <tr><td>EN</td><td style="color:#555">UNKNOWN</td><td>N/A</td></tr>
+                <tr><td>JP</td><td style="color:#555">UNKNOWN</td><td>N/A</td></tr>
+            </table>
+        </div>
 
         <div class="data-block">
             <h3>Step 1: Demand Volume</h3>
@@ -1143,10 +1206,19 @@ https://chokin2.com/1-9/</div><div class="grok-meta">@tameru3ch &middot; 2 likes
                 <h2>AIニュースレター <span class="en-label">/ AI newsletter</span></h2>
                 <div class="detail-sub">ID: ai-newsletter</div>
             </div>
-            <div class="detail-score" style="color:#ef4444">11/21</div>
+            <div class="detail-score" style="color:#ef4444">12/24</div>
         </div>
         <div class="warn-box"><span class="warn-badge">&#9888; Knowledge Gap (JP) — Grok API failed</span><span class="warn-badge">&#9888; Commercial Signals (JP) — Grok API failed</span></div>
-        <div class="mini-grid"><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></div><div class="mini-comment">Moderate demand</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></div><div class="mini-comment">Moderate avg views (56,122)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Grok failed</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Red ocean (300,675 publishers)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low gap (1)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong EN→JP opportunity (5.5x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Grok failed</div></div></div>
+        <div class="mini-grid"><div class="mini-card"><div class="mini-label">Trend</div><div class="mini-score"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></div><div class="mini-comment">Stable (EN:UNKNOWN JP:UNKNOWN)</div></div><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low demand (median 0)</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Median 0 views (top1=0%)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></div><div class="mini-comment">Moderate (9 questions)</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Red ocean (302,093 publishers)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low gap (1)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Strong EN→JP opportunity (5.5x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Grok failed</div></div></div>
+
+        <div class="data-block">
+            <h3>Step 0: Trend Direction</h3>
+            <table>
+                <tr><th>Lang</th><th>Direction</th><th>Reason</th></tr>
+                <tr><td>EN</td><td style="color:#555">UNKNOWN</td><td>N/A</td></tr>
+                <tr><td>JP</td><td style="color:#555">UNKNOWN</td><td>N/A</td></tr>
+            </table>
+        </div>
 
         <div class="data-block">
             <h3>Step 1: Demand Volume</h3>
@@ -1240,10 +1312,19 @@ Your newsletter is like having a one-on-one conversation with potentia</div><div
                 <h2>雑学 ショート <span class="en-label">/ trivia shorts</span></h2>
                 <div class="detail-sub">ID: trivia-shorts</div>
             </div>
-            <div class="detail-score" style="color:#ef4444">9/21</div>
+            <div class="detail-score" style="color:#ef4444">9/24</div>
         </div>
         <div class="warn-box"><span class="warn-badge">&#9888; YouTube data missing (yt-dlp timeout)</span><span class="warn-badge">&#9888; Publisher data missing (Xpoz timeout)</span><span class="warn-badge">&#9888; Twitter count data missing</span></div>
-        <div class="mini-grid"><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low demand</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low avg views (0)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Minimal questions</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#22c55e">&#9733;&#9733;&#9733;</span></div><div class="mini-comment">Low competition (0)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low gap (0)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">JP already mature (1.0x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Weak signals (0/7)</div></div></div>
+        <div class="mini-grid"><div class="mini-card"><div class="mini-label">Trend</div><div class="mini-score"><span style="color:#eab308">&#9733;&#9733;&#9734;</span></div><div class="mini-comment">Stable (EN:UNKNOWN JP:UNKNOWN)</div></div><div class="mini-card"><div class="mini-label">需要</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low demand (median 0)</div></div><div class="mini-card"><div class="mini-label">反応</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Median 0 views (top1=0%)</div></div><div class="mini-card"><div class="mini-label">質問</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Weak (0 questions)</div></div><div class="mini-card"><div class="mini-label">競合</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Dead market (pub 0, median 0)</div></div><div class="mini-card"><div class="mini-label">需給差</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Low gap (0)</div></div><div class="mini-card"><div class="mini-label">EN/JP</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">JP already mature (1.0x)</div></div><div class="mini-card"><div class="mini-label">商業</div><div class="mini-score"><span style="color:#ef4444">&#9733;&#9734;&#9734;</span></div><div class="mini-comment">Weak signals (0/7)</div></div></div>
+
+        <div class="data-block">
+            <h3>Step 0: Trend Direction</h3>
+            <table>
+                <tr><th>Lang</th><th>Direction</th><th>Reason</th></tr>
+                <tr><td>EN</td><td style="color:#555">UNKNOWN</td><td>N/A</td></tr>
+                <tr><td>JP</td><td style="color:#555">UNKNOWN</td><td>N/A</td></tr>
+            </table>
+        </div>
 
         <div class="data-block">
             <h3>Step 1: Demand Volume</h3>
@@ -1302,8 +1383,8 @@ Your newsletter is like having a one-on-one conversation with potentia</div><div
     </div>
 
     <div class="report-footer">
-        AI Agency HQ — Niche Demand Analyzer v0.1<br>
-        Framework: 7-Step Evaluation (Demand / Engagement / Knowledge Gap / Supply / Gap / Localization / Commercial)<br>
+        AI Agency HQ — Niche Demand Analyzer v0.2<br>
+        Framework: 8-Step Evaluation (Trend / Demand / Engagement / Knowledge Gap / Supply / Gap / Localization / Commercial)<br>
         Data sources: Grok API (x_search) + Xpoz MCP (Twitter/Reddit/Instagram) + yt-dlp (YouTube)
     </div>
 </div>

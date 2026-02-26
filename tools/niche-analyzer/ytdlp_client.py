@@ -63,6 +63,28 @@ def avg_views(videos: list[dict]) -> float:
     return total_views(videos) / len(videos)
 
 
+def median_views(videos: list[dict]) -> int:
+    """Median view count across videos."""
+    views = sorted(v.get("view_count", 0) for v in videos)
+    n = len(views)
+    if n == 0:
+        return 0
+    if n % 2:
+        return views[n // 2]
+    return (views[n // 2 - 1] + views[n // 2]) // 2
+
+
+def top1_concentration(videos: list[dict]) -> float:
+    """Fraction of total views held by the top video (0.0-1.0). High = outlier-dependent."""
+    if not videos:
+        return 0.0
+    total = total_views(videos)
+    if total == 0:
+        return 0.0
+    top1 = max(v.get("view_count", 0) for v in videos)
+    return round(top1 / total, 3)
+
+
 if __name__ == "__main__":
     q = sys.argv[1] if len(sys.argv) > 1 else "trivia shorts"
     vids = search_videos(q, 5)

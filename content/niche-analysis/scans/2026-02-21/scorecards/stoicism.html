@@ -12,11 +12,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans',san
 .header h1{font-size:22px;font-weight:700;color:#fff}
 .header .sub{font-size:13px;color:#888;margin-top:4px}
 .overall{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:20px;margin-bottom:20px;display:flex;align-items:center;gap:20px}
-.overall-score{font-size:36px;font-weight:800;color:#22c55e}
+.overall-score{font-size:36px;font-weight:800;color:#eab308}
 .overall-detail{flex:1}
 .overall-detail .label{font-size:13px;color:#888}
 .overall-detail .bar{height:8px;background:#2a2a2a;border-radius:4px;margin-top:6px;overflow:hidden}
-.overall-detail .bar-fill{height:100%;background:#22c55e;border-radius:4px;width:90%}
+.overall-detail .bar-fill{height:100%;background:#eab308;border-radius:4px;width:67%}
 .steps-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
 .step-card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;padding:14px}
 .step-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
@@ -39,7 +39,7 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
         <div class="sub">Niche ID: stoicism | Evaluated: 2026-02-21</div>
     </div>
     <div class="overall">
-        <div class="overall-score">19/21</div>
+        <div class="overall-score">16/24</div>
         <div class="overall-detail">
             <div class="label">Total Score</div>
             <div class="bar"><div class="bar-fill"></div></div>
@@ -48,31 +48,38 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
     <div class="steps-grid">
         <div class="step-card">
             <div class="step-header">
-                <span class="step-label">需要ボリューム</span>
-                <span class="step-stars" style="color:#22c55e">&#9733;&#9733;&#9733;</span>
+                <span class="step-label">トレンド方向性</span>
+                <span class="step-stars" style="color:#eab308">&#9733;&#9733;&#9734;</span>
             </div>
-            <div class="step-comment">Strong YouTube demand</div>
+            <div class="step-comment">Stable (EN:UNKNOWN JP:UNKNOWN)</div>
+        </div>
+        <div class="step-card">
+            <div class="step-header">
+                <span class="step-label">需要ボリューム</span>
+                <span class="step-stars" style="color:#ef4444">&#9733;&#9734;&#9734;</span>
+            </div>
+            <div class="step-comment">Low demand (median 0)</div>
         </div>
         <div class="step-card">
             <div class="step-header">
                 <span class="step-label">エンゲージメント</span>
-                <span class="step-stars" style="color:#22c55e">&#9733;&#9733;&#9733;</span>
+                <span class="step-stars" style="color:#ef4444">&#9733;&#9734;&#9734;</span>
             </div>
-            <div class="step-comment">High avg views (1,081,296)</div>
+            <div class="step-comment">Median 0 views (top1=0%)</div>
         </div>
         <div class="step-card">
             <div class="step-header">
                 <span class="step-label">ナレッジギャップ</span>
                 <span class="step-stars" style="color:#22c55e">&#9733;&#9733;&#9733;</span>
             </div>
-            <div class="step-comment">Rich how-to demand</div>
+            <div class="step-comment">Rich (15 questions)</div>
         </div>
         <div class="step-card">
             <div class="step-header">
                 <span class="step-label">競合供給量</span>
-                <span class="step-stars" style="color:#eab308">&#9733;&#9733;&#9734;</span>
+                <span class="step-stars" style="color:#ef4444">&#9733;&#9734;&#9734;</span>
             </div>
-            <div class="step-comment">Moderate competition (20,527)</div>
+            <div class="step-comment">Dead market (pub 20,527, median 0)</div>
         </div>
         <div class="step-card">
             <div class="step-header">
@@ -117,7 +124,7 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
     </div>
     <div class="footer">
         API calls: 15 | Cost: $2.24 |
-        Generated: 2026-02-21 19:07
+        Generated: 2026-02-22 20:07
     </div>
 </div>
 </body>

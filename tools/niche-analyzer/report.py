@@ -1,4 +1,4 @@
-"""Generate comprehensive HTML report from all niche evaluations."""
+"""Generate comprehensive HTML report from all niche evaluations — v2 (8-step)."""
 
 import json
 import sys
@@ -8,7 +8,7 @@ from pathlib import Path
 from config import OUTPUT_BASE
 
 # Reuse scoring logic from scorecard.py
-from scorecard import _score_step
+from scorecard import _score_step, _overall_rating, _declining_penalty
 
 
 def generate_report(scan_date: str, *, open_browser: bool = False) -> Path:
@@ -27,6 +27,7 @@ def generate_report(scan_date: str, *, open_browser: bool = False) -> Path:
         steps = data.get("steps", {})
 
         step_keys = [
+            "step0_trend",
             "step1_demand", "step2_engagement", "step3_knowledge_gap",
             "step4_supply", "step5_gap", "step6_localization", "step7_commercial",
         ]
@@ -39,6 +40,9 @@ def generate_report(scan_date: str, *, open_browser: bool = False) -> Path:
 
         # Detect data quality issues
         warnings = _detect_warnings(data, steps)
+
+        # Overall rating with DECLINING penalty
+        overall, adjusted = _overall_rating(total, steps)
 
         kw_en = data.get("keywords", {}).get("en", "") or data.get("niche_name_en", "")
         kw_jp = data.get("keywords", {}).get("jp", "") or data.get("niche_name_jp", "")
@@ -55,12 +59,14 @@ def generate_report(scan_date: str, *, open_browser: bool = False) -> Path:
             "steps": steps,
             "scores": scores,
             "total": total,
-            "max": 21,
+            "adjusted": adjusted,
+            "max": 24,
+            "overall": overall,
             "warnings": warnings,
         })
 
-    # Sort by total score descending
-    niches.sort(key=lambda n: n["total"], reverse=True)
+    # Sort by adjusted score descending
+    niches.sort(key=lambda n: n["adjusted"], reverse=True)
 
     html = _build_html(scan_date, niches)
 
@@ -183,18 +189,40 @@ def _build_html(scan_date: str, niches: list) -> str:
     """Build the complete HTML report."""
 
     # --- Ranking table rows ---
+    trend_icons = {"GROWING": "&#x2197;", "STABLE": "&#x2192;", "DECLINING": "&#x2198;", "UNKNOWN": "?"}
+    trend_colors = {"GROWING": "#22c55e", "STABLE": "#eab308", "DECLINING": "#ef4444", "UNKNOWN": "#555"}
+
     ranking_rows = ""
     for i, n in enumerate(niches, 1):
         s1 = n["steps"].get("step1_demand", {})
         s6 = n["steps"].get("step6_localization", {})
         s4 = n["steps"].get("step4_supply", {})
+        s0 = n["steps"].get("step0_trend", {})
         yt_en = s1.get("en", {}).get("yt_top20_views", 0)
         yt_jp = s1.get("jp", {}).get("yt_top20_views", 0)
         yt_ratio = s6.get("yt_ratio", 0)
         pub_jp = s4.get("jp", {}).get("twitter_publishers", 0)
 
+        # Trend direction (worst of EN/JP)
+        en_dir = s0.get("en", {}).get("direction", "UNKNOWN")
+        jp_dir = s0.get("jp", {}).get("direction", "UNKNOWN")
+        # Show the more concerning direction
+        if en_dir == "DECLINING" or jp_dir == "DECLINING":
+            show_dir = "DECLINING"
+        elif en_dir == "GROWING" or jp_dir == "GROWING":
+            show_dir = "GROWING"
+        else:
+            show_dir = en_dir if en_dir != "UNKNOWN" else jp_dir
+        trend_html = f'<span style="color:{trend_colors.get(show_dir, "#555")};font-size:18px">{trend_icons.get(show_dir, "?")}</span>'
+
         warn_icon = ' <span class="warn-dot" title="Data quality issues">&#9888;</span>' if n["warnings"] else ""
-        color = "#22c55e" if n["total"] >= 18 else "#eab308" if n["total"] >= 14 else "#ef4444"
+        overall = n.get("overall", "★★")
+        if overall == "★★★":
+            color = "#22c55e"
+        elif overall == "★★":
+            color = "#eab308"
+        else:
+            color = "#ef4444"
 
         ranking_rows += f"""
         <tr class="rank-row" data-niche="{n['id']}">
@@ -203,7 +231,8 @@ def _build_html(scan_date: str, niches: list) -> str:
                 <div class="niche-name">{_esc(n['name_jp'])}{warn_icon}</div>
                 <div class="niche-sub">{_esc(n['name_en'])}</div>
             </td>
-            <td class="num" style="color:{color};font-weight:700">{n['total']}/{n['max']}</td>
+            <td class="num" style="color:{color};font-weight:700">{n['adjusted']}/{n['max']}</td>
+            <td style="text-align:center">{trend_html}</td>
             <td class="num">{_fmt(yt_en)}</td>
             <td class="num">{_fmt(yt_jp)}</td>
             <td>{_ratio_bar(yt_ratio)}</td>
@@ -211,8 +240,9 @@ def _build_html(scan_date: str, niches: list) -> str:
         </tr>"""
 
     # --- Heatmap ---
-    step_labels = ["需要", "反応", "質問", "競合", "需給差", "EN/JP", "商業"]
+    step_labels = ["Trend", "需要", "反応", "質問", "競合", "需給差", "EN/JP", "商業"]
     step_keys = [
+        "step0_trend",
         "step1_demand", "step2_engagement", "step3_knowledge_gap",
         "step4_supply", "step5_gap", "step6_localization", "step7_commercial",
     ]
@@ -229,7 +259,7 @@ def _build_html(scan_date: str, niches: list) -> str:
         <tr>
             <td class="niche-name-sm">{_esc(n['name_jp'])}</td>
             {cells}
-            <td class="num" style="font-weight:700">{n['total']}</td>
+            <td class="num" style="font-weight:700">{n['adjusted']}</td>
         </tr>"""
 
     # --- Per-niche detail sections ---
@@ -250,10 +280,10 @@ def _build_html(scan_date: str, niches: list) -> str:
             badges = "".join(f'<span class="warn-badge">&#9888; {_esc(w)}</span>' for w in n["warnings"])
             warn_html = f'<div class="warn-box">{badges}</div>'
 
-        # Step score cards (compact)
+        # Step score cards (compact) — 8 steps
         step_cards = ""
         for key, label in zip(step_keys, step_labels):
-            sc = n["scores"][key]
+            sc = n["scores"].get(key, {"score": 1, "comment": "N/A"})
             step_cards += (
                 f'<div class="mini-card">'
                 f'<div class="mini-label">{label}</div>'
@@ -268,19 +298,44 @@ def _build_html(scan_date: str, niches: list) -> str:
         grok_com_en = _grok_summary(s7.get("en", {}).get("grok_raw", ""))
         grok_com_jp = _grok_summary(s7.get("jp", {}).get("grok_raw", ""))
 
-        color = "#22c55e" if n["total"] >= 18 else "#eab308" if n["total"] >= 14 else "#ef4444"
+        overall = n.get("overall", "★★")
+        if overall == "★★★":
+            color = "#22c55e"
+        elif overall == "★★":
+            color = "#eab308"
+        else:
+            color = "#ef4444"
+
+        # Step 0 trend data
+        s0 = s.get("step0_trend", {})
+        s0_en_dir = s0.get("en", {}).get("direction", "UNKNOWN")
+        s0_jp_dir = s0.get("jp", {}).get("direction", "UNKNOWN")
+        s0_en_reason = _esc(s0.get("en", {}).get("reason", "N/A"))
+        s0_jp_reason = _esc(s0.get("jp", {}).get("reason", "N/A"))
+        decline_badge = ""
+        if s0_en_dir == "DECLINING" and s0_jp_dir == "DECLINING":
+            decline_badge = ' <span class="warn-badge">DECLINING penalty applied</span>'
 
         detail_sections += f"""
     <div class="detail-section" id="detail-{n['id']}">
         <div class="detail-header">
             <div>
                 <h2>{_esc(n['name_jp'])} <span class="en-label">/ {_esc(n['name_en'])}</span></h2>
-                <div class="detail-sub">ID: {n['id']}</div>
+                <div class="detail-sub">ID: {n['id']}{decline_badge}</div>
             </div>
-            <div class="detail-score" style="color:{color}">{n['total']}/{n['max']}</div>
+            <div class="detail-score" style="color:{color}">{n['adjusted']}/{n['max']}</div>
         </div>
         {warn_html}
         <div class="mini-grid">{step_cards}</div>
+
+        <div class="data-block">
+            <h3>Step 0: Trend Direction</h3>
+            <table>
+                <tr><th>Lang</th><th>Direction</th><th>Reason</th></tr>
+                <tr><td>EN</td><td style="color:{trend_colors.get(s0_en_dir, '#555')}">{s0_en_dir}</td><td>{s0_en_reason}</td></tr>
+                <tr><td>JP</td><td style="color:{trend_colors.get(s0_jp_dir, '#555')}">{s0_jp_dir}</td><td>{s0_jp_reason}</td></tr>
+            </table>
+        </div>
 
         <div class="data-block">
             <h3>Step 1: Demand Volume</h3>
@@ -403,7 +458,7 @@ body{{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans',sa
 .detail-score{{font-size:32px;font-weight:800}}
 
 /* Mini step cards */
-.mini-grid{{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:20px}}
+.mini-grid{{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;margin-bottom:20px}}
 .mini-card{{background:#141414;border:1px solid #1e1e1e;border-radius:8px;padding:10px;text-align:center}}
 .mini-label{{font-size:10px;color:#666;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}}
 .mini-score{{font-size:16px;margin:4px 0}}
@@ -441,8 +496,8 @@ body{{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans',sa
 @media(max-width:768px){{
     .summary-row{{grid-template-columns:repeat(2,1fr)}}
     .mini-grid{{grid-template-columns:repeat(4,1fr)}}
-    .ranking-table th:nth-child(4),.ranking-table th:nth-child(5),
-    .ranking-table td:nth-child(4),.ranking-table td:nth-child(5){{display:none}}
+    .ranking-table th:nth-child(5),.ranking-table th:nth-child(6),
+    .ranking-table td:nth-child(5),.ranking-table td:nth-child(6){{display:none}}
 }}
 </style>
 </head>
@@ -466,7 +521,7 @@ body{{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans',sa
             <div class="label">Niches Evaluated</div>
         </div>
         <div class="summary-card">
-            <div class="val" style="color:#22c55e">{niches[0]['total']}/{niches[0]['max']}</div>
+            <div class="val" style="color:#22c55e">{niches[0]['adjusted']}/{niches[0]['max']}</div>
             <div class="label">Top Score — {_esc(niches[0]['name_jp'])}</div>
         </div>
         <div class="summary-card">
@@ -485,6 +540,7 @@ body{{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans',sa
             <th>#</th>
             <th>Niche</th>
             <th>Score</th>
+            <th>Trend</th>
             <th>YT EN</th>
             <th>YT JP</th>
             <th>EN/JP Ratio</th>
@@ -493,7 +549,7 @@ body{{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans',sa
         {ranking_rows}
     </table>
 
-    <div class="section-title">Heatmap — 7 Steps</div>
+    <div class="section-title">Heatmap — 8 Steps</div>
     <table class="heatmap-table">
         <tr><th></th>{heatmap_header}<th>Total</th></tr>
         {heatmap_rows}
@@ -503,8 +559,8 @@ body{{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans',sa
     {detail_sections}
 
     <div class="report-footer">
-        AI Agency HQ — Niche Demand Analyzer v0.1<br>
-        Framework: 7-Step Evaluation (Demand / Engagement / Knowledge Gap / Supply / Gap / Localization / Commercial)<br>
+        AI Agency HQ — Niche Demand Analyzer v0.2<br>
+        Framework: 8-Step Evaluation (Trend / Demand / Engagement / Knowledge Gap / Supply / Gap / Localization / Commercial)<br>
         Data sources: Grok API (x_search) + Xpoz MCP (Twitter/Reddit/Instagram) + yt-dlp (YouTube)
     </div>
 </div>

@@ -27,8 +27,8 @@
 
 ## リンク
 
-- Web: https://ai-agency.jp（準備中）
-- X: @ai_agency_jp（準備中）
+- Web: https://ai-unmanned.com（準備中）
+- X: 未開設
 
 ## ディレクトリ構成
 

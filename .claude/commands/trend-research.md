@@ -103,7 +103,24 @@ Task(writer):
 
 ## Step 2: CEO — データ収集フェーズ
 
-**順番が重要。需要→バズ→比較→補完の順で回す。**
+**順番が重要。需要→バズ→比較→補完→裏取りの順で回す。**
+
+### スキャンモード vs 深掘りモードの分岐【最初に判断】
+
+```
+スキャンモード（/trend-research 引数なし）:
+  → 候補を事前に決めるな。データから発見する。
+  → Phase Aの前に Grok MCP x_get_trending でXトレンドを取得
+  → WebSearchで「2026 副業 トレンド」「2026 niche business ideas」等を広く検索
+  → AI系に偏るな。美容・健康・金融・教育・趣味・ライフスタイル等を横断的に見る
+  → トレンドデータから候補3〜5個をピックアップしてからPhase Aに進む
+
+深掘りモード（/trend-research {テーマ}）:
+  → 指定テーマでPhase Aに直接進む
+  → ただしPhase E・Fの裏取りは省略するな
+```
+
+**過去の失敗（2026-02-26）: AI系3候補を事前に決め打ちしてスキャンを飛ばした結果、バイアスまみれの調査になった。Type Bは「ニッチ独立ブランド」であり、自分たちの得意分野だけ見るのは禁止。**
 
 ### Phase A: 検索需要の把握（Google Trends）【最初に実行】
 
@@ -173,16 +190,41 @@ Insta/TikTokだけバズ → ビジュアル向き（YouTube/短尺動画）
    MCP英語なし        → トレンドではない（除外）
 ```
 
-### Phase E: 補完調査（WebSearch）
+### Phase E: プラットフォーム市場調査（WebSearch）【必須】
 
-**MCPのフォールバックではない。MCPが対応しない媒体のデータを取る。**
+**MCPのフォールバックではない。MCPが対応しない媒体の実態を把握する。特にnoteは必ず検索しろ。**
 
 | 検索対象 | クエリ例 | 目的 |
 |---------|---------|------|
+| **note（必須）** | `{トピック} note 有料 メンバーシップ 人気 読者数` | 既存プレイヤー・有料記事・購読者規模の把握 |
+| **note（必須）** | `{トピック} 日本語 note 週刊 2026` | 定期配信の競合確認 |
 | YouTube | `{トピック} site:youtube.com` | 再生数・チャンネル数 |
-| note | `{トピック} site:note.com` | 有料記事・スキ数 |
 | Substack | `{トピック} site:substack.com` | 英語圏ニュースレター |
 | Amazon Kindle | `{トピック} site:amazon.co.jp Kindle` | 電子書籍の競合状況 |
+
+**Phase Eで既存プレイヤーが見つかったら、Phase Dのタイムマシン判定を上書き修正しろ。**
+
+### Phase F: Grok API裏取り検証【必須・最終チェック】
+
+**Phase A〜EのMCPデータ・WebSearchデータだけでは市場の全体像を見誤る（2026-02-26 AIニュースレター誤判定の教訓）。Grok APIで直接裏取りする。**
+
+```bash
+curl -s -X POST "https://api.x.ai/v1/chat/completions" \
+  -H "Authorization: Bearer $(cat ~/.claude/mcp-servers/x-search-mcp/.env | grep XAI_API_KEY | cut -d= -f2)" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "grok-3",
+    "messages": [{"role": "user", "content": "{トピック}の日本語市場について教えて。note、Substack、メルマガ等で定期配信している日本語の{トピック}を全て列挙。購読者数、更新頻度、有料/無料、特徴を含めて。"}],
+    "search_mode": "on"
+  }'
+```
+
+**Grok APIの回答で既存プレイヤーが判明したら:**
+- Phase Dのタイムマシン判定を修正
+- マトリクスの★を下方修正
+- 「Information Gap不成立」と明記
+
+**Grok APIが使えない場合（キー切れ等）→ L2エスカレーション。裏取りなしで先に進むな。**
 
 ---
 

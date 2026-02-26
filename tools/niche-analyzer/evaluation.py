@@ -1,4 +1,4 @@
-"""Stage 3: Niche evaluation — 7-step data collection."""
+"""Stage 3: Niche evaluation — 8-step data collection (Step 0-7)."""
 
 import json
 import sys
@@ -17,7 +17,7 @@ def evaluate_niche(
     keyword_jp: str,
     scan_date: str = None,
 ) -> dict:
-    """Run full 7-step evaluation for a single niche.
+    """Run full 8-step evaluation (Step 0-7) for a single niche.
 
     All data collection happens here (zero Claude tokens).
     Judgment/interpretation is left to the CEO session.
@@ -47,8 +47,29 @@ def evaluate_niche(
         "api_calls": {"grok": 0, "xpoz": 0, "ytdlp": 0},
     }
 
+    # ── Step 0: Trend Direction ──
+    print("  [0/8] Trend Direction (Grok)...")
+    trend_en = _safe_grok(
+        f"What is the Google Trends direction for '{keyword_en}' over the last 12 months? "
+        "Answer ONLY with one of: GROWING, STABLE, DECLINING. "
+        "Then give a one-sentence reason."
+    )
+    trend_jp = _safe_grok(
+        f"What is the Google Trends direction for '{keyword_jp}' over the last 12 months? "
+        "Answer ONLY with one of: GROWING, STABLE, DECLINING. "
+        "Then give a one-sentence reason."
+    )
+    result["api_calls"]["grok"] += 2
+
+    result["steps"]["step0_trend"] = {
+        "en": _parse_trend(trend_en),
+        "jp": _parse_trend(trend_jp),
+    }
+    print(f"        Trend EN: {result['steps']['step0_trend']['en']['direction']} | "
+          f"JP: {result['steps']['step0_trend']['jp']['direction']}")
+
     # ── Step 1: Demand Volume ──
-    print("  [1/7] Demand Volume...")
+    print("  [1/8] Demand Volume...")
     yt_en = ytdlp_client.search_videos(keyword_en, DEFAULT_YT_RESULTS)
     yt_jp = ytdlp_client.search_videos(keyword_jp, DEFAULT_YT_RESULTS)
     result["api_calls"]["ytdlp"] += 2
@@ -65,20 +86,25 @@ def evaluate_niche(
         "en": {
             "yt_top20_views": ytdlp_client.total_views(yt_en),
             "yt_video_count": len(yt_en),
+            "yt_median_views": ytdlp_client.median_views(yt_en),
+            "yt_top1_pct": ytdlp_client.top1_concentration(yt_en),
             "tweets_30d": tw_count_en,
             "reddit_posts": _count_items(reddit_en),
         },
         "jp": {
             "yt_top20_views": ytdlp_client.total_views(yt_jp),
             "yt_video_count": len(yt_jp),
+            "yt_median_views": ytdlp_client.median_views(yt_jp),
+            "yt_top1_pct": ytdlp_client.top1_concentration(yt_jp),
             "tweets_30d": tw_count_jp,
             "reddit_posts": _count_items(reddit_jp),
         },
     }
-    print(f"        YT EN: {ytdlp_client.total_views(yt_en):,} views | JP: {ytdlp_client.total_views(yt_jp):,} views")
+    print(f"        YT EN: {ytdlp_client.total_views(yt_en):,} views (median {ytdlp_client.median_views(yt_en):,}) | "
+          f"JP: {ytdlp_client.total_views(yt_jp):,} views (median {ytdlp_client.median_views(yt_jp):,})")
 
     # ── Step 2: Engagement Density ──
-    print("  [2/7] Engagement Density...")
+    print("  [2/8] Engagement Density...")
     tw_posts_en = _safe_call(xpoz.get_twitter_posts, keyword_en, start_date, end_date)
     tw_posts_jp = _safe_call(xpoz.get_twitter_posts, keyword_jp, start_date, end_date)
     ig_posts_en = _safe_call(xpoz.get_instagram_posts, keyword_en, start_date, end_date)
@@ -101,7 +127,7 @@ def evaluate_niche(
     }
 
     # ── Step 3: Knowledge Gap ──
-    print("  [3/7] Knowledge Gap (Grok)...")
+    print("  [3/8] Knowledge Gap (Grok)...")
     grok_gap_en = _safe_grok(
         f'Search X/Twitter for people asking questions about "{keyword_en}". '
         f'Look for "how to", "beginner", "help", "tips" related to {keyword_en}. '
@@ -119,7 +145,7 @@ def evaluate_niche(
     }
 
     # ── Step 4: Competitive Supply ──
-    print("  [4/7] Competitive Supply...")
+    print("  [4/8] Competitive Supply...")
     tw_users_en = _safe_call(xpoz.get_twitter_users, keyword_en, start_date, end_date)
     tw_users_jp = _safe_call(xpoz.get_twitter_users, keyword_jp, start_date, end_date)
     result["api_calls"]["xpoz"] += 2
@@ -140,7 +166,7 @@ def evaluate_niche(
     print(f"        Publishers EN: {en_publishers:,} | JP: {jp_publishers:,}")
 
     # ── Step 5: Supply-Demand Gap ──
-    print("  [5/7] Supply-Demand Gap (calculated)...")
+    print("  [5/8] Supply-Demand Gap (calculated)...")
     s1 = result["steps"]["step1_demand"]
     s4 = result["steps"]["step4_supply"]
     result["steps"]["step5_gap"] = {
@@ -149,7 +175,7 @@ def evaluate_niche(
     }
 
     # ── Step 6: Localization Ratio ──
-    print("  [6/7] Localization Ratio (calculated)...")
+    print("  [6/8] Localization Ratio (calculated)...")
     result["steps"]["step6_localization"] = {
         "yt_ratio": round(s1["en"]["yt_top20_views"] / max(s1["jp"]["yt_top20_views"], 1), 2),
         "twitter_ratio": round(s1["en"]["tweets_30d"] / max(s1["jp"]["tweets_30d"], 1), 2),
@@ -157,7 +183,7 @@ def evaluate_niche(
     }
 
     # ── Step 7: Commercial Signals ──
-    print("  [7/7] Commercial Signals (Grok)...")
+    print("  [7/8] Commercial Signals (Grok)...")
     grok_com_en = _safe_grok(
         f'Search X/Twitter for monetization activity around "{keyword_en}". '
         f'Look for: affiliate, sponsorship, course selling, "make money", income reports. '
@@ -197,6 +223,24 @@ def evaluate_niche(
 
 
 # ── Helpers ──
+
+def _parse_trend(raw: str) -> dict:
+    """Parse Grok trend direction response into {direction, reason}."""
+    if not raw or raw.startswith("ERROR"):
+        return {"direction": "UNKNOWN", "reason": raw or "No response"}
+    upper = raw.upper()
+    if "GROWING" in upper:
+        direction = "GROWING"
+    elif "DECLINING" in upper:
+        direction = "DECLINING"
+    elif "STABLE" in upper:
+        direction = "STABLE"
+    else:
+        direction = "UNKNOWN"
+    # reason = everything after the direction keyword (first line or sentence)
+    reason = raw.strip()
+    return {"direction": direction, "reason": reason}
+
 
 def _safe_count(xpoz, phrase, start, end):
     try:

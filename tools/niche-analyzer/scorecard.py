@@ -1,4 +1,4 @@
-"""Generate scorecard (Markdown + HTML) from eval JSON."""
+"""Generate scorecard (Markdown + HTML) from eval JSON — v2 scoring."""
 
 import json
 import sys
@@ -57,47 +57,96 @@ def _stars(value: float, thresholds: tuple = (1.5, 2.5)) -> str:
 
 
 def _score_step(step_name: str, data: dict, steps: dict) -> tuple[int, str]:
-    """Score a step 1-3 and return (score, comment)."""
-    if step_name == "step1_demand":
+    """Score a step 1-3 and return (score, comment). v2 scoring."""
+
+    if step_name == "step0_trend":
+        s = steps.get("step0_trend", {})
+        en_dir = s.get("en", {}).get("direction", "UNKNOWN")
+        jp_dir = s.get("jp", {}).get("direction", "UNKNOWN")
+        dirs = [en_dir, jp_dir]
+        if "GROWING" in dirs:
+            return 3, f"Growing (EN:{en_dir} JP:{jp_dir})"
+        if en_dir == "DECLINING" and jp_dir == "DECLINING":
+            return 1, f"Both declining"
+        # At least one STABLE (or UNKNOWN but not both DECLINING)
+        return 2, f"Stable (EN:{en_dir} JP:{jp_dir})"
+
+    elif step_name == "step1_demand":
         s = steps.get("step1_demand", {})
-        yt_total = s.get("en", {}).get("yt_top20_views", 0) + s.get("jp", {}).get("yt_top20_views", 0)
-        if yt_total > 5_000_000:
-            return 3, "Strong YouTube demand"
-        elif yt_total > 1_000_000:
-            return 2, "Moderate demand"
-        return 1, "Low demand"
+        en_median = s.get("en", {}).get("yt_median_views", 0)
+        jp_median = s.get("jp", {}).get("yt_median_views", 0)
+        yt_median = max(en_median, jp_median)
+        # Multi-source check: demand exists beyond YouTube
+        tweets = max(s.get("en", {}).get("tweets_30d", 0), s.get("jp", {}).get("tweets_30d", 0))
+        reddit = max(s.get("en", {}).get("reddit_posts", 0), s.get("jp", {}).get("reddit_posts", 0))
+        multi_source = (tweets > 100) or (reddit > 100)
+        if yt_median >= 500_000 and multi_source:
+            return 3, f"Strong (median {yt_median:,} + multi-source)"
+        if yt_median >= 500_000:
+            return 2, f"YT-only demand (median {yt_median:,})"
+        if yt_median >= 100_000 and multi_source:
+            return 2, f"Moderate + multi-source (median {yt_median:,})"
+        return 1, f"Low demand (median {yt_median:,})"
 
     elif step_name == "step2_engagement":
-        s = steps.get("step2_engagement", {})
-        avg_en = s.get("en", {}).get("yt_avg_views", 0)
-        avg_jp = s.get("jp", {}).get("yt_avg_views", 0)
-        avg = max(avg_en, avg_jp)
-        if avg > 200_000:
-            return 3, f"High avg views ({avg:,.0f})"
-        elif avg > 50_000:
-            return 2, f"Moderate avg views ({avg:,.0f})"
-        return 1, f"Low avg views ({avg:,.0f})"
+        s1 = steps.get("step1_demand", {})
+        s2 = steps.get("step2_engagement", {})
+        # Use median from step1 data (more robust than avg)
+        en_median = s1.get("en", {}).get("yt_median_views", 0)
+        jp_median = s1.get("jp", {}).get("yt_median_views", 0)
+        yt_median = max(en_median, jp_median)
+        en_top1 = s1.get("en", {}).get("yt_top1_pct", 0)
+        jp_top1 = s1.get("jp", {}).get("yt_top1_pct", 0)
+        top1_pct = max(en_top1, jp_top1)
+        # Base score from median views
+        if yt_median > 200_000:
+            base = 3
+        elif yt_median > 50_000:
+            base = 2
+        else:
+            base = 1
+        # Penalize outlier dependency
+        if top1_pct > 0.5:
+            base = max(base - 1, 1)
+            return base, f"Outlier-dependent (top1={top1_pct:.0%}, median {yt_median:,})"
+        return base, f"Median {yt_median:,} views (top1={top1_pct:.0%})"
 
     elif step_name == "step3_knowledge_gap":
         s = steps.get("step3_knowledge_gap", {})
-        # Qualitative — check if Grok returned meaningful results
-        jp_raw = s.get("jp", {}).get("grok_raw", "")
-        if "ERROR" in jp_raw:
-            return 1, "Grok failed"
-        if len(jp_raw) > 500:
-            return 3, "Rich how-to demand"
-        elif len(jp_raw) > 100:
-            return 2, "Some questions found"
-        return 1, "Minimal questions"
+        # Try both EN and JP, take the better one
+        best_count = 0
+        for lang in ("en", "jp"):
+            raw = s.get(lang, {}).get("grok_raw", "")
+            if isinstance(raw, str) and not raw.startswith("ERROR"):
+                try:
+                    items = json.loads(raw)
+                    if isinstance(items, list):
+                        best_count = max(best_count, len(items))
+                except (json.JSONDecodeError, TypeError):
+                    pass
+        if best_count >= 10:
+            return 3, f"Rich ({best_count} questions)"
+        if best_count >= 5:
+            return 2, f"Moderate ({best_count} questions)"
+        return 1, f"Weak ({best_count} questions)"
 
     elif step_name == "step4_supply":
         s = steps.get("step4_supply", {})
+        s1 = steps.get("step1_demand", {})
+        en_pub = s.get("en", {}).get("twitter_publishers", 0)
         jp_pub = s.get("jp", {}).get("twitter_publishers", 0)
-        if jp_pub > 30_000:
-            return 1, f"Red ocean ({jp_pub:,} publishers)"
-        elif jp_pub > 10_000:
-            return 2, f"Moderate competition ({jp_pub:,})"
-        return 3, f"Low competition ({jp_pub:,})"
+        pub = max(en_pub, jp_pub)
+        en_median = s1.get("en", {}).get("yt_median_views", 0)
+        jp_median = s1.get("jp", {}).get("yt_median_views", 0)
+        yt_median = max(en_median, jp_median)
+        # Cross-reference demand vs competition
+        if pub < 50_000 and yt_median >= 100_000:
+            return 3, f"Blue ocean (pub {pub:,}, median {yt_median:,})"
+        if pub < 50_000 and yt_median < 100_000:
+            return 1, f"Dead market (pub {pub:,}, median {yt_median:,})"
+        if pub < 200_000:
+            return 2, f"Moderate competition ({pub:,})"
+        return 1, f"Red ocean ({pub:,} publishers)"
 
     elif step_name == "step5_gap":
         s = steps.get("step5_gap", {})
@@ -133,6 +182,47 @@ def _score_step(step_name: str, data: dict, steps: dict) -> tuple[int, str]:
     return 1, "Unknown"
 
 
+def _declining_penalty(steps: dict) -> int:
+    """Calculate point penalty for DECLINING trends."""
+    s0 = steps.get("step0_trend", {})
+    en_dir = s0.get("en", {}).get("direction", "UNKNOWN")
+    jp_dir = s0.get("jp", {}).get("direction", "UNKNOWN")
+    if en_dir == "DECLINING" and jp_dir == "DECLINING":
+        return 3
+    if en_dir == "DECLINING" or jp_dir == "DECLINING":
+        return 1
+    return 0
+
+
+def _overall_rating(total: int, steps: dict) -> tuple[str, int]:
+    """Determine overall star rating (24-point scale) with DECLINING penalty.
+
+    Returns (rating_str, adjusted_total).
+    """
+    penalty = _declining_penalty(steps)
+    adjusted = total - penalty
+
+    # Base rating from adjusted points
+    if adjusted >= 20:
+        rating = "★★★"
+    elif adjusted >= 14:
+        rating = "★★"
+    else:
+        rating = "★"
+
+    # Additional tier downgrade when both DECLINING
+    s0 = steps.get("step0_trend", {})
+    en_dir = s0.get("en", {}).get("direction", "UNKNOWN")
+    jp_dir = s0.get("jp", {}).get("direction", "UNKNOWN")
+    if en_dir == "DECLINING" and jp_dir == "DECLINING":
+        if rating == "★★★":
+            rating = "★★"
+        elif rating == "★★":
+            rating = "★"
+
+    return rating, adjusted
+
+
 def _render_markdown(data: dict, steps: dict) -> str:
     """Render scorecard as Markdown."""
     niche_id = data.get("niche_id", "unknown")
@@ -140,6 +230,7 @@ def _render_markdown(data: dict, steps: dict) -> str:
     kw_jp = data.get("keywords", {}).get("jp", "")
 
     step_names = [
+        ("step0_trend", "トレンド方向性"),
         ("step1_demand", "需要ボリューム"),
         ("step2_engagement", "エンゲージメント"),
         ("step3_knowledge_gap", "ナレッジギャップ"),
@@ -154,16 +245,25 @@ def _render_markdown(data: dict, steps: dict) -> str:
         score, comment = _score_step(key, data, steps)
         scores.append((key, label, score, comment))
 
-    total = sum(s[2] for s in scores)
-    max_total = len(scores) * 3
-    overall = _stars(total / len(scores))
+    total_raw = sum(s[2] for s in scores)
+    max_total = len(scores) * 3  # 24
+    overall, adjusted = _overall_rating(total_raw, steps)
+    penalty = _declining_penalty(steps)
+
+    # Trend direction icons
+    s0 = steps.get("step0_trend", {})
+    en_dir = s0.get("en", {}).get("direction", "UNKNOWN")
+    jp_dir = s0.get("jp", {}).get("direction", "UNKNOWN")
+    decline_note = ""
+    if penalty > 0:
+        decline_note = f" *(DECLINING -{penalty}pt penalty)*"
 
     lines = [
         f"# スコアカード: {kw_jp} / {kw_en}",
         f"",
         f"**評価日**: {data.get('evaluated_at', '')[:10]}",
         f"**ニッチID**: {niche_id}",
-        f"**総合判定**: {overall} ({total}/{max_total})",
+        f"**総合判定**: {overall} ({adjusted}/{max_total}){decline_note}",
         f"",
         f"---",
         f"",
@@ -172,13 +272,24 @@ def _render_markdown(data: dict, steps: dict) -> str:
     ]
 
     star_map = {3: "★★★", 2: "★★", 1: "★"}
-    for i, (key, label, score, comment) in enumerate(scores, 1):
+    for i, (key, label, score, comment) in enumerate(scores):
         lines.append(f"| {i} | {label} | {star_map[score]} | {comment} |")
 
-    lines.append(f"| | **合計** | **{overall}** | **{total}/{max_total}** |")
+    lines.append(f"| | **合計** | **{overall}** | **{adjusted}/{max_total}** |")
     lines.append("")
     lines.append("---")
     lines.append("")
+
+    # Step 0 detail
+    lines.extend([
+        "## Step 0: トレンド方向性",
+        "",
+        f"| 言語 | 方向 | 理由 |",
+        f"|------|------|------|",
+        f"| EN | {en_dir} | {s0.get('en', {}).get('reason', '')} |",
+        f"| JP | {jp_dir} | {s0.get('jp', {}).get('reason', '')} |",
+        "",
+    ])
 
     # Detail sections
     s1 = steps.get("step1_demand", {})
@@ -188,6 +299,8 @@ def _render_markdown(data: dict, steps: dict) -> str:
         "| ソース | EN | JP |",
         "|--------|---:|---:|",
         f"| YouTube top20再生数 | {s1.get('en', {}).get('yt_top20_views', 0):,} | {s1.get('jp', {}).get('yt_top20_views', 0):,} |",
+        f"| YouTube中央値 | {s1.get('en', {}).get('yt_median_views', 0):,} | {s1.get('jp', {}).get('yt_median_views', 0):,} |",
+        f"| YT top1集中度 | {s1.get('en', {}).get('yt_top1_pct', 0):.1%} | {s1.get('jp', {}).get('yt_top1_pct', 0):.1%} |",
         f"| Twitter (30d) | {s1.get('en', {}).get('tweets_30d', 0):,} | {s1.get('jp', {}).get('tweets_30d', 0):,} |",
         f"| Reddit投稿数 | {s1.get('en', {}).get('reddit_posts', 0):,} | {s1.get('jp', {}).get('reddit_posts', 0):,} |",
         "",
@@ -223,6 +336,7 @@ def _render_html(data: dict, steps: dict) -> str:
     kw_jp = data.get("keywords", {}).get("jp", "")
 
     step_names = [
+        ("step0_trend", "トレンド方向性", "Trend Direction"),
         ("step1_demand", "需要ボリューム", "Demand Volume"),
         ("step2_engagement", "エンゲージメント", "Engagement"),
         ("step3_knowledge_gap", "ナレッジギャップ", "Knowledge Gap"),
@@ -239,8 +353,9 @@ def _render_html(data: dict, steps: dict) -> str:
         scores.append((key, label_jp, label_en, score, comment))
         total += score
 
-    max_total = len(scores) * 3
-    pct = total / max_total * 100
+    max_total = len(scores) * 3  # 24
+    overall, adjusted = _overall_rating(total, steps)
+    pct = adjusted / max_total * 100
 
     s1 = steps.get("step1_demand", {})
     s6 = steps.get("step6_localization", {})
@@ -271,7 +386,13 @@ def _render_html(data: dict, steps: dict) -> str:
         jp_val = s1.get("jp", {}).get(jp_key, 0)
         demand_rows += f"<tr><td>{src}</td><td class='num'>{en_val:,}</td><td class='num'>{jp_val:,}</td></tr>\n"
 
-    overall_color = colors.get(round(total / len(scores)), "#eab308")
+    # Determine color from overall star rating
+    if overall == "★★★":
+        overall_color = "#22c55e"
+    elif overall == "★★":
+        overall_color = "#eab308"
+    else:
+        overall_color = "#ef4444"
 
     return f"""<!DOCTYPE html>
 <html lang="ja">
@@ -314,7 +435,7 @@ td.num{{text-align:right;font-variant-numeric:tabular-nums}}
         <div class="sub">Niche ID: {niche_id} | Evaluated: {data.get('evaluated_at', '')[:10]}</div>
     </div>
     <div class="overall">
-        <div class="overall-score">{total}/{max_total}</div>
+        <div class="overall-score">{adjusted}/{max_total}</div>
         <div class="overall-detail">
             <div class="label">Total Score</div>
             <div class="bar"><div class="bar-fill"></div></div>

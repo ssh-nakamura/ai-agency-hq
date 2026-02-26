@@ -271,7 +271,7 @@
   <meta property="og:title" content="ページタイトル | 仮想機関AI計画">
   <meta property="og:description" content="ページの説明">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://ai-agency.jp/ページパス">
+  <meta property="og:url" content="https://ai-unmanned.com/ページパス">
 
   <!-- Tailwind CSS v4 -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>

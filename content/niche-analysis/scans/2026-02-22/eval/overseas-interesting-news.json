@@ -1,0 +1,87 @@
+{
+  "niche_id": "overseas-interesting-news",
+  "niche_name_en": "interesting world news stories",
+  "niche_name_jp": "海外 面白いニュース まとめ",
+  "evaluated_at": "2026-02-22T08:56:36.596180",
+  "date_range": {
+    "start": "2026-01-23",
+    "end": "2026-02-22"
+  },
+  "keywords": {
+    "en": "interesting world news stories",
+    "jp": "海外 面白いニュース まとめ"
+  },
+  "steps": {
+    "step1_demand": {
+      "en": {
+        "yt_top20_views": 20648472,
+        "yt_video_count": 20,
+        "tweets_30d": 0,
+        "reddit_posts": 6572
+      },
+      "jp": {
+        "yt_top20_views": 72459132,
+        "yt_video_count": 20,
+        "tweets_30d": 0,
+        "reddit_posts": 40
+      }
+    },
+    "step2_engagement": {
+      "en": {
+        "twitter_total_posts": 500000,
+        "twitter_avg_likes": 29.4,
+        "twitter_avg_retweets": 31.8,
+        "instagram_total_posts": 29294,
+        "yt_avg_views": 1032423.6
+      },
+      "jp": {
+        "twitter_total_posts": 500000,
+        "twitter_avg_likes": 10.6,
+        "twitter_avg_retweets": 16.3,
+        "yt_avg_views": 3622956.6
+      }
+    },
+    "step3_knowledge_gap": {
+      "en": {
+        "grok_raw": "[\n  {\n    \"text\": \"Well, I see you're British and a thinking Brit at that. You know British reality (which is similar to my Swedish one) and how to decode its Newspeak. But this is international news. Am I right in thinking \\\"Asian\\\" is preferred over \\\"Middle Eastern\\\" or \\\"MENA\\\" in UK reporting?\",\n    \"author\": \"@Haerke242\",\n    \"date\": \"2026-02-21\",\n    \"likes\": 0\n  },\n  {\n    \"text\": \"We all have been witnesses of Andrew telling us how his team is professional and how much they care about being in line with regulations and FDA.Current events prove otherwise also insider selling non-stop doesn't help the thesis how much they believe In the company! Lying to us?\",\n    \"author\": \"@bezanijanet\",\n    \"date\": \"2026-02-21\",\n    \"likes\": 1\n  },\n  {\n    \"text\": \"AEW fans have been proven to be the scary ones that honestly truly need some help, please be normal. Have you seen the news stories? The one guy was like keeping women hostage in his house with an AEW shirt on.\",\n    \"author\": \"@Yagermeister323\",\n    \"date\": \"2026-02-21\",\n    \"likes\": 0\n  },\n  {\n    \"text\": \"I'm sorry you are illiterate and incapable of reading ANY of the MANY news stories on what happened the last THOUSAND TIMES someone tried it.  \\nI cant help you if you cant read a newspaper.  \\nbut can you at least read what happened LAST MONTH with californias wealth tax?\",\n    \"author\": \"@TroubleSh0073r\",\n    \"date\": \"2026-02-20\",\n    \"likes\": 0\n  },\n  {\n    \"text\": \"The Vatican is part of the problem?  Are they moving Germans now?  \\nTry to keep up with current events.  As for your knowledge of history, many of those German officers ended up in the US to help it fight the USSR during the Cold War.\",\n    \"author\": \"@ali_beem72218\",\n    \"date\": \"2026-02-19\",\n    \"likes\": 0\n  },\n  {\n    \"text\": \"Why not help out surviving Cancer patients who have lost their homes & businesses because they can't work?\\nStephen Schwarzman: Blackstone Founder to Donate Entire $48 Billion Fortune to Major Philanthropic Foundation | World News - The Times of India https://timesofindia.indiatimes.com/world/us/blackstone-founder-stephen-schwarzman-plans-to-donate-his-entire-48-billion-fortune-to-a-major-philanthropic-foundation/articleshow/128482163"
+      },
+      "jp": {
+        "grok_raw": "[]"
+      }
+    },
+    "step4_supply": {
+      "en": {
+        "yt_channels": 3,
+        "twitter_publishers": 317903
+      },
+      "jp": {
+        "yt_channels": 10,
+        "twitter_publishers": 184111
+      }
+    },
+    "step5_gap": {
+      "en": 65.0,
+      "jp": 393.6
+    },
+    "step6_localization": {
+      "yt_ratio": 0.28,
+      "twitter_ratio": 0.0,
+      "publisher_ratio": 1.73
+    },
+    "step7_commercial": {
+      "en": {
+        "grok_raw": "[\n  {\n    \"text\": \"I made 5 figures in that pic.👇🏼 Every year since I became a “News Influencer,” I’ve made six figures. And I get to do what I love: tell the truth. Right now there is a revolution happening in the media. Old corporate media is dying, and new voices are rising to replace it. Here’s the question I have for you: Would you like to be one of them? I spent last year creating a full-on college level course and mentorship program where I will teach you how to become an independent journalist. You don’t need a journalism degree. All you need is your phone and social media. If you’d like to be part of the revolution, I’d love to have you with me! I’m picking a handful of students to start mentoring at the end of this month. Book a Zoom with me if you’re serious about it:\",\n    \"author\": \"Ivory Hecker - @IvoryHecker\",\n    \"date\": \"2025-04-10\",\n    \"likes\": 467,\n    \"commercial_type\": \"course selling\"\n  },\n  {\n    \"text\": \"A lot of people ask how I make money on X and how they can too In order to provide transparency, I'm going to share my entire 2023 revenue breakdown It took 2 years to go from 0 to here This isn’t to gloat, it's to show you how you can make $ on X too 2023 X Revenue: X Consulting: $111,000 X Ad Share: $7,848.06 X Subscriptions: $6,922 Newsletter sponsorships: $62,000 Premium newsletter (1% Club): $51,000 Courses: $65,000 Affiliate links in newsletter: $3,800 ...\",\n    \"author\": \"Alex Finn - @AlexFinn\",\n    \"date\": \"2024-01-25\",\n    \"likes\": 422,\n    \"commercial_type\": \"income reports\"\n  },\n  {\n    \"text\": \"A lot of people ask how I make money on X and how they can do the same Over the past 2 years I’ve gone from 0 to 170,000 followers and $248,290 of revenue This post isn’t to gloat, it's to show you how you can make $ on X too 2023 X Revenue: ... Newsletter sponsorships: $53,000 Premium newsletter (1% Club): $31,000 Courses: $51,000 Affiliate links in newsletter: $3,200\",\n    \"author\": \"Alex Finn - @AlexFinn\",\n    \"date\": \"2023-10-22\",\n    \"likes\": 886,\n    \"commercial_type\": \"income reports\"\n  },\n  {\n    \"text\": \"pick a high-earning niche (trading, crypto, dropshipping, etc.) create a spreadsheet of all the top creators in that niche create a catalog of 1000+ clips from their content ... set up a newsletter, build a free lead magnet such as an e-book & funnel the viewers from the videos into your email list once your email list is decently-sized, talk to the owners of some top-earning communities on whop & get an affiliate deal...\",\n    \"author\": \"EP - @eptwts\",\n    \"date\": \"2024-12-18\",\n    \"likes\": 242,\n    \"commercial_type\": \"affiliate\"\n  },\n  {\n    \"text\": \"💰 Want to turn your blog into a money-making machine? Learn exactly how people start & earn from money blogs. 📥 Grab the eBook — link in bio https://turistoffs.com/how-to-start-a-money-blog-ultimate-beginners-ebook-for-new-bloggers-step-by-step-guide-to-how-to-start-a-blog-that-makes-money-blogging-for-profit-digital-download/ #BloggingForProfit #MakeOnlineMoney #SideHustleIdeas #BloggingTips #PassiveIncome\",\n    \"author\": \"Turistoffs™ - @Turistoffs\",\n    \"date\": \"2026-02-18\",\n    \"likes\": 0,\n    \"commercial_type\": \"course selling\"\n  },\n  {\n    \"text\": \"here's exactly how we build info offers from scratch that generated $200k+ for our clients (steal this to launch your info biz) ... we craft the high-ticket info 1:1 program, usually $3k-$5k price point ...\",\n    \"author\": \"Qing - @info_qing\",\n    \"date\": \"2026-02-19\",\n    \"likes\": 5,\n    \"commercial_type\": \"course selling\"\n  },\n  {\n    \"text\": \"Kelly Church’s black ash basketry weaves Anishinaabe tradition into the @DIADetroit’s Contemporary Anishinaabe Art: A Continuation exhibition—on view through April 5, 2026. #sponsored #nativeart #art #Anishinaabe https://nativenewsonline.net/sponsored-content/we-are-still-here-kelly-church-is-weaving-tradition-advocacy-and-hope-into-black-ash-basketry\",\n    \"author\": \"Native News Online - @nativenews_net\",\n    \"date\": \"2026-02-20\",\n    \"likes\": 6,\n    \"commercial_type\": \"sponsorship\"\n  },\n  {\n    \"text\": \"🤖RentAHuman is a marketplace where AI agents hire humans to do real world tasks 👉https://rentahuman.ai/ Sponsored by @BargainsCo #rentahuman #aiagent #ia #news\",\n    \"author\": \"The Daily Gizmo - @The_DailyGizmo\",\n    \"date\": \"2026-02-18\",\n    \"likes\": 16,\n    \"commercial_type\": \"sponsorship\"\n  },\n  {\n    \"text\": \"Income Report - August 2021 I've been planning to do these monthly income reports for so long and I finally wrote about it (link below)! 😊 Summary --- Course: $4,505.19 eBook: $893 YouTube Ads: $1,143.58 Sponsors: $11,500 WeeklyDeals: $1,875 Notes: $145 Total: $20,061.77\",\n    \"author\": \"Florin Pop 👨🏻‍💻 - @FlorinPop17\",\n    \"date\": \"2021-09-02\",\n    \"likes\": 837,\n    \"commercial_type\": \"income reports\"\n  },\n  {\n    \"text\": \"The Compounding Creator How one creator made $1,332,400 across 6 revenue streams in 2020: 🎬 $135k - Ads 🔥 $177k - Affiliates 💰 $182k - Sponsorships 📚 $470k - Self-paced courses 🚀 $295k - Cohort-based course ⭕️ $71k - Community Breakdown 👇\",\n    \"author\": \"Ryan Gum - @ryangum\",\n    \"date\": \"2021-01-07\",\n    \"likes\": 1423,\n    \"commercial_type\": \"income reports\"\n  }\n]"
+      },
+      "jp": {
+        "grok_raw": "[\n  {\n    \"text\": \"消費減税や新首相の動向など、経済の先行きが不透明な話題ばかりがトレンド入りしていますね。大手企業の業績好調のニュースもありますが、個人ができる一番の「生活防衛」は、やはり会社以外の収入源を複数持っておくこと。メルカリを使っているなら、実は「売る」より「紹介する」方がリスクなく積み上がります。 初心者でも日常の「これいいよ」を収益に変える、最もハードルの低い副業の始め方をまとめました。【初心者必見】メルカリアフィリエイトの始め方と稼ぎ方｜日常の「これいいよ」を収益化する全手順 https://t.co/U0MkNPVPck #消費減税\",\n    \"author\": \"@OpenNetNews\",\n    \"date\": \"2026-02-18\",\n    \"likes\": 0,\n    \"commercial_type\": \"アフィリエイト\"\n  },\n  {\n    \"text\": \"もう、暴露してしまいます...。今始めれば、誰でも稼げる副業があります。それが「ブログとは別のアフィリエイト」です。ブログアフィリエイトに挑戦する人は多いです。ただ、”この副業”に気づいている人は殆どいません。人で溢れる前に、こちらを確認してみてください...👇 https://t.co/g0ALvmrHwI\",\n    \"author\": \"@black_Jkr4444\",\n    \"date\": \"2021-08-01\",\n    \"likes\": 172,\n    \"commercial_type\": \"アフィリエイト\"\n  },\n  {\n    \"text\": \"普段からお問い合わせいただく中で、【ブログアフィリエイト以外の手法】についての質問をよくいただきます！僕が実際に取り組んでいるアフィリエイト手法は、ブログとは違い短期で収益を上げる事ができるのが特徴ですね！詳しくはこちらの記事を見てみてください👀 https://a-nori.net/?p=192\",\n    \"author\": \"@AKINORI10456\",\n    \"date\": \"2026-02-21\",\n    \"likes\": 4,\n    \"commercial_type\": \"アフィリエイト\"\n  },\n  {\n    \"text\": \"【年収が上がるリサーチ術】10年前にコピーライティングの神様に教えてもらったことなのですが、”あること”をやると普通の人より28倍以上の情報量を得られます。ちなみに私はこの方法で得た情報で『アメブロ１位』を獲得しました。誰でもできますし、無料でできることです。その”あること”とは…。＊＊＊＊＊＊＊＊＊＊＊＊海外情報をリサーチすること＊＊＊＊＊＊＊＊＊＊＊です。...\",\n    \"author\": \"@webcopyschool\",\n    \"date\": \"2023-11-20\",\n    \"likes\": 220,\n    \"commercial_type\": \"収益化\"\n  },\n  {\n    \"text\": \"【無料配布】「副業のリサーチ、正直めんどくさくないですか？」私は面倒でした。英語も読めないし、毎日ニュースを追う時間もない。だから、AIに全部やらせる仕組みを作りました。・海外のバズってる情報・日本のトレンドこれを毎朝、勝手にスマホに届けてくれます。...受け取りはこちら👇 https://t.co/PMwHCv55k2\",\n    \"author\": \"@naoki2021n\",\n    \"date\": \"2026-02-17\",\n    \"likes\": 2,\n    \"commercial_type\": \"副業\"\n  },\n  {\n    \"text\": \"残業するくらいならこのコピペ副業で毎月10万にしろw エグい情報手に入れたからマジ共有するわw これ、海外のアフィリエイト手法が全部無料で学べるってやつ。外国語だけど、AIで翻訳したらいいだけ。...\",\n    \"author\": \"@reo_community\",\n    \"date\": \"2024-11-14\",\n    \"likes\": 643,\n    \"commercial_type\": \"アフィリエイト\"\n  },\n  {\n    \"text\": \"結局いちばん強いのは「取材」。自分の経験1つより、3人に聞けば情報量は3倍。だから重要なのは「取材できる仕組み」例えば①Googleフォームで事例募集②月4人Zoom固定③謝礼5,000円設定これを12ヶ月回せば48事例の一次情報が貯まる。独自データは競合と被らない強力な資産になる。\",\n    \"author\": \"@fuku_888_143\",\n    \"date\": \"2026-02-18\",\n    \"likes\": 4,\n    \"commercial_type\": \"収益化\"\n  },\n  {\n    \"text\": \"やばいやばい、、外国市場のアフィが勢力拡大してきたぞw なんか僕が外国発信ばっかりしてたら実際にやる人多くなってるw 実際海外アフィの何がいいの？を解説する海外の良いこと↓国内アフィリエイトの平均報酬が8%に対し、米国は実に25%。...\",\n    \"author\": \"@narukun_ai\",\n    \"date\": \"2025-03-11\",\n    \"likes\": 460,\n    \"commercial_type\": \"アフィリエイト\"\n  },\n  {\n    \"text\": \"よしっ海外行くため永遠に続く地獄の円安に耐えるためnoteで有料記事売りまくってやる！絶対に儲かるたった一つの方法教えます！て記事を1,000円で売るの 中身はこの記事と同じ記事を売れとだけ書いてある どや\",\n    \"author\": \"@frafra_perfum\",\n    \"date\": \"2026-02-21\",\n    \"likes\": 0,\n    \"commercial_type\": \"収益化\"\n  }\n]"
+      }
+    }
+  },
+  "api_calls": {
+    "grok": 4,
+    "xpoz": 9,
+    "ytdlp": 2,
+    "total": 15,
+    "estimated_cost_usd": 2.24
+  }
+}
