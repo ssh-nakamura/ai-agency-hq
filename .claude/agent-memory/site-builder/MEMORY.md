@@ -33,6 +33,32 @@
 - Nav: `bg-base/90 backdrop-blur-md border-b border-edge`, h-16, hover:text-brand
 - Secondary button: `border border-edge hover:bg-surface text-gray-300 font-medium rounded-lg px-6 py-3 transition-colors`
 
+## デプロイフロー（2026-02-26〜）
+
+ホスティング: Cloudflare Pages（Direct Upload方式）
+ドメイン: ai-unmanned.com
+
+### サイト修正後の手順
+1. **CEOからの指示を受けて site/ 内を修正**
+2. **プレビューデプロイ（develop）**
+   ```
+   cd site && npx wrangler pages deploy . --project-name=ai-unmanned --branch=develop --commit-dirty=true --commit-message="preview: 変更内容"
+   ```
+   → https://develop.ai-unmanned.pages.dev で株主が確認
+3. **株主OK → 本番デプロイ（main）**
+   ```
+   cd site && npx wrangler pages deploy . --project-name=ai-unmanned --branch=main --commit-dirty=true --commit-message="deploy: 変更内容"
+   ```
+   → https://ai-unmanned.com に反映
+
+### 注意
+- commit-messageは英語（日本語だとWranglerがUTF-8エラーを出す）
+- `--commit-dirty=true` は必須（git未コミットでもデプロイ可能にする）
+- デプロイはCEOの指示で実行。勝手にデプロイしない
+- site/ ディレクトリの中身だけがアップロードされる（docs/等は含まれない）
+
+---
+
 ## Patterns Used
 - FAQ uses `<details>/<summary>` for accordion (no JS needed)
 - summary hover: `hover:bg-surface-alt` (not surface-hover — that token is gone)
